@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Mi Repisa F1</title>
+  <meta name="theme-color" content="#0b0b0f">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,400;0,600;0,700;0,900;1,700;1,900&display=swap">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <header class="appbar" id="appbar">
+    <a href="#/" class="appbar-back" id="back" aria-label="Volver a la repisa" hidden>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </a>
+    <a href="#/" class="brand"><span class="flag" aria-hidden="true"></span><span>Mi Repisa</span></a>
+    <span class="appbar-title" id="appbarTitle"></span>
+  </header>
+
+  <main id="view"></main>
+
+  <button class="fab" id="fab" aria-label="Escanear etiqueta">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M8 10.5h8M8 13.5h5"/></svg>
+    <span>Escanear</span>
+  </button>
+
+  <!-- Escáner -->
+  <section id="scanner" class="scanner" hidden>
+    <video id="video" playsinline muted></video>
+    <canvas id="photo" class="photo" hidden></canvas>
+    <div class="scan-top">
+      <button class="icon-btn" id="btnCloseScan" aria-label="Cerrar">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <button class="icon-btn" id="btnTorch" aria-label="Linterna" hidden>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6l-1 7h4l-8 13 1-9H7z"/></svg>
+      </button>
+    </div>
+    <div class="guide-wrap">
+      <div class="guide" id="guide"><i></i><i></i><i></i><i></i><span>Encuadrá la etiqueta negra</span></div>
+    </div>
+    <div class="scan-bar">
+      <div class="scan-status" id="scanStatus">Iniciando cámara…</div>
+      <div class="scan-ocr" id="scanOcr"></div>
+      <div class="scan-cands" id="scanCands"></div>
+      <div class="scan-actions">
+        <label class="btn btn-light">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+          Sacar foto<input type="file" accept="image/*" capture="environment" id="fileInput" hidden>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <script src="data/autos.js"></script>
+  <script src="data/pilotos.js"></script>
+  <script src="data/logos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js" defer></script>
+  <script src="matcher.js"></script>
+  <script src="detector.js"></script>
+  <script src="scanner.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

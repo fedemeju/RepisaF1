@@ -1,0 +1,9 @@
+mclaren.svg	File:McLaren Speedmark.svg	https://commons.wikimedia.org/wiki/File:McLaren_Speedmark.svg
+williams.svg	File:Williams Racing 2022 logo.svg	https://commons.wikimedia.org/wiki/File:Williams_Racing_2022_logo.svg
+mercedes.svg	File:Mercedes-Benz Star 2022.svg	https://commons.wikimedia.org/wiki/File:Mercedes-Benz_Star_2022.svg
+red-bull.png	provisto por el usuario
+renault.jpg	provisto por el usuario
+toleman.webp	provisto por el usuario
+hesketh.png	provisto por el usuario
+ferrari.png	provisto por el usuario
+brawn.png	provisto por el usuario
