@@ -2,3 +2,6 @@
 .DS_Store
 Thumbs.db
 node_modules/
+
+# Audios largos de trabajo (se cortan con cortar.js)
+audio/bloques/

@@ -258,14 +258,23 @@
     const state = { playing: false };
     setPlaying(false);
 
-    let mode = "tts";
     const audio = car.audio ? new Audio(car.audio) : null;
+    // "pending" hasta saber si el mp3 existe. Antes se decidía a los 0,6 s y en el celu,
+    // como el mp3 tarda más en cargar, terminaba hablando la voz del celular.
+    let mode = audio ? "pending" : "tts";
+    const ready = !audio ? Promise.resolve() : new Promise((res) => {
+      audio.addEventListener("loadedmetadata", res, { once: true });
+      audio.addEventListener("error", res, { once: true });
+      setTimeout(res, 10000); // conexión muy lenta: igual intentamos con el mp3
+    });
     const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
     const ttsVoice = () => {
       const voices = speechSynthesis.getVoices();
       return voices.find((v) => /^es[-_](AR|419|US|MX)/i.test(v.lang)) || voices.find((v) => /^es/i.test(v.lang));
     };
+    let cancelled = false;
     const stopAll = () => {
+      cancelled = true;
       if (audio) audio.pause();
       if ("speechSynthesis" in window) speechSynthesis.cancel();
       setPlaying(false);
@@ -294,8 +303,16 @@
     }
     lbl.textContent = audio ? "Cargando…" : "Voz del celular";
 
-    function play() {
-      if (mode === "mp3" && audio) return audio.play().then(() => setPlaying(true));
+    async function play() {
+      cancelled = false;
+      if (audio && mode === "pending") { lbl.textContent = "Cargando…"; await ready; if (cancelled) return; }
+      if (audio && mode !== "tts") {
+        try { await audio.play(); mode = "mp3"; setPlaying(true); return; }
+        catch (e) { if (mode !== "tts") throw e; } // si el mp3 no existe, sigue con la voz del celu
+      }
+      return speak();
+    }
+    function speak() {
       if (!("speechSynthesis" in window)) { lbl.textContent = "Este navegador no puede leer en voz alta"; return Promise.reject(); }
       speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(car.relato);
@@ -311,7 +328,7 @@
 
     if (autoplayNext) {
       autoplayNext = false;
-      setTimeout(() => play().catch(() => {}), audio ? 600 : 50);
+      play().catch(() => {});
     }
   }
 
