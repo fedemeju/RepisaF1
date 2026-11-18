@@ -12,6 +12,8 @@
   - relato: el texto que se lee en voz alta / el guion para generar el audio con IA.
   - conexiones: [{ id, texto }] enlaces a otros autos de la repisa. Los autos del
     mismo piloto se enlazan solos. La época (década) también se calcula sola.
+  - oculto: true → el auto queda guardado pero la app no lo muestra ni lo reconoce al escanear.
+    Para que aparezca, borrá esa línea.
   - Cualquier campo que no sepas con certeza, dejalo en null y no se muestra.
 */
 window.AUTOS = [
@@ -61,12 +63,13 @@ window.AUTOS = [
       "Ese año la FIA determinó que Red Bull había superado el tope presupuestario de 2021 y lo sancionó con multa y menos tiempo de túnel de viento.",
       "Pérez logró la pole en Arabia Saudita: la primera de su carrera."
     ],
-    relato: "Este es el Red Bull RB18, el auto con el que Max Verstappen ganó su segundo título mundial. En 2022 la Fórmula 1 cambió por completo: volvió el efecto suelo, y casi todos los autos rebotaban en las rectas. El equipo de Adrian Newey fue el que mejor entendió las nuevas reglas. Max, que llevaba el número uno por primera vez, ganó quince carreras, un récord en ese momento. Tu modelo es el de Suzuka: una carrera bajo una lluvia tremenda, frenada con bandera roja y acortada. Max ganó y, por una regla que casi nadie recordaba, se repartieron todos los puntos. Así fue campeón ahí mismo, cuando ni él sabía que ya lo era. Red Bull también se llevó el campeonato de constructores, con diecisiete victorias en veintidós carreras.",
+    relato: "Quince victorias en un año. Ese récord de la Fórmula 1 lo puso este auto: el Red Bull RB18. En 2022 cambiaron todas las reglas y volvió el efecto suelo: los autos se pegaban al piso… y muchos rebotaban como pelotas en las rectas. El equipo de Adrian Newey fue el que mejor lo resolvió, y Max Verstappen, con el número uno en la trompa por primera vez, arrasó. Tu modelo es el de Japón, y esa carrera tiene una historia increíble: bajo una lluvia tremenda y con la carrera acortada, Max ganó, y por una regla que casi nadie conocía se dieron los puntos completos. Así fue campeón en ese mismo momento… y ni él lo sabía.",
     audio: "audio/rb18-2022-verstappen.mp3"
   },
 
   {
     id: "mp4-4-1988-senna",
+    oculto: true, // auto de ejemplo: no confirmado en la repisa
     etiqueta: {
       equipo: "McLaren",
       chasis: "MP4/4",
@@ -107,12 +110,13 @@ window.AUTOS = [
       "Prost sumó más puntos totales, pero en esa época solo contaban los 11 mejores resultados: por eso el campeón fue Senna.",
       "Senna aseguró el título en Suzuka, después de quedarse casi parado en la largada y remontar."
     ],
-    relato: "El McLaren MP4/4 es, para muchos, el auto más dominante de la historia. En 1988 combinó un chasis bajísimo, con el piloto casi acostado, y el motor turbo de Honda. Y tuvo a los dos mejores pilotos del mundo: Ayrton Senna y Alain Prost. Ganó quince de las dieciséis carreras. La única que se le escapó fue Monza, donde Senna chocó con un rezagado a dos vueltas del final y Ferrari hizo un uno-dos, semanas después de la muerte de Enzo Ferrari. El título se definió en Japón: Senna casi se queda parado en la largada, remontó bajo la lluvia y ganó su primer campeonato mundial. Prost sumó más puntos en total, pero en esa época solo contaban los once mejores resultados.",
+    relato: "Quince de dieciséis. Esas son las carreras que ganó este auto en 1988: el McLaren MP4/4, para muchos el más dominante de la historia. Tenía un chasis tan bajo que el piloto iba casi acostado, el motor turbo de Honda… y a los dos mejores pilotos del mundo en el mismo equipo: Ayrton Senna y Alain Prost. La única carrera que se le escapó fue Monza: a dos vueltas del final, Senna chocó con un rezagado y Ferrari hizo un uno-dos, semanas después de la muerte de Enzo Ferrari. Y un dato que pocos saben: ese año Prost sumó más puntos que Senna. Pero solo contaban los once mejores resultados… y así Senna fue campeón por primera vez.",
     audio: "audio/mp4-4-1988-senna.mp3"
   },
 
   {
     id: "fw14b-1992-mansell",
+    oculto: true, // auto de ejemplo: no confirmado en la repisa
     etiqueta: {
       equipo: "Williams",
       chasis: "FW14B",
@@ -153,12 +157,13 @@ window.AUTOS = [
       "Las 14 poles de Mansell fueron récord durante años.",
       "Fue uno de los primeros grandes autos de Adrian Newey, que después diseñaría para McLaren y Red Bull."
     ],
-    relato: "El Williams FW14B parecía una nave espacial. En 1992 tenía suspensión activa, que mantenía el auto siempre a la altura justa, control de tracción y caja semiautomática, cosas que los rivales apenas estaban probando. Lo diseñaron Adrian Newey y Patrick Head, y lo empujaba un motor V10 de Renault. Nigel Mansell, el León, ganó las primeras cinco carreras del año, sumó nueve victorias y catorce poles, y fue campeón en agosto, en Hungría, con cinco carreras por delante. Fue el único título de su carrera, después de años de quedarse cerca. El auto era tan superior que, poco después, la FIA prohibió toda esa electrónica.",
+    relato: "Este auto era tan avanzado que terminaron prohibiendo su tecnología. Es el Williams FW14B de 1992. Tenía suspensión activa: computadoras que mantenían el auto siempre a la altura perfecta. Además, control de tracción y caja semiautomática, cuando los rivales apenas lo estaban probando. Lo diseñó Adrian Newey, el mismo que años después haría los Red Bull campeones. Nigel Mansell, el León, ganó las primeras cinco carreras del año y fue campeón en agosto, con cinco fechas por delante. Era su primer título, después de años de quedarse cerca. ¿Y qué hizo al año siguiente? Se fue a correr a Estados Unidos… y también fue campeón ahí, en su primera temporada.",
     audio: "audio/fw14b-1992-mansell.mp3"
   },
 
   {
     id: "f2004-2004-schumacher",
+    oculto: true, // auto de ejemplo: no confirmado en la repisa
     etiqueta: {
       equipo: "Ferrari",
       chasis: "F2004",
@@ -198,12 +203,13 @@ window.AUTOS = [
       "Schumacher se aseguró el título en Spa, terminando segundo.",
       "Varios récords de vuelta del F2004 duraron muchos años."
     ],
-    relato: "La Ferrari F2004 es la cumbre de la era de Michael Schumacher. Con Ross Brawn como director técnico, Rory Byrne en el diseño y un motor V10 de Ferrari, ganó quince de las dieciocho carreras de 2004. Schumacher ganó doce de las primeras trece. La única excepción fue Mónaco, donde chocó en el túnel mientras iba detrás del auto de seguridad. En Spa, terminando segundo, se aseguró su séptimo título mundial, el quinto seguido con Ferrari. Ese récord de siete coronas tardó dieciséis años en ser igualado, por Lewis Hamilton. Y varios de los récords de vuelta de este auto resistieron durante muchos años.",
+    relato: "Doce de las primeras trece carreras. Así arrancó Michael Schumacher la temporada 2004 con esta Ferrari, la F2004. ¿La única que no ganó? Mónaco, donde chocó dentro del túnel… mientras iba detrás del auto de seguridad. Este auto es la cumbre de la era dorada de Ferrari: el equipo de Ross Brawn y Rory Byrne, un motor V10 que gritaba como pocos, y quince victorias en dieciocho carreras. En Spa, Schumacher se aseguró su séptimo título mundial, el quinto seguido con Ferrari. Ese récord de siete coronas tardó dieciséis años en ser igualado, recién en 2020, por Lewis Hamilton.",
     audio: "audio/f2004-2004-schumacher.mp3"
   },
 
   {
     id: "bgp001-2009-button",
+    oculto: true, // auto de ejemplo: no confirmado en la repisa
     etiqueta: {
       equipo: "Brawn GP",
       chasis: "BGP 001",
@@ -245,12 +251,13 @@ window.AUTOS = [
       "Lo compraron por una suma simbólica cuando Honda se retiró.",
       "Button cerró el título en Brasil remontando del 14.º al 5.º puesto."
     ],
-    relato: "La historia del Brawn BGP 001 parece de película. A fines de 2008, Honda se retiró de la Fórmula 1 y dejó a cientos de personas a punto de quedarse sin trabajo. Ross Brawn se quedó con el equipo por una suma simbólica, le puso un motor Mercedes y salió a pista con un auto casi todo blanco, sin sponsors. Tenía un secreto: el doble difusor, una pieza en la parte trasera del piso que generaba mucha más carga aerodinámica. Los rivales protestaron, pero la FIA lo declaró legal. Jenson Button ganó seis de las primeras siete carreras y fue campeón en Brasil. El equipo ganó también el campeonato de constructores, en su única temporada. Al año siguiente lo compró Mercedes: es el origen del Mercedes que después dominó con Hamilton.",
+    relato: "¿Cómo un equipo que estaba por desaparecer ganó el campeonato del mundo? Esta es la historia del Brawn BGP 001. A fines de 2008, Honda abandonó la Fórmula 1 de un día para otro. Ross Brawn se quedó con el equipo por una suma simbólica, le puso un motor Mercedes y salió a pista casi sin sponsors: por eso el auto es casi todo blanco. Tenía un secreto escondido en la parte trasera del piso: el doble difusor. Los rivales protestaron, pero era legal. Jenson Button ganó seis de las primeras siete carreras y fue campeón. Un solo año de vida, dos títulos… y al año siguiente lo compró Mercedes. De este auto nació el equipo que después dominó con Hamilton.",
     audio: "audio/bgp001-2009-button.mp3"
   },
 
   {
     id: "w11-2020-hamilton",
+    oculto: true, // auto de ejemplo: no confirmado en la repisa
     etiqueta: {
       equipo: "Mercedes-AMG",
       chasis: "W11",
@@ -292,7 +299,7 @@ window.AUTOS = [
       "Temporada reducida a 17 carreras por la pandemia.",
       "Hamilton cerró el título en Turquía, bajo lluvia, largando 6.º."
     ],
-    relato: "El Mercedes W11 corrió en 2020, el año de la pandemia, con una temporada reducida a diecisiete carreras. Mercedes lo pintó de negro como mensaje contra el racismo. Fue probablemente el auto más rápido de toda la era híbrida: quince poles y trece victorias. Tenía un truco único, el DAS: en las rectas, Hamilton podía empujar y tirar del volante para cambiar el ángulo de las ruedas delanteras. Con este auto, Lewis Hamilton superó en Portugal el récord de noventa y una victorias de Michael Schumacher. Y en Turquía, bajo la lluvia y largando sexto, ganó y alcanzó sus siete títulos mundiales, igualando al alemán.",
+    relato: "Para muchos, el auto más rápido de la era híbrida. Es el Mercedes W11 de 2020, y corrió pintado de negro como mensaje contra el racismo. Tenía un truco que nadie más tenía: el DAS. En las rectas, Lewis Hamilton empujaba y tiraba del volante para cambiar el ángulo de las ruedas delanteras. Quince poles y trece victorias en diecisiete carreras. Con este auto, Hamilton superó las noventa y una victorias de Michael Schumacher y se convirtió en el piloto más ganador de la historia. Y en Turquía, bajo la lluvia y largando sexto, ganó y alcanzó sus siete títulos, igualando al alemán.",
     audio: "audio/w11-2020-hamilton.mp3",
     conexiones: [
       { id: "w196-1955-fangio", texto: "Mercedes ya había dominado en los años 50 con Fangio; el W11 es la cumbre de su regreso." }

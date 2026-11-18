@@ -1,5 +1,7 @@
 // Escáner: cámara + OCR (Tesseract.js, corre en el celular, sin IA en la nube)
 (function () {
+  // Solo se reconocen los autos visibles (los "oculto: true" se ignoran)
+  const VISIBLES = AUTOS.filter((a) => !a.oculto);
   const $ = (id) => document.getElementById(id);
   const el = {
     root: $("scanner"), video: $("video"), guide: $("guide"),
@@ -98,10 +100,10 @@
     el.ocr.textContent = clean ? "Leí: " + clean : "";
     if (!clean) return false;
     recent.push(clean); if (recent.length > 3) recent.shift();
-    let ranked = Matcher.score(clean, AUTOS);
+    let ranked = Matcher.score(clean, VISIBLES);
     let car = Matcher.decide(ranked);
     if (!car && recent.length > 1) {
-      ranked = Matcher.score(recent.join(" "), AUTOS);
+      ranked = Matcher.score(recent.join(" "), VISIBLES);
       car = Matcher.decide(ranked);
     }
     if (car) { found(car); return true; }
@@ -205,7 +207,7 @@
       const region = near[0] || { x: Math.max(0, px - bw / 2), y: Math.max(0, py - bh / 2), w: bw, h: bh };
       const text = await readRegion(w, img, region);
       if (!handleText(text)) {
-        el.status.textContent = Matcher.score(text, AUTOS)[0]?.score >= 4 ? "¿Es alguno de estos?" : "No la pude leer. Tocá de nuevo o sacá otra foto más cerca.";
+        el.status.textContent = Matcher.score(text, VISIBLES)[0]?.score >= 4 ? "¿Es alguno de estos?" : "No la pude leer. Tocá de nuevo o sacá otra foto más cerca.";
       }
     };
   }

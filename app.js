@@ -3,12 +3,13 @@
   const view = document.getElementById("view");
   const back = document.getElementById("back");
   const appbarTitle = document.getElementById("appbarTitle");
-  const cars = [...AUTOS].sort((a, b) => a.etiqueta.anio - b.etiqueta.anio);
+  // Los autos con "oculto: true" quedan en la base pero no se muestran
+  const cars = AUTOS.filter((a) => !a.oculto).sort((a, b) => a.etiqueta.anio - b.etiqueta.anio);
   const byId = Object.fromEntries(cars.map((c) => [c.id, c]));
   let query = "";
   let tab = "autos"; // pestaña del inicio: autos | pilotos
-  const drivers = [...(window.PILOTOS || [])].sort((a, b) => (b.titulos.length - a.titulos.length) || a.nacimiento - b.nacimiento);
-  const driverByName = Object.fromEntries(drivers.map((d) => [Matcher.norm(d.nombre), d]));
+  const allDrivers = [...(window.PILOTOS || [])].sort((a, b) => (b.titulos.length - a.titulos.length) || a.nacimiento - b.nacimiento);
+  const driverByName = Object.fromEntries(allDrivers.map((d) => [Matcher.norm(d.nombre), d]));
   const driverOf = (name) => driverByName[Matcher.norm(name)];
   // Autos de la repisa de un piloto: primero los que dice la etiqueta, después donde figura como compañero
   const carsOf = (d) => {
@@ -17,6 +18,8 @@
     const other = cars.filter((c) => !main.includes(c) && (c.pilotos || []).some((p) => Matcher.norm(p.nombre) === n));
     return { main, other };
   };
+  // En la pestaña Pilotos solo aparecen los que tienen algún auto en la repisa
+  const drivers = allDrivers.filter((d) => { const { main, other } = carsOf(d); return main.length + other.length > 0; });
   let player = null;        // audio en curso
   let autoplayNext = false; // al llegar desde el escáner, arranca el audio solo
   const withAudio = new Set();
@@ -395,7 +398,7 @@
 
   // ---------- Ficha de piloto ----------
   function driverPage(id) {
-    const d = drivers.find((x) => x.id === id);
+    const d = allDrivers.find((x) => x.id === id);
     if (!d) { location.hash = "#/"; return; }
     back.hidden = false;
     appbarTitle.textContent = d.nombre;
