@@ -116,6 +116,8 @@
       if (!url || !el.isConnected) return;
       const t = await trimmed(url);
       if (!t || !el.isConnected) return;
+      // demasiado alargado (una palabra larga y finita): no se leería, quedan las siglas
+      if (t.ratio > 10) return;
       // logos alargados (palabras) usan un escudo más ancho para que se lean
       if (t.ratio > 1.6) el.classList.add("wide");
       const img = new Image(); img.alt = ""; img.src = t.src;
