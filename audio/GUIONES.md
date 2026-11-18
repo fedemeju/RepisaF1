@@ -23,9 +23,9 @@ Este auto ganó en su debut, y parece de otro planeta. Es el Mercedes W196, la F
 
 ## Ferrari 246 F1 · 1958 · Mike Hawthorn
 
-**Archivo:** `246f1-1958-hawthorn.mp3` ⬜ falta · ~47 s · 694 caracteres
+**Archivo:** `246f1-1958-hawthorn.mp3` ⬜ falta · ~48 s · 702 caracteres
 
-Una victoria contra cuatro. Así terminó 1958: Stirling Moss ganó cuatro carreras, Mike Hawthorn una sola… y el campeón fue Hawthorn, por un punto. Lo hizo con este auto, la Ferrari Dino 246, con el motor adelante y el nombre del hijo de Enzo Ferrari, que había muerto dos años antes. Tu modelo es el de Holanda, en Zandvoort, una carrera floja: Hawthorn terminó quinto, a una vuelta. Pero esos dos puntos valieron oro. Y hay más: en Portugal, Moss defendió a Hawthorn para que no lo descalificaran. Ese gesto de caballero le costó el título. Fue un año durísimo: murieron los dos compañeros de Hawthorn. Él se retiró apenas salió campeón, y pocos meses después murió en un accidente en la ruta.
+Una victoria contra cuatro. Así terminó 1958: Stirling Moss ganó cuatro carreras, Mike Hawthorn una sola… y el campeón fue Hawthorn, por un punto. Lo hizo con este auto, la Ferrari Dino 246, con el motor adelante y el nombre del hijo de Enzo Ferrari, que había muerto dos años antes. Tu modelo es el de Holanda, en Zandvoort: ese día Hawthorn terminó quinto, a una vuelta. Parecía poca cosa, pero esos dos puntos valieron oro. Y hay más: en Portugal, Moss defendió a Hawthorn para que no lo descalificaran. Ese gesto de caballero le costó el título. Fue un año durísimo: murieron los dos compañeros de Hawthorn. Él se retiró apenas salió campeón, y pocos meses después murió en un accidente en la ruta.
 
 ---
 
@@ -55,17 +55,17 @@ Imaginate ganarle el campeonato a tu propio jefe. Eso hizo Denis Hulme en 1967 c
 
 ## Honda RA300 · 1967 · John Surtees
 
-**Archivo:** `ra300-1967-surtees.mp3` ⬜ falta · ~43 s · 605 caracteres
+**Archivo:** `ra300-1967-surtees.mp3` ⬜ falta · ~44 s · 623 caracteres
 
-Este auto se armó en unas pocas semanas y ganó en su primera carrera. Es el Honda RA300 de 1967. El motor V12 japonés era potente pero pesado, y John Surtees, el piloto, convenció a Honda de hacer el chasis en Inglaterra con la fábrica Lola, usando la base de un auto de Indianápolis. Los mecánicos lo bautizaron Hondola. Lo estrenaron en Monza, y la carrera fue una locura: en la última vuelta Surtees y Jack Brabham llegaron juntos a la última curva, y Surtees ganó por dos décimas. Fue la segunda victoria de Honda en la Fórmula 1. La tercera tardó casi cuarenta años: llegó en 2006, con Jenson Button.
+Este auto se armó en unas pocas semanas y ganó en su primera carrera. Es el Honda RA300 de 1967. El motor V12 japonés era potente pero pesado, y John Surtees, el piloto, convenció a Honda de hacer el chasis en Inglaterra con la fábrica Lola, usando la base de un auto de Indianápolis. Los mecánicos lo bautizaron Hondola. Lo estrenaron en Monza, y la carrera fue una locura: en la última vuelta Surtees y Jack Brabham llegaron juntos a la última curva, y Surtees ganó por dos décimas. Fue la segunda victoria de Honda con equipo propio en la Fórmula 1. La tercera tardó casi cuarenta años: llegó en 2006, con Jenson Button.
 
 ---
 
 ## BRM P153 · 1970 · Pedro Rodríguez
 
-**Archivo:** `p153-1970-rodriguez.mp3` ⬜ falta · ~45 s · 640 caracteres
+**Archivo:** `p153-1970-rodriguez.mp3` ⬜ falta · ~44 s · 636 caracteres
 
-El circuito más rápido del mundo y un mexicano que no levantaba el pie. Este es el BRM P153, y tu modelo es el del Gran Premio de Bélgica de 1970. Spa, en esa época, tenía catorce kilómetros entre bosques y pueblos, a fondo casi todo el tiempo. Pedro Rodríguez se tiró a pelear con Chris Amon vuelta tras vuelta, y le ganó por un segundo, a un promedio de casi doscientos cuarenta y dos kilómetros por hora. Fue la primera victoria de BRM en cuatro años. Pedro y su hermano Ricardo fueron los primeros ídolos mexicanos del automovilismo, y los dos murieron corriendo. Por ellos, el autódromo de Ciudad de México se llama Hermanos Rodríguez.
+El circuito más rápido del mundo y un mexicano que no levantaba el pie. Este es el BRM P153, y tu modelo es el del Gran Premio de Bélgica de 1970. Spa, en esa época, tenía catorce kilómetros entre bosques y pueblos, a fondo casi todo el tiempo. Pedro Rodríguez se tiró a pelear con Chris Amon vuelta tras vuelta, y le ganó por un segundo, a un promedio de más de doscientos cuarenta kilómetros por hora. Fue la primera victoria de BRM en cuatro años. Pedro y su hermano Ricardo fueron los primeros ídolos mexicanos del automovilismo, y los dos murieron corriendo. Por ellos, el autódromo de Ciudad de México se llama Hermanos Rodríguez.
 
 ---
 
@@ -159,17 +159,17 @@ Una sola carrera, una sola victoria. Este es el Brabham BT46B, el auto aspirador
 
 ## Ligier JS11 · 1979 · Jacques Laffite
 
-**Archivo:** `js11-1979-laffite.mp3` ⬜ falta · ~43 s · 659 caracteres
+**Archivo:** `js11-1979-laffite.mp3` ⬜ falta · ~45 s · 680 caracteres
 
-Enero de 1979, Autódromo de Buenos Aires. La primera carrera del año la gana este auto: el Ligier JS11, azul francés, con Jacques Laffite. Largó desde la pole, y dos semanas después volvió a ganar en Brasil. Parecía imbatible. ¿El secreto? El efecto suelo, que el Lotus 79 había inventado el año anterior, pero mejor hecho. El diseñador era Gérard Ducarouge, el mismo que años después haría el Lotus de la primera victoria de Ayrton Senna. Su compañero, Patrick Depailler, ganó en España. Pero los rivales aprendieron rápido, y Laffite no volvió a ganar ese año. Terminó cuarto. Igual, su nombre quedó para siempre en la historia del Gran Premio de Argentina.
+Enero de 1979, Autódromo de Buenos Aires. La primera carrera del año la gana este auto: el Ligier JS11, azul francés, con Jacques Laffite. Largó desde la pole, y dos semanas después volvió a ganar en Brasil. Parecía imbatible. ¿El secreto? El efecto suelo, el mismo truco con el que el Lotus 79 había arrasado el año anterior… pero mejor hecho. El diseñador era Gérard Ducarouge, el mismo que años después haría el Lotus de la primera victoria de Ayrton Senna. Su compañero, Patrick Depailler, ganó en España. Pero los rivales aprendieron rápido, y Laffite no volvió a ganar ese año. Terminó cuarto. Igual, su nombre quedó para siempre en la historia del Gran Premio de Argentina.
 
 ---
 
 ## Alfa Romeo 177 · 1979 · Bruno Giacomelli
 
-**Archivo:** `177-1979-giacomelli.mp3` ⬜ falta · ~44 s · 608 caracteres
+**Archivo:** `177-1979-giacomelli.mp3` ⬜ falta · ~44 s · 611 caracteres
 
-Alfa Romeo fue el primer campeón de la Fórmula 1: ganó los Mundiales de 1950 y 1951, el segundo con Juan Manuel Fangio. Después se fue. Casi treinta años más tarde volvió con equipo propio, y este fue el auto del regreso: el Alfa Romeo 177. Lo llamaron así porque el proyecto había arrancado en 1977. El motor era un doce cilindros chato, el mismo que Alfa le daba a Brabham, el del famoso auto aspiradora de Niki Lauda. Debutó en Bélgica en 1979, manejado por un joven italiano, Bruno Giacomelli. No ganó nada: era pesado y llegó tarde. Pero abrió la puerta a la segunda etapa de Alfa Romeo en la Fórmula 1.
+Los dos primeros Mundiales de la Fórmula 1, en 1950 y 1951, se ganaron con Alfa Romeo: el segundo, con Juan Manuel Fangio. Después se fue. Casi treinta años más tarde volvió con equipo propio, y este fue el auto del regreso: el Alfa Romeo 177. Lo llamaron así porque el proyecto había arrancado en 1977. El motor era un doce cilindros chato, el mismo que Alfa le daba a Brabham, el del famoso auto aspiradora de Niki Lauda. Debutó en Bélgica en 1979, manejado por un joven italiano, Bruno Giacomelli. No ganó nada: era pesado y llegó tarde. Pero abrió la puerta a la segunda etapa de Alfa Romeo en la Fórmula 1.
 
 ---
 
@@ -207,9 +207,9 @@ Esta historia nos duele un poco a los argentinos. 1981, última carrera en Las V
 
 ## Tyrrell 011 · 1982 · Michele Alboreto
 
-**Archivo:** `011-1982-alboreto.mp3` ⬜ falta · ~45 s · 649 caracteres
+**Archivo:** `011-1982-alboreto.mp3` ⬜ falta · ~45 s · 653 caracteres
 
-1982 fue el año más loco de la Fórmula 1: once ganadores distintos en dieciséis carreras. Y el último de ellos lo consiguió con este auto, el Tyrrell 011. Michele Alboreto, un italiano joven y elegante, ganó la última carrera del año, en Las Vegas: su primera victoria. Enzo Ferrari se fijó en él y lo llevó a Ferrari. Pero este auto tiene otro récord escondido: al año siguiente, en Detroit, Alboreto volvió a ganar con él. Fue la victoria número ciento cincuenta y cinco del motor Ford Cosworth, el motor más ganador de la historia, que había debutado en 1967. Y fue la última, porque llegaban los turbo. También fue la última victoria de Tyrrell.
+1982 fue el año más loco de la Fórmula 1: once ganadores distintos en dieciséis carreras. Y el último de ellos lo consiguió con este auto, el Tyrrell 011. Michele Alboreto, un italiano joven y elegante, ganó la última carrera del año, en Las Vegas: su primera victoria. Enzo Ferrari se fijó en él y lo llevó a Ferrari. Pero este auto tiene otro récord escondido: al año siguiente, en Detroit, Alboreto volvió a ganar con él. Fue la victoria número ciento cincuenta y cinco del motor Ford Cosworth, uno de los más ganadores de la historia, que había debutado en 1967. Y fue la última, porque llegaban los turbo. También fue la última victoria de Tyrrell.
 
 ---
 
@@ -239,25 +239,9 @@ Este es el auto con el que el mundo conoció a Ayrton Senna. Toleman era un equi
 
 ## Lotus 97T · 1985 · Ayrton Senna
 
-**Archivo:** `97t-1985-senna.mp3` ⬜ falta · ~42 s · 579 caracteres
+**Archivo:** `97t-1985-senna.mp3` ⬜ falta · ~42 s · 581 caracteres
 
-Estoril, Portugal, 21 de abril de 1985. Llueve tanto que los autos parecen lanchas. En la pole, por primera vez, está un brasileño de veinticinco años con este Lotus negro y dorado: Ayrton Senna. Sale primero y no lo ve nadie más. Mientras los demás trompean, él va cada vez más rápido. Llega con casi un minuto de ventaja y le saca una vuelta a todos, menos al segundo. Primera pole y primera victoria de Senna en la Fórmula 1, en su segundo año. Ese día el mundo entendió que con lluvia había un piloto distinto a todos. Este Lotus 97T es, para muchos, donde empezó la leyenda.
-
----
-
-## McLaren MP4/4 · 1988 · Ayrton Senna
-
-**Archivo:** `mp4-4-1988-senna.mp3` ⬜ falta · ~45 s · 630 caracteres
-
-Quince de dieciséis. Esas son las carreras que ganó este auto en 1988: el McLaren MP4/4, para muchos el más dominante de la historia. Tenía un chasis tan bajo que el piloto iba casi acostado, el motor turbo de Honda… y a los dos mejores pilotos del mundo en el mismo equipo: Ayrton Senna y Alain Prost. La única carrera que se le escapó fue Monza: a dos vueltas del final, Senna chocó con un rezagado y Ferrari hizo un uno-dos, semanas después de la muerte de Enzo Ferrari. Y un dato que pocos saben: ese año Prost sumó más puntos que Senna. Pero solo contaban los once mejores resultados… y así Senna fue campeón por primera vez.
-
----
-
-## Williams FW14B · 1992 · Nigel Mansell
-
-**Archivo:** `fw14b-1992-mansell.mp3` ⬜ falta · ~42 s · 659 caracteres
-
-Este auto era tan avanzado que terminaron prohibiendo su tecnología. Es el Williams FW14B de 1992. Tenía suspensión activa: computadoras que mantenían el auto siempre a la altura perfecta. Además, control de tracción y caja semiautomática, cuando los rivales apenas lo estaban probando. Lo diseñó Adrian Newey, el mismo que años después haría los Red Bull campeones. Nigel Mansell, el León, ganó las primeras cinco carreras del año y fue campeón en agosto, con cinco fechas por delante. Era su primer título, después de años de quedarse cerca. ¿Y qué hizo al año siguiente? Se fue a correr a Estados Unidos… y también fue campeón ahí, en su primera temporada.
+Estoril, Portugal, 21 de abril de 1985. Llueve tanto que los autos parecen lanchas. En la pole, por primera vez, está un brasileño de veinticinco años con este Lotus negro y dorado: Ayrton Senna. Sale primero y no lo ve nadie más. Mientras los demás trompean, él va cada vez más rápido. Llega con más de un minuto de ventaja y le saca una vuelta a todos, menos al segundo. Primera pole y primera victoria de Senna en la Fórmula 1, en su segundo año. Ese día el mundo entendió que con lluvia había un piloto distinto a todos. Este Lotus 97T es, para muchos, donde empezó la leyenda.
 
 ---
 
@@ -287,9 +271,9 @@ Para muchos, este es el auto más avanzado que corrió en la Fórmula 1. Es el W
 
 ## Williams FW19 · 1997 · Jacques Villeneuve
 
-**Archivo:** `fw19-1997-villeneuve.mp3` ⬜ falta · ~43 s · 644 caracteres
+**Archivo:** `fw19-1997-villeneuve.mp3` ⬜ falta · ~42 s · 654 caracteres
 
-Jerez, España, última carrera de 1997. Michael Schumacher va primero en el campeonato, un punto adelante de Jacques Villeneuve y este Williams FW19. A mitad de carrera, Villeneuve se le tira por adentro en una curva… y Schumacher le cierra la puerta a propósito. Chocan. Pero el que se queda en la leca es Schumacher; Villeneuve sigue, con el auto tocado, y termina tercero. Campeón del mundo. Después la FIA hizo algo inédito: le borró a Schumacher todos los puntos del año. Villeneuve era hijo de Gilles, el ídolo de Ferrari, y ya había ganado Indianápolis. Ese año, además, ganó el Gran Premio de Argentina. Fue el último título de Williams.
+Jerez, España, última carrera de 1997. Michael Schumacher va primero en el campeonato, un punto adelante de Jacques Villeneuve y este Williams FW19. Faltando veinte vueltas, Villeneuve se le tira por adentro en una curva… y Schumacher le cierra la puerta a propósito. Chocan. Pero el que queda varado en la grava es Schumacher; Villeneuve sigue, con el auto tocado, y termina tercero. Campeón del mundo. Después la FIA hizo algo inédito: le borró a Schumacher todos los puntos del año. Villeneuve era hijo de Gilles, el ídolo de Ferrari, y ya había ganado Indianápolis. Ese año, además, ganó el Gran Premio de Argentina. Fue el último título de Williams.
 
 ---
 
@@ -367,17 +351,17 @@ Cinco años seguidos ganó Michael Schumacher. Hasta que llegó este auto. Es el
 
 ## Honda RA106 · 2006 · Jenson Button
 
-**Archivo:** `ra106-2006-button.mp3` ⬜ falta · ~40 s · 605 caracteres
+**Archivo:** `ra106-2006-button.mp3` ⬜ falta · ~40 s · 604 caracteres
 
-Ciento trece carreras sin ganar. Eso cargaba Jenson Button cuando llegó a Hungría en 2006 con este Honda RA106. Encima largaba decimocuarto, castigado por cambiar el motor. Pero llovió, paró, volvió a llover, y Button, que manejaba suave como pocos sobre piso mojado, fue pasando a todos. Ganó. Su primera victoria. Y para Honda fue algo histórico: la primera victoria con equipo propio desde 1967, cuando John Surtees ganó en Monza con el RA300. Treinta y nueve años después. Lo mejor llegó más tarde: Honda se fue a fines de 2008, el equipo pasó a llamarse Brawn, y en 2009 Button fue campeón del mundo.
+Ciento doce carreras sin ganar. Eso cargaba Jenson Button cuando llegó a Hungría en 2006 con este Honda RA106. Encima largaba decimocuarto, castigado por cambiar el motor. Pero llovió, paró, volvió a llover, y Button, que manejaba suave como pocos sobre piso mojado, fue pasando a todos. Ganó. Su primera victoria. Y para Honda fue algo histórico: la primera victoria con equipo propio desde 1967, cuando John Surtees ganó en Monza con el RA300. Treinta y nueve años después. Lo mejor llegó más tarde: Honda se fue a fines de 2008, el equipo pasó a llamarse Brawn, y en 2009 Button fue campeón del mundo.
 
 ---
 
 ## Ferrari F2007 · 2007 · Kimi Raikkonen
 
-**Archivo:** `f2007-2007-raikkonen.mp3` ⬜ falta · ~41 s · 626 caracteres
+**Archivo:** `f2007-2007-raikkonen.mp3` ⬜ falta · ~41 s · 616 caracteres
 
-La primera carrera de Ferrari sin Michael Schumacher. Australia, 2007. El elegido para reemplazarlo era un finlandés que casi no hablaba: Kimi Räikkönen, el Iceman. Se subió a este auto, la F2007, hizo la pole, ganó la carrera y marcó la vuelta más rápida. Todo en su debut. Pero lo mejor llegó al final del año. A dos carreras del cierre, Räikkönen estaba diecisiete puntos detrás de Lewis Hamilton, que peleaba con su compañero Fernando Alonso. Hamilton tuvo problemas, Alonso no alcanzó, y Kimi ganó las dos últimas. Campeón por un punto. Y cuando le preguntaron qué sentía, contestó con su cara de siempre: casi sin gesto.
+La primera carrera de Ferrari sin Michael Schumacher. Australia, 2007. El elegido para reemplazarlo era un finlandés que casi no hablaba: Kimi Räikkönen, el Iceman. Se subió a este auto, la F2007, hizo la pole, ganó la carrera y marcó la vuelta más rápida. Todo en su debut. Pero lo mejor llegó al final del año. A dos carreras del cierre, Räikkönen estaba diecisiete puntos detrás de Lewis Hamilton, que peleaba con su compañero Fernando Alonso. Hamilton tuvo problemas, Alonso no alcanzó, y Kimi ganó las dos últimas. Campeón por un punto. ¿Y cómo lo festejó? Como festejaba todo el Iceman: casi sin mover la cara.
 
 ---
 
@@ -439,9 +423,9 @@ Las rayas de Martini volvieron a la Fórmula 1, y en un Williams. Este es el FW3
 
 ## Mercedes F1 W05 Hybrid · 2014 · Lewis Hamilton
 
-**Archivo:** `w05-2014-hamilton.mp3` ⬜ falta · ~41 s · 644 caracteres
+**Archivo:** `w05-2014-hamilton.mp3` ⬜ falta · ~41 s · 641 caracteres
 
-Acá empezó el imperio. En 2014 la Fórmula 1 cambió los motores: llegaron los V6 turbo híbridos, con baterías y energía recuperada. Mercedes se preparó como nadie, y el resultado fue este auto, el W05. Ganó dieciséis de las diecinueve carreras. El secreto estaba escondido adentro: el turbo partido en dos, la turbina de un lado del motor y el compresor del otro. Como nadie más podía seguirlos, la pelea fue entre casa: Lewis Hamilton contra Nico Rosberg, amigos de la infancia en el karting que terminaron sin hablarse. Hamilton ganó once carreras y su segundo título. Mercedes siguió ganando el campeonato de constructores ocho años seguidos.
+Acá empezó el imperio. En 2014 la Fórmula 1 cambió los motores: llegaron los V6 turbo híbridos, con baterías y energía recuperada. Mercedes se preparó como nadie, y el resultado fue este auto, el W05. Ganó dieciséis de las diecinueve carreras. El secreto estaba escondido adentro: el turbo partido en dos, la turbina de un lado del motor y el compresor del otro. Como nadie más podía seguirlos, la pelea fue en casa: Lewis Hamilton contra Nico Rosberg, amigos de la infancia en el karting que terminaron sin hablarse. Hamilton ganó once carreras y su segundo título. Mercedes siguió ganando el campeonato de constructores ocho años seguidos.
 
 ---
 
@@ -455,9 +439,9 @@ Sepang, Malasia, 2015. Sebastian Vettel corre su segunda carrera con Ferrari, el
 
 ## Ferrari SF70H · 2017 · Sebastian Vettel
 
-**Archivo:** `sf70h-2017-vettel.mp3` ⬜ falta · ~44 s · 666 caracteres
+**Archivo:** `sf70h-2017-vettel.mp3` ⬜ falta · ~45 s · 684 caracteres
 
-Por fin una Ferrari que le hacía frente a Mercedes. Esta es la SF70H, de 2017: el setenta es por los setenta años de Ferrari. Ese año cambiaron las reglas, los autos se hicieron más anchos y más rápidos, y Ferrari acertó. Sebastian Vettel ganó la primera carrera, en Australia, y durante media temporada fue líder del campeonato contra Lewis Hamilton. Ganó cinco carreras, incluida Mónaco con un uno-dos. Pero en Singapur todo se vino abajo: Vettel largó desde la pole, se cerró hacia su compañero Räikkönen y Max Verstappen, y los tres chocaron en la largada. Desde ahí Hamilton se escapó. Vettel terminó segundo, el más cerca que estuvo de ser campeón con Ferrari.
+Por fin una Ferrari que le hacía frente a Mercedes. Esta es la SF70H, de 2017: el setenta es por los setenta años de Ferrari. Ese año cambiaron las reglas, los autos se hicieron más anchos y más rápidos, y Ferrari acertó. Sebastian Vettel ganó la primera carrera, en Australia, y durante media temporada fue líder del campeonato contra Lewis Hamilton. Ganó cinco carreras, incluida Mónaco con un uno-dos. Pero en Singapur todo se vino abajo: Vettel largó desde la pole y, en los primeros metros, se tocó con su compañero Räikkönen y con Max Verstappen: los tres quedaron afuera. Desde ahí Hamilton se escapó. Vettel terminó segundo, el más cerca que estuvo de ser campeón con Ferrari.
 
 ---
 
@@ -477,4 +461,4 @@ Quince victorias en un año. Ese récord de la Fórmula 1 lo puso este auto: el 
 
 ---
 
-Total: 59 textos, 37746 caracteres.
+Total: 57 textos, 36523 caracteres.

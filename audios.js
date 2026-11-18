@@ -33,7 +33,8 @@ require("./data/autos.js");
 // Opcional: limitar a algunos autos →  node audios.js guiones rb18-2022-verstappen w196-1955-fangio
 const rehacer = process.argv.includes("--rehacer");
 const soloIds = process.argv.slice(3).filter((x) => !x.startsWith("--"));
-const AUTOS = soloIds.length ? window.AUTOS.filter((a) => soloIds.includes(a.id)) : window.AUTOS;
+// Los autos con oculto: true no se muestran en la app: no se les hace audio (salvo que se pidan por id)
+const AUTOS = soloIds.length ? window.AUTOS.filter((a) => soloIds.includes(a.id)) : window.AUTOS.filter((a) => !a.oculto);
 const dir = path.join(__dirname, "audio");
 fs.mkdirSync(dir, { recursive: true });
 
