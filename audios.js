@@ -13,6 +13,17 @@
 //        ELEVEN_VOICE_ID  el id de la voz elegida (Voices → la voz → "Copy voice ID")
 //      Los mp3 que ya existen no se vuelven a generar (no gasta créditos de más).
 //      Para regenerar uno, borrá su mp3 y corré de nuevo.
+//
+//   node audios.js azure
+//      Lo mismo, pero con las voces argentinas de Microsoft (Azure): Tomás por defecto.
+//      Gratis hasta 500.000 caracteres por mes (todos los relatos suman unos 40.000).
+//      Necesita dos variables de entorno (no se guardan en ningún archivo):
+//        AZURE_SPEECH_KEY     la clave del recurso de Voz (Azure → tu recurso → "Claves y punto de conexión")
+//        AZURE_SPEECH_REGION  la región del recurso, ej. brazilsouth o eastus
+//      Opcionales: AZURE_VOICE (es-AR-TomasNeural, o es-AR-ElenaNeural para la voz de mujer)
+//                  AZURE_RATE  velocidad, ej. +5% o -5% (por defecto 0%)
+//      Para probar con un solo auto: node audios.js azure rb18-2022-verstappen
+//      Con --rehacer también reemplaza los mp3 que ya existen (ej. los hechos con otra voz).
 
 const fs = require("fs");
 const path = require("path");
@@ -20,7 +31,8 @@ const path = require("path");
 global.window = {};
 require("./data/autos.js");
 // Opcional: limitar a algunos autos →  node audios.js guiones rb18-2022-verstappen w196-1955-fangio
-const soloIds = process.argv.slice(3);
+const rehacer = process.argv.includes("--rehacer");
+const soloIds = process.argv.slice(3).filter((x) => !x.startsWith("--"));
 const AUTOS = soloIds.length ? window.AUTOS.filter((a) => soloIds.includes(a.id)) : window.AUTOS;
 const dir = path.join(__dirname, "audio");
 fs.mkdirSync(dir, { recursive: true });
@@ -73,7 +85,54 @@ async function generar() {
   guiones();
 }
 
+const xml = (t) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
+const esperar = (ms) => new Promise((r) => setTimeout(r, ms));
+
+async function azure() {
+  const key = process.env.AZURE_SPEECH_KEY, region = (process.env.AZURE_SPEECH_REGION || "").trim();
+  const voz = process.env.AZURE_VOICE || "es-AR-TomasNeural", rate = process.env.AZURE_RATE || "0%";
+  if (!key || !region) {
+    console.log("Faltan AZURE_SPEECH_KEY y/o AZURE_SPEECH_REGION. Mirá las instrucciones al principio de este archivo.");
+    process.exit(1);
+  }
+  const pendientes = AUTOS.filter((a) => rehacer || !fs.existsSync(path.join(dir, path.basename(a.audio))));
+  const chars = pendientes.reduce((n, a) => n + a.relato.length, 0);
+  console.log(`${pendientes.length} audios por generar con ${voz} (${chars} caracteres).`);
+  for (const a of pendientes) {
+    const file = path.join(dir, path.basename(a.audio));
+    process.stdout.write(`  ${path.basename(file)} … `);
+    const ssml = `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="es-AR">` +
+      `<voice name="${voz}"><prosody rate="${rate}">${xml(a.relato)}</prosody></voice></speak>`;
+    let res;
+    for (let intento = 0; intento < 4; intento++) {
+      res = await fetch(`https://${region}.tts.speech.microsoft.com/cognitiveservices/v1`, {
+        method: "POST",
+        headers: {
+          "Ocp-Apim-Subscription-Key": key,
+          "Content-Type": "application/ssml+xml",
+          "X-Microsoft-OutputFormat": "audio-48khz-96kbitrate-mono-mp3",
+          "User-Agent": "repisa-f1"
+        },
+        body: ssml
+      });
+      if (res.status !== 429) break;
+      process.stdout.write("(esperando el límite por minuto) ");
+      await esperar(20000); // el plan gratis acepta unos 20 pedidos por minuto
+    }
+    if (!res.ok) {
+      console.log(`error ${res.status}: ${(await res.text()).slice(0, 200) || "(sin detalle)"}`);
+      if (res.status === 401 || res.status === 403) { console.log("Revisá la clave y que la región sea la del recurso."); break; }
+      continue;
+    }
+    fs.writeFileSync(file, Buffer.from(await res.arrayBuffer()));
+    console.log("listo");
+    await esperar(3200);
+  }
+  guiones();
+}
+
 const cmd = process.argv[2];
 if (cmd === "guiones") guiones();
 else if (cmd === "generar") generar();
-else console.log("Uso: node audios.js guiones   |   node audios.js generar");
+else if (cmd === "azure") azure();
+else console.log("Uso: node audios.js guiones   |   node audios.js generar   |   node audios.js azure");

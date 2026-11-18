@@ -38,6 +38,10 @@ carpeta y subí el número de `CACHE` en `sw.js` (ej. `repisa-f1-v2`).
 2. Generá la voz con la herramienta que prefieras (ElevenLabs, etc.), en mp3.
 3. Guardalo en `audio/` con el nombre exacto del campo `audio` (ej. `audio/rb18-2022-verstappen.mp3`).
 
+**Con la voz argentina de Microsoft (Tomás), todo de una:** con las variables `AZURE_SPEECH_KEY` y
+`AZURE_SPEECH_REGION` cargadas, `node audios.js azure` genera todos los mp3 que falten (gratis hasta
+500.000 caracteres por mes). Detalles al principio de `audios.js`.
+
 Si un auto todavía no tiene mp3, el botón de play lee el relato con la voz del celular.
 Al escanear un auto, el audio arranca solo.
 
