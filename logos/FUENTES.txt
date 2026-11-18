@@ -7,3 +7,16 @@ toleman.webp	provisto por el usuario
 hesketh.png	provisto por el usuario
 ferrari.png	provisto por el usuario
 brawn.png	provisto por el usuario
+arrows.png	provisto por el usuario
+benetton.png	provisto por el usuario
+bmw-sauber.jpg	provisto por el usuario
+brabham.png	provisto por el usuario
+brm.jpg	provisto por el usuario
+honda.png	provisto por el usuario
+jordan.png	provisto por el usuario
+alfa-romeo.jpg	provisto por el usuario
+lotus.jpg	provisto por el usuario
+march.jpg	provisto por el usuario
+sauber.png	provisto por el usuario
+toro-rosso.png	provisto por el usuario
+tyrrell.png	provisto por el usuario
