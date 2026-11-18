@@ -2916,5 +2916,93 @@ window.AUTOS = [
       { id: "sf15t-2015-vettel", texto: "La primera victoria de Vettel con Ferrari, en Malasia 2015." },
       { id: "w11-2020-hamilton", texto: "Hamilton, el rival de esa pelea, después llegó a los siete títulos." }
     ]
+  },
+
+  {
+    id: "191-1991-schumacher",
+    etiqueta: {
+      equipo: "Jordan",
+      chasis: "191",
+      anio: 1991,
+      piloto: "Michael Schumacher",
+      carrera: "1991 Belgian Grand Prix"
+    },
+    alias: [
+      "JORDAN 191",
+      "JORDAN191",
+      "7UP"
+    ],
+    color: "#0f8a3c",
+    acento: "#1d4e9e",
+    numero: 32,
+    ficha: [
+      [
+        "Motor",
+        "Ford HB (Cosworth) · 3.5 L V8, como cliente"
+      ],
+      [
+        "Diseño",
+        "Gary Anderson"
+      ],
+      [
+        "Neumáticos",
+        "Goodyear"
+      ],
+      [
+        "Patrocinio",
+        "7UP (el verde) y Fujifilm"
+      ]
+    ],
+    pilotos: [
+      {
+        nombre: "Michael Schumacher",
+        numero: 32,
+        resultado: "Debut en Spa: 7.º en la clasificación, abandonó en la primera vuelta"
+      },
+      {
+        nombre: "Bertrand Gachot",
+        numero: 32,
+        resultado: "Titular hasta agosto, cuando fue preso en Londres"
+      },
+      {
+        nombre: "Andrea de Cesaris",
+        numero: 33,
+        resultado: "Mejor resultado: 4.º en Canadá y en México"
+      }
+    ],
+    temporada: {
+      carreras: 16,
+      victorias: 0,
+      poles: 0,
+      constructores: "5.º — 13 pts (en su primer año)",
+      pilotos: "Schumacher corrió una sola carrera con este auto"
+    },
+    titulos: [],
+    carreraModelo: {
+      nombre: "GP de Bélgica 1991 · Spa-Francorchamps",
+      texto: "La única carrera de Schumacher con Jordan. Llegó como reemplazo de último momento, clasificó séptimo con un auto de un equipo nuevo y sorprendió a todo el paddock. En carrera se le rompió el embrague en la primera vuelta. En esa misma carrera, Andrea de Cesaris iba segundo con el otro Jordan hasta que el motor dijo basta a pocas vueltas del final."
+    },
+    importancia: [
+      "El auto del debut de Michael Schumacher en la Fórmula 1.",
+      "Primer año de Jordan en la F1: terminó 5.º entre los constructores, una gran temporada para un equipo nuevo.",
+      "Para muchos, uno de los autos más lindos de la historia, con su verde de 7UP."
+    ],
+    curiosidades: [
+      "Schumacher dijo que conocía Spa, pero nunca había corrido ahí: aprendió el circuito dando vueltas en bicicleta.",
+      "Después de esa carrera, Benetton lo contrató de inmediato y el caso terminó en los tribunales.",
+      "Su lugar en Jordan lo ocupó Roberto Moreno, que hizo el camino inverso desde Benetton."
+    ],
+    relato: "Una sola carrera, y cambió la historia de la Fórmula 1. Agosto de 1991: el piloto de Jordan, Bertrand Gachot, termina preso en Londres por rociar con gas a un taxista. Eddie Jordan necesita un reemplazo urgente para Spa, y aparece un alemán de veintidós años: Michael Schumacher. Le preguntan si conoce el circuito y dice que sí. Mentira: nunca había corrido ahí, y lo aprendió dando vueltas en bicicleta. En la clasificación, con este Jordan verde, termina séptimo y deja a todos con la boca abierta. En la carrera abandona en la primera vuelta. No importó: antes de la carrera siguiente, Benetton ya se lo había llevado. Así empezó la era Schumacher.",
+    audio: "audio/191-1991-schumacher.mp3",
+    conexiones: [
+      {
+        id: "jordan199-1999-frentzen",
+        texto: "Ocho años después, Jordan vivió su mejor temporada con Frentzen."
+      },
+      {
+        id: "b194-1994-schumacher",
+        texto: "Tres años después de este debut, Schumacher fue campeón por primera vez."
+      }
+    ]
   }
 ];
