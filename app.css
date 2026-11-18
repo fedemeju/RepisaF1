@@ -53,6 +53,7 @@ h1, h2, h3 { font-family: var(--display); margin: 0; }
   background: conic-gradient(#fff 25%, #111 0 50%, #fff 0 75%, #111 0) 0 0 / 8px 8px;
   transform: skewX(-12deg);
 }
+.brand-logo { height: 15px; width: auto; display: block; flex: none; }
 .appbar-title { margin-left: auto; color: var(--muted); font-size: 14px; font-family: var(--display); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 main { max-width: 920px; margin: 0 auto; padding: 16px 16px calc(110px + var(--safe-b)); animation: in .35s var(--ease); }
@@ -163,6 +164,20 @@ main { max-width: 920px; margin: 0 auto; padding: 16px 16px calc(110px + var(--s
 .hero.light { color: #101014; }
 .hero .stripes { position: absolute; inset: 0; background: repeating-linear-gradient(115deg, transparent 0 22px, rgba(255, 255, 255, .04) 22px 23px); pointer-events: none; }
 .hero .bignum { position: absolute; right: 8px; top: -8px; font-family: var(--display); font-weight: 900; font-style: italic; font-size: 150px; line-height: 1; color: transparent; -webkit-text-stroke: 2px #fff; opacity: .22; pointer-events: none; }
+/* Foto del auto: de fondo en toda la portada; el color del equipo la tapa del lado del texto */
+.hero.has-photo { min-height: 320px; }
+.hero .car-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% 40%; pointer-events: none; }
+.hero .photo-fade {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg, var(--c1) 0%, color-mix(in srgb, var(--c1) 80%, transparent) 30%, color-mix(in srgb, var(--c1) 15%, transparent) 70%, transparent 100%),
+    linear-gradient(0deg, color-mix(in srgb, var(--c1) 70%, transparent) 0%, transparent 45%);
+}
+.hero.has-photo > :not(.car-photo):not(.photo-fade):not(.stripes) { position: relative; z-index: 1; }
+.hero.has-photo:not(.light) h1, .hero.has-photo:not(.light) .sub { text-shadow: 0 2px 14px rgba(0, 0, 0, .55); }
+.hero.has-photo .label-plate { z-index: 1; }
+@media (min-width: 700px) { .hero.has-photo { min-height: 360px; } }
+.hero .photo-credit { position: absolute !important; right: 8px; bottom: 6px; z-index: 1; max-width: 60%; font-size: 9px; line-height: 1.2; color: rgba(255, 255, 255, .75); text-shadow: 0 1px 2px #000; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .hero.light .bignum { -webkit-text-stroke-color: #000; opacity: .14; }
 .hero .top { position: relative; display: flex; align-items: center; gap: 12px; }
 .hero .eq { font-family: var(--display); font-weight: 700; font-size: 14px; letter-spacing: .14em; text-transform: uppercase; opacity: .9; }
@@ -187,6 +202,9 @@ main { max-width: 920px; margin: 0 auto; padding: 16px 16px calc(110px + var(--s
 }
 .play:active { transform: scale(.94); }
 .player .info { flex: 1; min-width: 0; }
+.player.off .play { background: var(--surface-3); box-shadow: none; color: var(--faint); cursor: default; }
+.player.off b { color: var(--muted); }
+.player.off .progress { display: none; }
 .player b { display: block; font-family: var(--display); font-weight: 700; font-size: 17px; line-height: 1.2; }
 .player small { color: var(--muted); font-size: 13px; }
 .player .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
@@ -214,6 +232,54 @@ main { max-width: 920px; margin: 0 auto; padding: 16px 16px calc(110px + var(--s
 .fact { display: flex; justify-content: space-between; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 12px 14px; }
 .fact small { color: var(--muted); font-size: 13px; }
 .fact b { font-family: var(--display); font-weight: 700; font-size: 16px; text-align: right; }
+
+/* ============ Tarjeta de campeón ============ */
+.trophy-card {
+  position: relative; overflow: hidden; display: flex; gap: 16px; align-items: flex-start;
+  margin-top: 16px; padding: 18px; border-radius: var(--r-lg);
+  background:
+    radial-gradient(260px 160px at 0% 0%, rgba(255, 215, 110, .35), transparent 70%),
+    linear-gradient(135deg, #3a2c08 0%, #1f1806 60%, #15120a 100%);
+  border: 1px solid rgba(227, 179, 65, .45);
+  box-shadow: inset 0 1px 0 rgba(255, 230, 160, .18), 0 10px 30px rgba(0, 0, 0, .35);
+}
+.trophy-card::after { content: ""; position: absolute; right: -30px; top: -30px; width: 140px; height: 140px; border-radius: 50%; border: 18px solid rgba(227, 179, 65, .07); }
+.tc-icon { flex: none; width: 64px; height: 64px; border-radius: 18px; display: grid; place-items: center; color: #2a1f05;
+  background: linear-gradient(145deg, #ffe38a, #e3b341 55%, #b8862a); box-shadow: 0 6px 18px rgba(227, 179, 65, .35), inset 0 1px 0 rgba(255, 255, 255, .6); }
+.tc-body { flex: 1; min-width: 0; position: relative; z-index: 1; }
+.tc-kicker { color: var(--gold); font-family: var(--display); font-weight: 700; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; }
+.trophy-card h2 { font-size: 22px; font-weight: 900; font-style: italic; line-height: 1.1; text-transform: uppercase; color: #fff4d6; margin: 2px 0 10px; }
+.tc-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.tc-list li { display: flex; flex-direction: column; padding: 8px 10px; border-radius: 10px; background: rgba(0, 0, 0, .25); border: 1px solid rgba(227, 179, 65, .18); }
+.tc-type { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: rgba(255, 228, 160, .75); font-weight: 600; }
+.tc-list b { font-family: var(--display); font-weight: 700; font-size: 16px; color: #fff; line-height: 1.25; }
+
+/* ============ Panel de temporada ============ */
+.season { display: grid; gap: 10px; }
+.kpi-tiles { display: grid; gap: 8px; }
+.kpi-tile { position: relative; display: flex; flex-direction: column; justify-content: flex-end; min-height: 96px; padding: 12px; border-radius: var(--r); background: var(--surface); border: 1px solid var(--line); overflow: hidden; }
+.kpi-tile b { font-family: var(--display); font-weight: 900; font-size: 34px; line-height: 1; font-variant-numeric: tabular-nums; }
+.kpi-tile small { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; margin-top: 4px; }
+.kpi-tile .kt-ic { position: absolute; top: 10px; right: 10px; color: var(--faint); }
+.kpi-tile.main { background: linear-gradient(150deg, color-mix(in srgb, var(--red) 35%, var(--surface)), var(--surface) 75%); border-color: rgba(255, 59, 48, .35); }
+.kpi-tile.main b { font-size: 46px; }
+.kpi-tile.main .kt-ic { color: var(--red-2); }
+.winrate { padding: 12px 14px; border-radius: var(--r); background: var(--surface); border: 1px solid var(--line); }
+.wr-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: 14px; color: var(--muted); }
+.wr-top span b { color: var(--text); }
+.wr-top > b { font-family: var(--display); font-weight: 900; font-size: 20px; color: var(--text); }
+.wr-bar { height: 8px; margin-top: 8px; border-radius: 999px; background: var(--surface-3); overflow: hidden; }
+.wr-bar i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--red), var(--red-2) 60%, #ff8a3d); }
+.positions { display: grid; gap: 8px; }
+.pos-card { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: var(--r); background: var(--surface); border: 1px solid var(--line); }
+.pos-card small { display: block; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+.pos-card b { display: block; font-family: var(--display); font-weight: 700; font-size: 16px; line-height: 1.3; }
+.medal { flex: none; width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; font-family: var(--display); font-weight: 900; font-size: 20px; background: var(--surface-3); color: var(--muted); }
+.medal sup { font-size: 11px; margin-left: 1px; }
+.pos-card.p1 .medal { background: linear-gradient(145deg, #ffe38a, #e3b341 55%, #b8862a); color: #2a1f05; box-shadow: 0 4px 14px rgba(227, 179, 65, .35); }
+.pos-card.p2 .medal { background: linear-gradient(145deg, #f4f4f6, #b9bcc4 60%, #8d9099); color: #1c1d22; }
+.pos-card.p3 .medal { background: linear-gradient(145deg, #f0b98a, #c77d42 60%, #8f5428); color: #2a1406; }
+.pos-card.p1 { border-color: rgba(227, 179, 65, .35); }
 
 .titles { display: grid; gap: 8px; }
 .title { display: flex; gap: 12px; align-items: center; padding: 12px 14px; border-radius: var(--r); background: linear-gradient(100deg, rgba(227, 179, 65, .16), rgba(227, 179, 65, .03)); border: 1px solid rgba(227, 179, 65, .3); }

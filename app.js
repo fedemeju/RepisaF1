@@ -38,6 +38,8 @@
 
   const ICON = {
     trophy: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg>',
+    trophyBig: '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/><path d="M10 8.5l1.3 1.2L14 7" stroke-width="1.8"/></svg>',
+    stopwatch: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="14" r="7"/><path d="M12 14l3-3M10 3h4M12 3v4"/></svg>',
     chart: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
     flag: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h12l-2 4 2 4H5"/></svg>',
     star: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.1 6-5.4-3-5.4 3 1.1-6L3.2 9.4l6.1-.8z"/></svg>',
@@ -249,87 +251,126 @@
   }
   document.getElementById("fab").onclick = startScan;
 
-  // ---------- Audio: mp3 si existe; si no, voz del celular leyendo el relato ----------
+  // ---------- Audio: solo nuestras grabaciones (mp3). Sin mp3, el reproductor queda apagado ----------
   function setupAudio(car) {
     const box = document.getElementById("audio");
     if (!box) return;
     const btn = box.querySelector(".play"), bar = box.querySelector(".progress i"), track = box.querySelector(".progress"), lbl = box.querySelector("small");
-    const setPlaying = (on) => { btn.innerHTML = on ? ICON.pause : ICON.play; btn.setAttribute("aria-label", on ? "Pausar" : "Reproducir historia"); box.classList.toggle("playing", on); state.playing = on; };
     const state = { playing: false };
-    setPlaying(false);
-
-    const audio = car.audio ? new Audio(car.audio) : null;
-    // "pending" hasta saber si el mp3 existe. Antes se decidía a los 0,6 s y en el celu,
-    // como el mp3 tarda más en cargar, terminaba hablando la voz del celular.
-    let mode = audio ? "pending" : "tts";
-    const ready = !audio ? Promise.resolve() : new Promise((res) => {
-      audio.addEventListener("loadedmetadata", res, { once: true });
-      audio.addEventListener("error", res, { once: true });
-      setTimeout(res, 10000); // conexión muy lenta: igual intentamos con el mp3
-    });
+    const setPlaying = (on) => { btn.innerHTML = on ? ICON.pause : ICON.play; btn.setAttribute("aria-label", on ? "Pausar" : "Reproducir historia"); box.classList.toggle("playing", on); state.playing = on; };
     const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
-    const ttsVoice = () => {
-      const voices = speechSynthesis.getVoices();
-      return voices.find((v) => /^es[-_](AR|419|US|MX)/i.test(v.lang)) || voices.find((v) => /^es/i.test(v.lang));
+    const unavailable = () => {
+      box.classList.add("off"); btn.disabled = true; btn.innerHTML = ICON.play;
+      lbl.textContent = "Narración próximamente";
+      player = { stop: () => {} };
+      autoplayNext = false; // que no quede pendiente para el próximo auto
     };
+    setPlaying(false);
+    if (!car.audio) return unavailable();
+
+    const audio = new Audio(car.audio);
+    audio.preload = "metadata";
+    // Esperamos a saber si el mp3 existe (en el celu con datos puede tardar unos segundos)
+    let estado = "cargando";
+    const ready = new Promise((res) => {
+      audio.addEventListener("loadedmetadata", () => { estado = "ok"; res(); }, { once: true });
+      audio.addEventListener("error", () => { estado = "falta"; unavailable(); res(); }, { once: true });
+      setTimeout(res, 10000);
+    });
+    const durLabel = () => { lbl.textContent = isFinite(audio.duration) ? `Narración · ${fmt(audio.duration)}` : "Narración"; };
+    audio.addEventListener("loadedmetadata", durLabel);
+    audio.addEventListener("durationchange", () => { if (estado === "ok") durLabel(); });
+    audio.addEventListener("timeupdate", () => {
+      if (!isFinite(audio.duration)) return;
+      bar.style.width = (audio.currentTime / audio.duration) * 100 + "%";
+      if (state.playing) lbl.textContent = `${fmt(audio.currentTime)} / ${fmt(audio.duration)}`;
+    });
+    audio.addEventListener("ended", () => { setPlaying(false); bar.style.width = "0"; durLabel(); });
+    // tocar o arrastrar la barra para adelantar
+    const seek = (ev) => {
+      if (estado !== "ok" || !isFinite(audio.duration)) return;
+      const r = track.getBoundingClientRect();
+      audio.currentTime = Math.max(0, Math.min(1, (ev.clientX - r.left) / r.width)) * audio.duration;
+    };
+    track.addEventListener("pointerdown", (ev) => { seek(ev); track.setPointerCapture(ev.pointerId); track.onpointermove = seek; });
+    track.addEventListener("pointerup", () => { track.onpointermove = null; });
+    lbl.textContent = "Cargando…";
+
     let cancelled = false;
-    const stopAll = () => {
-      cancelled = true;
-      if (audio) audio.pause();
-      if ("speechSynthesis" in window) speechSynthesis.cancel();
-      setPlaying(false);
-    };
-
-    if (audio) {
-      audio.preload = "metadata";
-      const durLabel = () => { lbl.textContent = isFinite(audio.duration) ? `Narración · ${fmt(audio.duration)}` : "Narración"; };
-      audio.addEventListener("loadedmetadata", () => { mode = "mp3"; durLabel(); });
-      audio.addEventListener("durationchange", () => { if (mode === "mp3") durLabel(); });
-      audio.addEventListener("error", () => { mode = "tts"; lbl.textContent = "Voz del celular"; });
-      audio.addEventListener("timeupdate", () => {
-        if (!isFinite(audio.duration)) return;
-        bar.style.width = (audio.currentTime / audio.duration) * 100 + "%";
-        if (state.playing) lbl.textContent = `${fmt(audio.currentTime)} / ${fmt(audio.duration)}`;
-      });
-      audio.addEventListener("ended", () => { setPlaying(false); bar.style.width = "0"; });
-      // tocar o arrastrar la barra para adelantar
-      const seek = (ev) => {
-        if (mode !== "mp3" || !isFinite(audio.duration)) return;
-        const r = track.getBoundingClientRect();
-        audio.currentTime = Math.max(0, Math.min(1, (ev.clientX - r.left) / r.width)) * audio.duration;
-      };
-      track.addEventListener("pointerdown", (ev) => { seek(ev); track.setPointerCapture(ev.pointerId); track.onpointermove = seek; });
-      track.addEventListener("pointerup", () => { track.onpointermove = null; });
-    }
-    lbl.textContent = audio ? "Cargando…" : "Voz del celular";
-
+    const stop = () => { cancelled = true; audio.pause(); setPlaying(false); };
     async function play() {
       cancelled = false;
-      if (audio && mode === "pending") { lbl.textContent = "Cargando…"; await ready; if (cancelled) return; }
-      if (audio && mode !== "tts") {
-        try { await audio.play(); mode = "mp3"; setPlaying(true); return; }
-        catch (e) { if (mode !== "tts") throw e; } // si el mp3 no existe, sigue con la voz del celu
-      }
-      return speak();
-    }
-    function speak() {
-      if (!("speechSynthesis" in window)) { lbl.textContent = "Este navegador no puede leer en voz alta"; return Promise.reject(); }
-      speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(car.relato);
-      u.lang = "es-AR"; const v = ttsVoice(); if (v) u.voice = v;
-      u.onboundary = (ev) => { bar.style.width = (ev.charIndex / car.relato.length) * 100 + "%"; };
-      u.onend = () => { setPlaying(false); bar.style.width = "0"; };
-      speechSynthesis.speak(u);
+      if (estado === "cargando") { await ready; if (cancelled) return; }
+      if (estado === "falta") return;
+      await audio.play();
       setPlaying(true);
-      return Promise.resolve();
     }
-    btn.onclick = () => (state.playing ? (audio && mode === "mp3" ? (audio.pause(), setPlaying(false)) : stopAll()) : play().catch(() => {}));
-    player = { stop: stopAll };
+    btn.onclick = () => (state.playing ? stop() : play().catch(() => {}));
+    player = { stop };
 
     if (autoplayNext) {
       autoplayNext = false;
       play().catch(() => {});
     }
+  }
+
+  // ---------- Tarjeta de campeón ----------
+  function championCard(c) {
+    const anio = c.etiqueta.anio;
+    const titles = (c.titulos || []).map((x) => {
+      const m = /Campeonato de (Pilotos|Constructores)\s+(\d{4})\s*[—–-]\s*(.+)/i.exec(x);
+      return m ? { tipo: m[1], anio: +m[2], quien: m[3].trim() } : { tipo: "", anio: null, quien: x };
+    });
+    if (!titles.length) return "";
+    const hasP = titles.some((t) => /pilotos/i.test(t.tipo) && t.anio === anio);
+    const hasC = titles.some((t) => /constructores/i.test(t.tipo) && t.anio === anio);
+    const headline = hasP && hasC ? "Campeón de pilotos y constructores" : hasP ? "Campeón del mundo" : hasC ? "Campeón de constructores" : "Títulos";
+    return `<section class="trophy-card">
+      <div class="tc-icon" aria-hidden="true">${ICON.trophyBig}</div>
+      <div class="tc-body">
+        <div class="tc-kicker">${hasP || hasC ? `Temporada ${anio}` : "Títulos"}</div>
+        <h2>${headline}</h2>
+        <ul class="tc-list">${titles.map((t) => `<li>
+          <span class="tc-type">${t.tipo ? `${esc(t.tipo)} · ${t.anio}` : ""}</span>
+          <b>${esc(t.quien)}</b></li>`).join("")}</ul>
+      </div>
+    </section>`;
+  }
+
+  // ---------- Panel de la temporada ----------
+  // Posición a partir del texto: "campeón" → 1, "subcampeón" → 2, "3.º" → 3
+  function posOf(txt) {
+    if (!txt || /no exist/i.test(txt)) return null;
+    if (/subcampe/i.test(txt)) return 2;
+    if (/campe[oó]n/i.test(txt)) return 1;
+    const m = /(\d+)\s*\.?\s*[º°]/.exec(txt);
+    return m ? +m[1] : null;
+  }
+  function seasonPanel(c) {
+    const t = c.temporada; if (!t) return "";
+    const e = c.etiqueta;
+    const tile = (v, label, icon, main) => (v == null ? "" : `<div class="kpi-tile ${main ? "main" : ""}"><span class="kt-ic">${ICON[icon]}</span><b>${esc(v)}</b><small>${label}</small></div>`);
+    const tiles = [tile(t.victorias, t.victorias === 1 ? "victoria" : "victorias", "trophy", true), tile(t.poles, t.poles === 1 ? "pole" : "poles", "stopwatch"), tile(t.carreras, "carreras", "flag")].filter(Boolean);
+    const pct = t.victorias != null && t.carreras ? Math.round((t.victorias / t.carreras) * 100) : null;
+    const posCard = (label, txt) => {
+      if (!txt) return "";
+      const p = posOf(txt);
+      // Sin repetir la posición que ya muestra la medalla: "1.º — 759 pts" → "759 pts"
+      let det = txt.replace(/^\s*\d+\s*\.?\s*[º°]\s*[—–-]?\s*/, "").replace(/^\((.*)\)$/, "$1").trim();
+      if (!det) det = p === 1 ? "Campeón" : p === 2 ? "Subcampeón" : `${p}.º puesto`;
+      det = det.charAt(0).toUpperCase() + det.slice(1);
+      return `<div class="pos-card ${p && p <= 3 ? "p" + p : ""}">
+        <span class="medal">${p ? `${p}<sup>º</sup>` : "–"}</span>
+        <div><small>${label}</small><b>${esc(det)}</b></div></div>`;
+    };
+    return `<section class="sec">${secHead("chart", `Temporada ${e.anio}`)}
+      <div class="season">
+        <div class="kpi-tiles" style="grid-template-columns:${tiles.length > 1 ? `1.3fr repeat(${tiles.length - 1},1fr)` : "1fr"}">${tiles.join("")}</div>
+        ${pct != null ? `<div class="winrate">
+          <div class="wr-top"><span>Ganó <b>${t.victorias}</b> de ${t.carreras} ${t.carreras === 1 ? "carrera" : "carreras"}</span><b>${pct}%</b></div>
+          <div class="wr-bar"><i style="width:${Math.max(pct, 2)}%"></i></div></div>` : ""}
+        <div class="positions">${posCard("Campeonato de pilotos", t.pilotos)}${posCard("Campeonato de constructores", t.constructores)}</div>
+      </div></section>`;
   }
 
   // ---------- Ficha ----------
@@ -340,14 +381,16 @@
     const idx = cars.indexOf(c), prev = cars[idx - 1], next = cars[idx + 1];
     back.hidden = false;
     appbarTitle.textContent = `${e.chasis} · ${e.anio}`;
-    const stat = (v, l) => (v == null ? "" : `<div class="stat"><b>${esc(v)}</b><small>${l}</small></div>`);
-    const stats = [stat(t.victorias, "victorias"), stat(t.poles, "poles"), stat(t.carreras, "carreras")].filter(Boolean);
     const cx = connections(c);
+    // fotos/<id>.jpg, registrada con indexar-logos.js (puede traer el crédito del autor)
+    const photoInfo = (window.FOTOS || {})[c.id];
+    const photo = typeof photoInfo === "string" ? photoInfo : photoInfo && photoInfo.src;
+    const credit = photoInfo && photoInfo.credito;
 
     view.innerHTML = `
-      <section class="hero ${isLight(c.color) ? "light" : ""}" style="${vars(c)}">
+      <section class="hero ${isLight(c.color) ? "light" : ""} ${photo ? "has-photo" : ""}" style="${vars(c)}">
         <div class="stripes"></div>
-        <span class="bignum">${c.numero ?? ""}</span>
+        ${photo ? `<img class="car-photo" src="${photo}" alt="Foto del ${esc(e.chasis)}" loading="eager"><div class="photo-fade"></div>${credit ? `<span class="photo-credit">Foto: ${esc(credit)}</span>` : ""}` : `<span class="bignum">${c.numero ?? ""}</span>`}
         <div class="top">${badge(c, "lg")}<div><div class="eq">${esc(e.equipo)}</div><div class="yr">Temporada ${e.anio}</div></div></div>
         <h1>${esc(e.chasis)}</h1>
         ${driverOf(e.piloto)
@@ -366,15 +409,9 @@
         </div>
       </div>` : ""}
 
-      ${c.temporada ? `<section class="sec">${secHead("chart", `Temporada ${e.anio}`)}
-        ${stats.length ? `<div class="stats" style="grid-template-columns:repeat(${stats.length},1fr)">${stats.join("")}</div>` : ""}
-        <div class="facts">
-          ${t.pilotos ? `<div class="fact"><small>Pilotos</small><b>${esc(t.pilotos)}</b></div>` : ""}
-          ${t.constructores ? `<div class="fact"><small>Constructores</small><b>${esc(t.constructores)}</b></div>` : ""}
-        </div></section>` : ""}
+      ${championCard(c)}
 
-      ${c.titulos?.length ? `<section class="sec">${secHead("trophy", "Títulos")}<div class="titles">
-        ${c.titulos.map((x) => `<div class="title">${ICON.trophy}<span>${esc(x)}</span></div>`).join("")}</div></section>` : ""}
+      ${seasonPanel(c)}
 
       ${c.carreraModelo ? `<section class="sec">${secHead("flag", "La carrera de tu modelo")}
         <div class="race"><b>${esc(c.carreraModelo.nombre)}</b><p>${esc(c.carreraModelo.texto)}</p></div></section>` : ""}

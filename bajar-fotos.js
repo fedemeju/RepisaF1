@@ -1,0 +1,111 @@
+// Busca y baja fotos de los autos REALES desde Wikimedia Commons (licencias libres).
+//   node bajar-fotos.js            → baja las que falten (va despacio: Wikimedia frena las descargas seguidas)
+//   node bajar-fotos.js <id> ...   → solo esos autos (si ya tienen foto, borrala antes para cambiarla)
+// Guarda fotos/<id>.jpg y el autor/licencia en fotos/creditos.json. Al final corre indexar-logos.js.
+const fs = require("fs"), path = require("path");
+global.window = {};
+require("./data/autos.js");
+
+const DIR = path.join(__dirname, "fotos");
+const CRED = path.join(DIR, "creditos.json");
+const API = "https://commons.wikimedia.org/w/api.php";
+const UA = "repisa-app/1.0 (personal hobby project)";
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+fs.mkdirSync(DIR, { recursive: true });
+const cred = fs.existsSync(CRED) ? JSON.parse(fs.readFileSync(CRED, "utf8")) : {};
+
+const norm = (s) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase();
+const compact = (s) => norm(s).replace(/[^A-Z0-9]/g, "");
+// Lo que NO queremos: modelos a escala, réplicas, cascos, motores, logos, etc.
+const MALO = /model|scale|1[:_-]?(18|20|24|43)\b|diecast|die-cast|replica|lego|toy|miniatur|maqueta|helmet|casco|logo|badge|emblem|engine|motor\b|steering|cockpit|poster|stamp|sello|livery\b|drawing|sketch|\.svg$/i;
+
+async function api(params) {
+  for (let i = 0; i < 6; i++) {
+    const r = await fetch(API + "?" + new URLSearchParams({ format: "json", ...params }), { headers: { "User-Agent": UA } });
+    if (r.status === 429 || r.status >= 500) { await sleep(30000 * (i + 1)); continue; }
+    return r.json();
+  }
+  throw new Error("la API no responde");
+}
+
+function puntaje(title, car) {
+  const e = car.etiqueta, t = compact(title), tw = norm(title);
+  const ch = compact(e.chasis);
+  const surname = norm(e.piloto).split(/\s+/).pop();
+  const team = norm(e.equipo).split(/\s+/).filter((w) => w.length > 2);
+  let s = 0;
+  if (ch.length >= 3 && t.includes(ch)) s += /^\d+$/.test(ch) ? 2 : 4; // chasis solo números (006, 177) es ambiguo
+  if (surname && tw.includes(surname)) s += 2;
+  if (team.some((w) => tw.includes(w))) s += 1;
+  if (tw.includes(String(e.anio))) s += 1;
+  return s;
+}
+
+async function buscar(car) {
+  const e = car.etiqueta, surname = e.piloto.split(/\s+/).pop();
+  const consultas = [`${e.equipo} ${e.chasis} ${surname}`, `${e.equipo} ${e.chasis}`, `${e.chasis} ${e.anio}`, `${e.chasis} ${surname}`];
+  const vistos = new Map();
+  for (const q of consultas) {
+    const j = await api({ action: "query", list: "search", srnamespace: "6", srlimit: "25", srsearch: q + " filetype:bitmap" });
+    for (const r of (j.query && j.query.search) || []) {
+      if (!/\.jpe?g$/i.test(r.title) || MALO.test(r.title)) continue;
+      vistos.set(r.title, puntaje(r.title, car));
+    }
+    await sleep(1500);
+  }
+  const mejor = [...vistos].sort((a, b) => b[1] - a[1])[0];
+  // hace falta el chasis más algo más (piloto, equipo o año) para confiar
+  return mejor && mejor[1] >= 5 ? mejor[0] : null;
+}
+
+async function info(title) {
+  const j = await api({ action: "query", prop: "imageinfo", iiprop: "url|extmetadata", iiurlwidth: "1280", titles: title });
+  const p = Object.values(j.query.pages)[0];
+  const ii = p.imageinfo && p.imageinfo[0];
+  if (!ii) return null;
+  const m = ii.extmetadata || {};
+  const plano = (v) => String((v && v.value) || "").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+  const autor = plano(m.Artist).slice(0, 60) || "autor desconocido";
+  const lic = plano(m.LicenseShortName) || "ver Commons";
+  return { url: ii.thumburl || ii.url, pagina: ii.descriptionurl, credito: `${autor} · ${lic} · Wikimedia Commons` };
+}
+
+async function bajar(url, dest) {
+  for (let i = 0; i < 8; i++) {
+    const r = await fetch(url, { headers: { "User-Agent": UA } });
+    if (r.ok) { fs.writeFileSync(dest, Buffer.from(await r.arrayBuffer())); return true; }
+    if (r.status !== 429 && r.status < 500) return false;
+    const espera = Math.min(600, 60 * 2 ** i);
+    console.log(`     (Wikimedia frena: ${r.status}, espero ${espera}s)`);
+    await sleep(espera * 1000);
+  }
+  return false;
+}
+
+(async () => {
+  const probar = process.argv.includes("--probar"); // solo muestra qué foto elegiría, sin bajar
+  const soloIds = process.argv.slice(2).filter((x) => !x.startsWith("--"));
+  const autos = window.AUTOS.filter((a) => (soloIds.length ? soloIds.includes(a.id) : !a.oculto))
+    .filter((a) => !fs.readdirSync(DIR).some((f) => f.startsWith(a.id + ".")))
+    .sort((a, b) => a.etiqueta.anio - b.etiqueta.anio);
+  console.log(`${autos.length} autos sin foto`);
+  let ok = 0, sinResultado = [];
+  for (const car of autos) {
+    const nombre = `${car.etiqueta.equipo} ${car.etiqueta.chasis} ${car.etiqueta.anio}`;
+    try {
+      const title = await buscar(car);
+      if (!title) { console.log(`✗ ${nombre}: no encontré una foto confiable`); sinResultado.push(car.id); continue; }
+      if (probar) { console.log(`? ${nombre} ← ${title}`); ok++; continue; }
+      const i = await info(title);
+      if (!i) { console.log(`✗ ${nombre}: sin datos de ${title}`); sinResultado.push(car.id); continue; }
+      if (await bajar(i.url, path.join(DIR, car.id + ".jpg"))) {
+        cred[car.id] = { credito: i.credito, archivo: title, pagina: i.pagina };
+        fs.writeFileSync(CRED, JSON.stringify(cred, null, 2));
+        ok++; console.log(`✓ ${nombre} ← ${title}`);
+      } else { console.log(`✗ ${nombre}: no se pudo bajar`); sinResultado.push(car.id); }
+    } catch (err) { console.log(`✗ ${nombre}: ${err.message}`); sinResultado.push(car.id); }
+    if (!probar) await sleep(40000); // de a una, para que Wikimedia no bloquee
+  }
+  console.log(`\nFIN: ${ok} fotos ${probar ? "encontradas (prueba)" : "nuevas"}. Sin foto: ${sinResultado.join(", ") || "ninguno"}`);
+  if (!probar) require("child_process").execFileSync("node", [path.join(__dirname, "indexar-logos.js")], { stdio: "inherit" });
+})();

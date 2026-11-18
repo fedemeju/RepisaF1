@@ -35,6 +35,7 @@ gratis o paga, sin licencia, es infracción de marca y Google Play la puede dar 
 Qué hacer: borrar los archivos de `logos/` y correr `node indexar-logos.js`.
 La app vuelve sola a los escudos con siglas y colores de cada equipo.
 
-## 3. El nombre
+## 3. El nombre y el logo de F1
 
-"F1" y "Formula 1" también son marcas registradas: la versión pública necesita otro nombre.
+"F1", "Formula 1" y el logo de F1 (img/f1.webp, en la barra de arriba) son marcas registradas:
+la versión pública necesita otro nombre y sacar ese logo.
