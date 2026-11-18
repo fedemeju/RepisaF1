@@ -50,6 +50,7 @@
     link: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>',
     chev: '<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>',
     search: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>',
+    headphonesBig: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="5" height="7" rx="2"/><rect x="16" y="14" width="5" height="7" rx="2"/></svg>',
     headphones: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="5" height="7" rx="2"/><rect x="16" y="14" width="5" height="7" rx="2"/></svg>',
     play: '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l10.5-6.5z"/></svg>',
     pause: '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><rect x="6.5" y="5" width="4" height="14" rx="1"/><rect x="13.5" y="5" width="4" height="14" rx="1"/></svg>'
@@ -151,6 +152,24 @@
     return out;
   }
 
+  // ---------- Escuchados y favoritos (se guardan en este celu, en el navegador) ----------
+  const store = (() => {
+    const K = "repisa-estado";
+    let s = {};
+    try { s = JSON.parse(localStorage.getItem(K) || "{}") || {}; } catch (_) { s = {}; }
+    s.h = s.h || {}; s.f = s.f || {};
+    const save = () => { try { localStorage.setItem(K, JSON.stringify(s)); } catch (_) {} };
+    return {
+      heard: (id) => !!s.h[id],
+      fav: (id) => !!s.f[id],
+      setHeard(id) { if (!s.h[id]) { s.h[id] = Date.now(); save(); } },
+      toggleFav(id) { if (s.f[id]) delete s.f[id]; else s.f[id] = Date.now(); save(); return !!s.f[id]; }
+    };
+  })();
+  let listFilter = "todos"; // todos | favoritos | sin-escuchar
+  const STAR = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2l2.7 5.6 6.1.8-4.5 4.2 1.1 6-5.4-3-5.4 3 1.1-6L3.2 9.6l6.1-.8z"/></svg>';
+  const CHECK = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+
   // ---------- Inicio ----------
   function cardHtml(c) {
     const e = c.etiqueta;
@@ -162,10 +181,11 @@
         <p>${esc(e.piloto)}</p>
         <div class="tags">
           ${isChampion(c) ? `<span class="tag gold">Campeón</span>` : ""}
-          ${withAudio.has(c.id) ? `<span class="tag">${ICON.headphones} Audio</span>` : ""}
+          ${store.heard(c.id) ? `<span class="tag heard">${CHECK} Escuchado</span>` : withAudio.has(c.id) ? `<span class="tag">${ICON.headphones} Audio</span>` : ""}
         </div>
       </div>
       <span class="num">${c.numero ?? ""}</span>
+      ${store.fav(c.id) ? `<span class="card-fav" aria-label="Favorito">${STAR}</span>` : ""}
     </a>`;
   }
 
@@ -188,10 +208,21 @@
         <button role="tab" class="tab ${tab === "autos" ? "on" : ""}" data-tab="autos" aria-selected="${tab === "autos"}">Autos <span>${cars.length}</span></button>
         <button role="tab" class="tab ${tab === "pilotos" ? "on" : ""}" data-tab="pilotos" aria-selected="${tab === "pilotos"}">Pilotos <span>${drivers.length}</span></button>
       </div>
+      <button class="tour-cta" id="tourBtn">
+        <span class="tc-ic">${ICON.headphonesBig}</span>
+        <span class="tc-txt"><b>Escuchar la repisa</b><small>Las historias una tras otra, como en un museo</small></span>
+        ${ICON.chev}
+      </button>
       <div class="searchbox">${ICON.search}<input class="search" id="q" type="search" placeholder="${tab === "autos" ? "Buscar equipo, piloto o año" : "Buscar piloto o país"}" value="${esc(query)}" autocomplete="off"></div>
-      ${tab === "autos" ? `<nav class="jump" aria-label="Ir a década">${decades.map((d) => `<button class="chip" data-d="${d}">${decadeName(d)}</button>`).join("")}</nav>` : ""}
+      ${tab === "autos" ? `<div class="filters" role="group" aria-label="Mostrar">
+          ${[["todos", "Todos", cars.length], ["favoritos", "★ Favoritos", cars.filter((c) => store.fav(c.id)).length], ["sin-escuchar", "Sin escuchar", cars.filter((c) => withAudio.has(c.id) && !store.heard(c.id)).length]]
+            .map(([k, l, n]) => `<button class="filter ${listFilter === k ? "on" : ""}" data-f="${k}">${l} <span>${n}</span></button>`).join("")}
+        </div>
+        <nav class="jump" aria-label="Ir a década">${decades.map((d) => `<button class="chip" data-d="${d}">${decadeName(d)}</button>`).join("")}</nav>` : ""}
       <div id="list"></div>`;
     renderList();
+    document.getElementById("tourBtn").onclick = openTourSheet;
+    view.querySelectorAll(".filter").forEach((b) => (b.onclick = () => { listFilter = b.dataset.f; home(); }));
     const qi = document.getElementById("q");
     qi.oninput = () => { query = qi.value; renderList(); };
     view.querySelectorAll(".tab").forEach((b) => (b.onclick = () => { if (tab !== b.dataset.tab) { tab = b.dataset.tab; query = ""; home(); } }));
@@ -230,11 +261,18 @@
       return;
     }
     const match = cars.filter((c) => {
+      if (listFilter === "favoritos" && !store.fav(c.id)) return false;
+      if (listFilter === "sin-escuchar" && (!withAudio.has(c.id) || store.heard(c.id))) return false;
       if (!q) return true;
       const e = c.etiqueta;
       return Matcher.norm([e.equipo, e.chasis, e.anio, e.piloto, e.carrera, ...(c.pilotos || []).map((p) => p.nombre)].join(" ")).includes(q);
     });
-    if (!match.length) { list.innerHTML = `<div class="empty">No hay autos que coincidan con “${esc(query)}”.</div>`; return; }
+    if (!match.length) {
+      list.innerHTML = `<div class="empty">${query ? `No hay autos que coincidan con “${esc(query)}”.`
+        : listFilter === "favoritos" ? "Todavía no marcaste favoritos. Tocá la estrella en la ficha de un auto."
+        : listFilter === "sin-escuchar" ? "¡Ya escuchaste todas las historias!" : "No hay autos."}</div>`;
+      return;
+    }
     const groups = new Map();
     for (const c of match) { const d = decadeOf(c); if (!groups.has(d)) groups.set(d, []); groups.get(d).push(c); }
     list.innerHTML = [...groups].map(([d, cs]) => `
@@ -264,6 +302,7 @@
       lbl.textContent = "Narración próximamente";
       player = { stop: () => {} };
       autoplayNext = false; // que no quede pendiente para el próximo auto
+      if (tour) setTimeout(() => tourStep(1), 800); // en el recorrido, sigue con el próximo
     };
     setPlaying(false);
     if (!car.audio) return unavailable();
@@ -284,8 +323,15 @@
       if (!isFinite(audio.duration)) return;
       bar.style.width = (audio.currentTime / audio.duration) * 100 + "%";
       if (state.playing) lbl.textContent = `${fmt(audio.currentTime)} / ${fmt(audio.duration)}`;
+      if (audio.currentTime / audio.duration > 0.9 && !store.heard(car.id)) { store.setHeard(car.id); markHeardUI(); }
     });
-    audio.addEventListener("ended", () => { setPlaying(false); bar.style.width = "0"; durLabel(); });
+    audio.addEventListener("ended", () => {
+      setPlaying(false); bar.style.width = "0"; durLabel();
+      store.setHeard(car.id); markHeardUI();
+      if (tour) setTimeout(() => tourStep(1), 1500); // recorrido: pausa corta y al próximo auto
+      else tourBarSync();
+    });
+    const markHeardUI = () => { const h = box.querySelector(".heard-badge"); if (h) h.hidden = false; };
     // tocar o arrastrar la barra para adelantar
     const seek = (ev) => {
       if (estado !== "ok" || !isFinite(audio.duration)) return;
@@ -304,9 +350,11 @@
       if (estado === "falta") return;
       await audio.play();
       setPlaying(true);
+      tourBarSync();
     }
-    btn.onclick = () => (state.playing ? stop() : play().catch(() => {}));
-    player = { stop };
+    const pause = () => { audio.pause(); setPlaying(false); tourBarSync(); };
+    btn.onclick = () => (state.playing ? pause() : play().catch(() => {}));
+    player = { stop, toggle: () => (state.playing ? pause() : play().catch(() => {})), isPlaying: () => state.playing };
 
     if (autoplayNext) {
       autoplayNext = false;
@@ -391,6 +439,7 @@
       <section class="hero ${isLight(c.color) ? "light" : ""} ${photo ? "has-photo" : ""}" style="${vars(c)}">
         <div class="stripes"></div>
         ${photo ? `<img class="car-photo" src="${photo}" alt="Foto del ${esc(e.chasis)}" loading="eager"><div class="photo-fade"></div>${credit ? `<span class="photo-credit">Foto: ${esc(credit)}</span>` : ""}` : `<span class="bignum">${c.numero ?? ""}</span>`}
+        <button class="fav-btn ${store.fav(c.id) ? "on" : ""}" id="favBtn" aria-pressed="${store.fav(c.id)}" aria-label="Marcar como favorito">${STAR}</button>
         <div class="top">${badge(c, "lg")}<div><div class="eq">${esc(e.equipo)}</div><div class="yr">Temporada ${e.anio}</div></div></div>
         <h1>${esc(e.chasis)}</h1>
         ${driverOf(e.piloto)
@@ -403,7 +452,7 @@
       ${c.relato ? `<div class="player" id="audio">
         <button class="play" aria-label="Reproducir historia"></button>
         <div class="info">
-          <div class="row"><b>Escuchá su historia</b><span class="eq-bars" aria-hidden="true"><i></i><i></i><i></i></span></div>
+          <div class="row"><b>Escuchá su historia</b><span class="heard-badge" ${store.heard(c.id) ? "" : "hidden"}>${CHECK} Escuchada</span><span class="eq-bars" aria-hidden="true"><i></i><i></i><i></i></span></div>
           <small></small>
           <div class="progress" role="slider" aria-label="Posición del audio"><i></i></div>
         </div>
@@ -447,6 +496,12 @@
         ${next ? `<a class="next" href="#/auto/${next.id}"><small>Siguiente ›</small><b>${esc(next.etiqueta.chasis)}</b></a>` : ""}
       </nav>`;
     hydrateLogos(view);
+    const favBtn = document.getElementById("favBtn");
+    favBtn.onclick = () => {
+      const on = store.toggleFav(c.id);
+      favBtn.classList.toggle("on", on); favBtn.setAttribute("aria-pressed", on);
+      if (navigator.vibrate) navigator.vibrate(on ? 30 : 15);
+    };
     setupAudio(c);
   }
 
@@ -498,7 +553,96 @@
     hydrateLogos(view);
   }
 
+  // ---------- Modo recorrido: "Escuchar la repisa" ----------
+  let tour = null; // { ids, i, nombre }
+  let wakeLock = null;
+  const fab = document.getElementById("fab");
+  const tourBar = document.createElement("div");
+  tourBar.className = "tour-bar"; tourBar.hidden = true;
+  document.body.appendChild(tourBar);
+  const minutos = (n) => Math.max(1, Math.round((n * 42) / 60)); // ~42 s por historia
+
+  // la pantalla no se apaga mientras dura el recorrido (si el celu lo permite)
+  async function keepAwake() { try { wakeLock = await navigator.wakeLock.request("screen"); } catch (_) {} }
+  document.addEventListener("visibilitychange", () => { if (tour && document.visibilityState === "visible") keepAwake(); });
+
+  function openTourSheet() {
+    const pool = cars.filter((c) => withAudio.size ? withAudio.has(c.id) : !!c.audio);
+    const opts = [
+      ["todo", "Toda la repisa", pool],
+      ["sin", "Las que no escuchaste", pool.filter((c) => !store.heard(c.id))],
+      ["fav", "Tus favoritos", pool.filter((c) => store.fav(c.id))],
+      ...[...new Set(pool.map(decadeOf))].map((d) => ["d" + d, decadeName(d), pool.filter((c) => decadeOf(c) === d)])
+    ].filter(([, , list]) => list.length);
+    const sheet = document.createElement("div");
+    sheet.className = "sheet-back";
+    sheet.innerHTML = `<div class="sheet" role="dialog" aria-label="Escuchar la repisa">
+      <div class="sheet-grab"></div>
+      <h2>Escuchar la repisa</h2>
+      <p>Las historias se reproducen una tras otra, mostrando cada auto. Dejá el celu y que la repisa se cuente sola.</p>
+      <div class="sheet-opts">${opts.map(([k, l, list], i) => `<button class="sheet-opt ${i === 0 ? "main" : ""}" data-k="${k}">
+        <b>${l}</b><small>${list.length} ${list.length === 1 ? "historia" : "historias"} · ~${minutos(list.length)} min</small>${ICON.chev}</button>`).join("")}</div>
+      <button class="btn sheet-cancel">Cancelar</button></div>`;
+    document.body.appendChild(sheet);
+    const close = () => sheet.remove();
+    sheet.onclick = (ev) => { if (ev.target === sheet) close(); };
+    sheet.querySelector(".sheet-cancel").onclick = close;
+    sheet.querySelectorAll(".sheet-opt").forEach((b) => (b.onclick = () => {
+      const [, l, list] = opts.find(([k]) => k === b.dataset.k);
+      close();
+      startTour(list.map((c) => c.id), l);
+    }));
+  }
+
+  function startTour(ids, nombre) {
+    if (!ids.length) return;
+    tour = { ids, i: 0, nombre };
+    keepAwake();
+    goTour();
+  }
+  function goTour() {
+    autoplayNext = true;
+    const h = "#/auto/" + tour.ids[tour.i];
+    if (location.hash === h) route(); else location.hash = h;
+    tourBarSync();
+  }
+  function tourStep(d) {
+    if (!tour) return;
+    const n = tour.i + d;
+    if (n < 0) return;
+    if (n >= tour.ids.length) { endTour(true); return; }
+    tour.i = n; goTour();
+  }
+  function endTour(terminado) {
+    tour = null;
+    if (wakeLock) { wakeLock.release().catch(() => {}); wakeLock = null; }
+    tourBarSync();
+    if (terminado) { location.hash = "#/"; }
+  }
+  function tourBarSync() {
+    if (!tour) { tourBar.hidden = true; fab.hidden = false; return; }
+    fab.hidden = true; tourBar.hidden = false;
+    const c = byId[tour.ids[tour.i]];
+    const playing = player && player.isPlaying && player.isPlaying();
+    tourBar.innerHTML = `
+      <div class="tb-info"><small>${esc(tour.nombre)} · ${tour.i + 1} de ${tour.ids.length}</small><b>${esc(c.etiqueta.chasis)} · ${c.etiqueta.anio}</b>
+        <div class="tb-prog"><i style="width:${((tour.i + 1) / tour.ids.length) * 100}%"></i></div></div>
+      <button class="tb-btn" data-a="prev" aria-label="Anterior" ${tour.i === 0 ? "disabled" : ""}><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg></button>
+      <button class="tb-btn main" data-a="play" aria-label="${playing ? "Pausar" : "Seguir"}">${playing ? ICON.pause : ICON.play}</button>
+      <button class="tb-btn" data-a="next" aria-label="Siguiente"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg></button>
+      <button class="tb-btn" data-a="stop" aria-label="Terminar recorrido"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>`;
+    tourBar.querySelectorAll(".tb-btn").forEach((b) => (b.onclick = () => {
+      const a = b.dataset.a;
+      if (a === "prev") tourStep(-1);
+      else if (a === "next") tourStep(1);
+      else if (a === "stop") endTour(false);
+      else if (player && player.toggle) player.toggle();
+    }));
+  }
+
   function route() {
+    // si el usuario se va a otra pantalla, el recorrido termina
+    if (tour && location.hash !== "#/auto/" + tour.ids[tour.i]) endTour(false);
     if (player) { player.stop(); player = null; }
     const m = location.hash.match(/^#\/auto\/(.+)$/);
     const p = location.hash.match(/^#\/piloto\/(.+)$/);
@@ -510,7 +654,8 @@
   }
   window.addEventListener("hashchange", route);
   route();
-  audioCheck.then(() => { if (!/^#\/(auto|piloto)\//.test(location.hash)) renderList(); });
+  // cuando se sabe qué autos tienen mp3, se actualiza el inicio (etiquetas y contadores)
+  audioCheck.then(() => { if (!/^#\/(auto|piloto)\//.test(location.hash)) { const y = scrollY; home(); scrollTo(0, y); } });
 
   if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
     navigator.serviceWorker.register("sw.js").catch(() => {});

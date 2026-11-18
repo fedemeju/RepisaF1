@@ -28,22 +28,35 @@ async function api(params) {
   throw new Error("la API no responde");
 }
 
+// Fotos elegidas a mano cuando el modelo es una versión especial (id del auto → archivo de Commons).
+// Para cambiar una: poné acá el archivo que quieras, borrá fotos/<id>.jpg y corré  node bajar-fotos.js <id>
+const FIJAS = {
+  // tu modelo es la versión carenada (ruedas tapadas), no la de ruedas descubiertas
+  "w196-1955-fangio": "File:Paris - Retromobile 2014 - Mercedes-Benz W 196 R Stromlinie- 1954 - 001.jpg"
+};
+
 function puntaje(title, car) {
   const e = car.etiqueta, t = compact(title), tw = norm(title);
   const ch = compact(e.chasis);
   const surname = norm(e.piloto).split(/\s+/).pop();
   const team = norm(e.equipo).split(/\s+/).filter((w) => w.length > 2);
+  const hasTeam = team.some((w) => tw.includes(w));
   let s = 0;
-  if (ch.length >= 3 && t.includes(ch)) s += /^\d+$/.test(ch) ? 2 : 4; // chasis solo números (006, 177) es ambiguo
+  if (ch.length >= 3 && !/^\d+$/.test(ch) && t.includes(ch)) s += 4;
+  // chasis cortos o solo números (25, 512, 006): tiene que aparecer como palabra suelta y con el equipo
+  else if (/^\d+$/.test(ch) || ch.length < 3) {
+    const re = new RegExp(`(^|[^0-9A-Z])${norm(e.chasis).replace(/[^A-Z0-9]/g, "")}([^0-9A-Z]|$)`);
+    if (re.test(tw.replace(/\s+/g, " ")) && hasTeam) s += 4;
+  }
   if (surname && tw.includes(surname)) s += 2;
-  if (team.some((w) => tw.includes(w))) s += 1;
+  if (hasTeam) s += 1;
   if (tw.includes(String(e.anio))) s += 1;
   return s;
 }
 
 async function buscar(car) {
   const e = car.etiqueta, surname = e.piloto.split(/\s+/).pop();
-  const consultas = [`${e.equipo} ${e.chasis} ${surname}`, `${e.equipo} ${e.chasis}`, `${e.chasis} ${e.anio}`, `${e.chasis} ${surname}`];
+  const consultas = [`${e.equipo} ${e.chasis} ${surname}`, `${e.equipo} ${e.chasis}`, `${e.equipo} ${e.chasis} ${e.anio}`, `${e.chasis} ${e.anio}`, `${e.chasis} ${surname}`];
   const vistos = new Map();
   for (const q of consultas) {
     const j = await api({ action: "query", list: "search", srnamespace: "6", srlimit: "25", srsearch: q + " filetype:bitmap" });
@@ -93,7 +106,7 @@ async function bajar(url, dest) {
   for (const car of autos) {
     const nombre = `${car.etiqueta.equipo} ${car.etiqueta.chasis} ${car.etiqueta.anio}`;
     try {
-      const title = await buscar(car);
+      const title = FIJAS[car.id] || await buscar(car);
       if (!title) { console.log(`✗ ${nombre}: no encontré una foto confiable`); sinResultado.push(car.id); continue; }
       if (probar) { console.log(`? ${nombre} ← ${title}`); ok++; continue; }
       const i = await info(title);
