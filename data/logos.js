@@ -11,6 +11,7 @@ window.LOGOS = {
   "hesketh": "logos/hesketh.png",
   "honda": "logos/honda.png",
   "jordan": "logos/jordan.png",
+  "ligier": "logos/ligier.jpg",
   "lotus": "logos/lotus.jpg",
   "march": "logos/march.jpg",
   "mclaren": "logos/mclaren.svg",
@@ -21,5 +22,5 @@ window.LOGOS = {
   "toleman": "logos/toleman.webp",
   "toro-rosso": "logos/toro-rosso.png",
   "tyrrell": "logos/tyrrell.png",
-  "williams": "logos/williams.svg"
+  "williams": "logos/williams.png"
 };
