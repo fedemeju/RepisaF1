@@ -313,6 +313,8 @@ a.driver .meta, .driver .meta { flex: 1; min-width: 0; }
 .scan-bar { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; padding: 20px 16px calc(20px + var(--safe-b)); background: linear-gradient(transparent, rgba(0, 0, 0, .92) 35%); }
 .scan-status { font-family: var(--display); font-weight: 700; font-size: 18px; }
 .scan-ocr { color: #9a9a9a; font-size: 12px; font-family: ui-monospace, monospace; min-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.scan-debug { color: #7d7d86; font-size: 11px; font-family: ui-monospace, monospace; line-height: 1.4; }
+.top-right { display: flex; gap: 8px; }
 .scan-cands { display: grid; gap: 6px; margin: 10px 0; }
 .scan-cands button { width: 100%; justify-content: flex-start; text-align: left; }
 .scan-actions { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; margin-top: 4px; }

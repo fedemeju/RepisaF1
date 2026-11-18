@@ -13,8 +13,21 @@
     root: $("scanner"), video: $("video"), guide: $("guide"), tip: $("guideTip"),
     status: $("scanStatus"), ocr: $("scanOcr"), cands: $("scanCands"),
     torch: $("btnTorch"), close: $("btnCloseScan"), file: $("fileInput"), photo: $("photo"),
-    shutter: $("btnShutter"), zoom: $("zoomBar"), ring: $("focusRing")
+    shutter: $("btnShutter"), zoom: $("zoomBar"), ring: $("focusRing"),
+    switchCam: $("btnSwitch"), debug: $("scanDebug")
   };
+  // Línea de diagnóstico: qué cámara, si enfoca, nitidez y estado del lector
+  const diag = { cam: "", res: "", foco: "", zoom: "", nitidez: "", lector: "cargando" };
+  function showDiag(patch) {
+    Object.assign(diag, patch || {});
+    el.debug.textContent = [
+      diag.cam && `cám: ${diag.cam}`, diag.res, diag.foco && `foco: ${diag.foco}`, diag.zoom && `zoom ${diag.zoom}`,
+      diag.nitidez && `nitidez ${diag.nitidez}`, `lector: ${diag.lector}`
+    ].filter(Boolean).join(" · ");
+  }
+  let backCams = [], camIndex = 0;
+  const savedCam = { get: () => { try { return localStorage.getItem("repisa-cam"); } catch (_) { return null; } },
+                     set: (id) => { try { localStorage.setItem("repisa-cam", id); } catch (_) {} } };
   let stream = null, track = null, running = false, busy = false, worker = null, workerPromise = null, torchOn = false;
   let recent = [];
   let holdUntil = 0;
@@ -30,7 +43,10 @@
           if (++tries > 100) throw new Error("No se pudo cargar el lector de texto (¿sin internet la primera vez?)");
           await sleep(100);
         }
-        const w = await Tesseract.createWorker("eng");
+        const w = await Tesseract.createWorker("eng", 1, {
+          logger: (m) => { if (!worker && m.status) showDiag({ lector: `${m.status.replace(/ing .*/, "ing")} ${Math.round((m.progress || 0) * 100)}%` }); }
+        });
+        showDiag({ lector: "listo" });
         // Solo letras, números, guion y barra: evita lecturas como "200%" o "«©"
         await w.setParameters({
           tessedit_pageseg_mode: "6",
@@ -123,7 +139,7 @@
 
   function handleText(text) {
     const clean = text.replace(/\s+/g, " ").trim();
-    el.ocr.textContent = clean ? "Leí: " + clean : "";
+    el.ocr.textContent = "Leí: " + (clean || "(nada legible)");
     if (!clean) return false;
     recent.push(clean); if (recent.length > 3) recent.shift();
     let ranked = Matcher.score(clean, VISIBLES);
@@ -144,17 +160,21 @@
       el.status.textContent = "Preparando lector de texto…";
       w = await getWorker();
     } catch (e) { el.status.textContent = e.message; return; }
-    let frame = 0;
+    let frame = 0, blurCount = 0;
     while (running) {
       if (!busy && Date.now() > holdUntil && el.video.readyState >= 2 && el.video.videoWidth) {
         const [sx, sy, sw, sh] = guideToVideo();
         const sh_ = sharpness(el.video, sx, sy, sw, sh);
         const blurry = sh_ < SHARP_MIN;
+        showDiag({ nitidez: `${Math.round(sh_)}/${SHARP_MIN}`, res: `${el.video.videoWidth}x${el.video.videoHeight}` });
         el.guide.classList.toggle("blurry", blurry);
+        // si está borroso igual intenta leer de vez en cuando (por si la medición se equivoca)
+        const tryAnyway = blurry && ++blurCount % 4 === 0;
         if (blurry) {
           el.status.textContent = "Está borroso: alejá un poco el celu o tocá la pantalla para enfocar";
-        } else {
-          el.status.textContent = "Leyendo… o tocá el botón para capturar";
+        }
+        if (!blurry || tryAnyway) {
+          if (!blurry) el.status.textContent = "Leyendo… o tocá el botón para capturar";
           const canvas = prep(el.video, sx, sy, sw, sh, frame++ % 2 ? 900 : 1400);
           try {
             const { data } = await w.recognize(canvas);
@@ -251,12 +271,74 @@
     }
   }
 
+  // ---------- Elegir cámara ----------
+  // Pedimos la máxima resolución: el texto de la placa es muy chico.
+  const HI = { width: { ideal: 3840 }, height: { ideal: 2160 } };
+  const getCam = (deviceId) => navigator.mediaDevices.getUserMedia({
+    audio: false,
+    video: deviceId ? { deviceId: { exact: deviceId }, ...HI } : { facingMode: { ideal: "environment" }, ...HI }
+  });
+  const hasAF = (s) => { const t = s.getVideoTracks()[0]; const c = t.getCapabilities ? t.getCapabilities() : {}; return !!(c.focusMode && c.focusMode.includes("continuous")); };
+  const stopStream = (s) => s && s.getTracks().forEach((t) => t.stop());
+
+  // En celus con varias cámaras traseras, Chrome a veces abre la gran angular, que no tiene
+  // autofoco: de cerca sale todo borroso. Buscamos una trasera con autofoco y la recordamos.
+  async function chooseCamera() {
+    const saved = savedCam.get();
+    if (saved) { try { const s = await getCam(saved); if (hasAF(s)) return s; stopStream(s); } catch (_) {} }
+    let s = await getCam(null);
+    const devs = (await navigator.mediaDevices.enumerateDevices()).filter((d) => d.kind === "videoinput");
+    backCams = devs.filter((d) => /back|rear|trase|environment|posterior/i.test(d.label));
+    if (!backCams.length) backCams = devs;
+    const current = s.getVideoTracks()[0].getSettings().deviceId;
+    camIndex = Math.max(0, backCams.findIndex((d) => d.deviceId === current));
+    if (hasAF(s)) { savedCam.set(current); return s; }
+    for (const [i, d] of backCams.entries()) {
+      if (d.deviceId === current) continue;
+      try {
+        const s2 = await getCam(d.deviceId);
+        if (hasAF(s2)) { stopStream(s); camIndex = i; savedCam.set(d.deviceId); return s2; }
+        stopStream(s2);
+      } catch (_) {}
+    }
+    return s; // ninguna informa autofoco: quedamos con la que abrió
+  }
+
+  async function attach(s) {
+    stream = s;
+    el.video.srcObject = s;
+    await el.video.play();
+    track = s.getVideoTracks()[0];
+    const caps = track.getCapabilities ? track.getCapabilities() : {};
+    const af = !!(caps.focusMode && caps.focusMode.includes("continuous"));
+    el.torch.hidden = !caps.torch;
+    if (af) track.applyConstraints({ advanced: [{ focusMode: "continuous" }] }).catch(() => {});
+    setupZoom(caps);
+    el.switchCam.hidden = backCams.length < 2;
+    const label = (track.label || "cámara").replace(/camera2?\s*/i, "").replace(/,?\s*facing\s*/i, " ").trim().slice(0, 20);
+    showDiag({ cam: `${label} (${camIndex + 1}/${backCams.length || 1})`, foco: af ? "auto" : "fijo", zoom: caps.zoom ? `hasta ${caps.zoom.max}x` : "no" });
+  }
+
+  async function switchCamera(ev) {
+    ev.stopPropagation();
+    if (backCams.length < 2 || busy) return;
+    camIndex = (camIndex + 1) % backCams.length;
+    stopStream(stream);
+    try {
+      const s = await getCam(backCams[camIndex].deviceId);
+      savedCam.set(backCams[camIndex].deviceId);
+      await attach(s);
+      el.status.textContent = "Cámara cambiada";
+    } catch (e) { el.status.textContent = "No pude abrir esa cámara: " + e.message; }
+  }
+
   async function open(cb) {
     onFound = cb; recent = [];
     el.root.hidden = false; el.guide.classList.remove("hit", "blurry"); el.photo.hidden = true;
     el.cands.innerHTML = ""; el.ocr.textContent = ""; el.zoom.hidden = true; el.shutter.hidden = true;
     el.status.textContent = "Iniciando cámara…";
-    getWorker().catch(() => {});
+    showDiag({ lector: worker ? "listo" : "cargando", nitidez: "" });
+    getWorker().catch((e) => showDiag({ lector: "ERROR " + e.message }));
     // Sin https (por ejemplo http://192.168.x.x) el navegador no ofrece cámara en vivo:
     // abrimos directo la cámara del celular para sacar una foto (tiene que ser en el mismo toque).
     if (!window.isSecureContext || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -266,20 +348,7 @@
       return;
     }
     try {
-      // pedimos la máxima resolución: el texto de la placa es muy chico
-      stream = await navigator.mediaDevices.getUserMedia({
-        audio: false,
-        video: { facingMode: { ideal: "environment" }, width: { ideal: 3840 }, height: { ideal: 2160 } }
-      });
-      el.video.srcObject = stream;
-      await el.video.play();
-      track = stream.getVideoTracks()[0];
-      const caps = track.getCapabilities ? track.getCapabilities() : {};
-      el.torch.hidden = !caps.torch;
-      if (caps.focusMode && caps.focusMode.includes("continuous")) {
-        track.applyConstraints({ advanced: [{ focusMode: "continuous" }] }).catch(() => {});
-      }
-      setupZoom(caps);
+      await attach(await chooseCamera());
       el.shutter.hidden = false;
       running = true;
       loop();
@@ -354,6 +423,7 @@
 
   el.close.onclick = close;
   el.shutter.onclick = (ev) => { ev.stopPropagation(); capture(); };
+  el.switchCam.onclick = switchCamera;
   el.video.addEventListener("click", tapToFocus);
   el.file.onchange = () => { const f = el.file.files[0]; el.file.value = ""; if (f) fromPhoto(f); };
   el.torch.onclick = async (ev) => {
