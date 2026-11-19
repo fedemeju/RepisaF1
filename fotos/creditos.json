@@ -1,7 +1,257 @@
 {
+  "375indy-1952-ascari": {
+    "credito": "Morio · CC BY-SA 3.0 · Wikimedia Commons",
+    "archivo": "File:Ferrari 375 Indy front-left Enzo Ferrari Museum.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Ferrari_375_Indy_front-left_Enzo_Ferrari_Museum.jpg"
+  },
   "w196-1955-fangio": {
-    "credito": "Valder137 · CC BY 2.0 · Wikimedia Commons",
-    "archivo": "File:Mercedes-Benz W196R 1955 Juan Miguel Fangio LSideFront MBMuse 9June2013 (14797035177).jpg",
-    "pagina": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_W196R_1955_Juan_Miguel_Fangio_LSideFront_MBMuse_9June2013_(14797035177).jpg"
+    "credito": "Thesupermat · CC BY-SA 3.0 · Wikimedia Commons",
+    "archivo": "File:Paris - Retromobile 2014 - Mercedes-Benz W 196 R Stromlinie- 1954 - 001.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Paris_-_Retromobile_2014_-_Mercedes-Benz_W_196_R_Stromlinie-_1954_-_001.jpg"
+  },
+  "246f1-1958-hawthorn": {
+    "credito": "https://www.flickr.com/photos/davehamster/ · CC BY 2.0 · Wikimedia Commons",
+    "archivo": "File:Mike Hawthorn Ferrari 246 F1 2017 Silverstone Classic (39733047304).jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Mike_Hawthorn_Ferrari_246_F1_2017_Silverstone_Classic_(39733047304).jpg"
+  },
+  "lotus25-1963-clark": {
+    "credito": "Iain Cameron · CC BY 2.0 · Wikimedia Commons",
+    "archivo": "File:1963 F1 Lotus 25 F1 racing car, raced by Jim Clark in 1963 (21133245490).jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:1963_F1_Lotus_25_F1_racing_car,_raced_by_Jim_Clark_in_1963_(21133245490).jpg"
+  },
+  "bt24-1967-hulme": {
+    "credito": "Ben Sutherland from Crystal Palace, London, UK · CC BY 2.0 · Wikimedia Commons",
+    "archivo": "File:Denny Hulme's 1967 Braham-Repco BT24 F1 car (14663090354).jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Denny_Hulme%27s_1967_Braham-Repco_BT24_F1_car_(14663090354).jpg"
+  },
+  "ra300-1967-surtees": {
+    "credito": "BWard 1997 · CC BY 4.0 · Wikimedia Commons",
+    "archivo": "File:Honda RACING Gallery 1967 Honda RA300 John Surtees.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Honda_RACING_Gallery_1967_Honda_RA300_John_Surtees.jpg"
+  },
+  "p153-1970-rodriguez": {
+    "credito": "Ben Sutherland from Crystal Palace, London, UK · CC BY 2.0 · Wikimedia Commons",
+    "archivo": "File:Pedro Rodriguez' 1970 BRM P153 F1 car (14478690210).jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Pedro_Rodriguez%27_1970_BRM_P153_F1_car_(14478690210).jpg"
+  },
+  "72d-1972-fittipaldi": {
+    "credito": "User Pop1 on en.wikipedia · CC BY-SA 3.0 · Wikimedia Commons",
+    "archivo": "File:Emerson Fittipaldi 1972 Austrian GP.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Emerson_Fittipaldi_1972_Austrian_GP.jpg"
+  },
+  "p160b-1972-beltoise": {
+    "credito": "Lukas Raich · CC BY-SA 4.0 · Wikimedia Commons",
+    "archivo": "File:BRM P160B Frontflügel.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:BRM_P160B_Frontfl%C3%BCgel.jpg"
+  },
+  "006-1973-stewart": {
+    "credito": "50DAG2026 · CC BY-SA 4.0 · Wikimedia Commons",
+    "archivo": "File:AUS Tyrrell Stewart 006.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:AUS_Tyrrell_Stewart_006.jpg"
+  },
+  "308b-1975-hunt": {
+    "credito": "Neil · CC BY 2.0 · Wikimedia Commons",
+    "archivo": "File:Hesketh 308B - James Hunt (27422976993).jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Hesketh_308B_-_James_Hunt_(27422976993).jpg"
+  },
+  "bt44b-1975-pace": {
+    "credito": "Calreyn88 · CC BY-SA 4.0 · Wikimedia Commons",
+    "archivo": "File:1975 Brabham BT44B.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:1975_Brabham_BT44B.jpg"
+  },
+  "p34-1976-scheckter": {
+    "credito": "Lothar Spurzem · CC BY-SA 2.0 de · Wikimedia Commons",
+    "archivo": "File:ScheckterJody1976-07-31Tyrrell-FordP34.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:ScheckterJody1976-07-31Tyrrell-FordP34.jpg"
+  },
+  "312t2-1977-lauda": {
+    "credito": "Martin Lee · CC BY-SA 2.0 · Wikimedia Commons",
+    "archivo": "File:Niki Lauda - Ferrari 312T2 heads out of Tabac at the 1977 Monaco GP.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Niki_Lauda_-_Ferrari_312T2_heads_out_of_Tabac_at_the_1977_Monaco_GP.jpg"
+  },
+  "lotus79-1978-andretti": {
+    "credito": "Martin Lee from London, UK · CC BY-SA 2.0 · Wikimedia Commons",
+    "archivo": "File:Mario Andretti - Lotus 79 at the 1978 British Grand Prix (50049698533).jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Mario_Andretti_-_Lotus_79_at_the_1978_British_Grand_Prix_(50049698533).jpg"
+  },
+  "bt46b-1978-lauda": {
+    "credito": "Calreyn88 · CC BY-SA 4.0 · Wikimedia Commons",
+    "archivo": "File:1978 Brabham-Alfa Romeo BT46B Fan Car.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:1978_Brabham-Alfa_Romeo_BT46B_Fan_Car.jpg"
+  },
+  "js11-1979-laffite": {
+    "credito": "Martin Lee from London, UK · CC BY-SA 2.0 · Wikimedia Commons",
+    "archivo": "File:Jacques Laffite - Ligier JS11 approaches Piscine during practice for the 1979 Monaco GP (49985522587).jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Jacques_Laffite_-_Ligier_JS11_approaches_Piscine_during_practice_for_the_1979_Monaco_GP_(49985522587).jpg"
+  },
+  "177-1979-giacomelli": {
+    "credito": "traumautoarchiv.de · CC BY-SA 2.0 · Wikimedia Commons",
+    "archivo": "File:Alfa Romeo 177 in Museo Storico Alfa Romeo.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Alfa_Romeo_177_in_Museo_Storico_Alfa_Romeo.jpg"
+  },
+  "fw07-1979-regazzoni": {
+    "credito": "Martin Lee from London, UK · CC BY-SA 2.0 · Wikimedia Commons",
+    "archivo": "File:Clay Regazzoni - Williams FW07 approaches Rascasse during practice for the 1979 Monaco GP (49985522647).jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Clay_Regazzoni_-_Williams_FW07_approaches_Rascasse_during_practice_for_the_1979_Monaco_GP_(49985522647).jpg"
+  },
+  "rs10-1979-jabouille": {
+    "credito": "en:User:Ericd · CC BY-SA 3.0 · Wikimedia Commons",
+    "archivo": "File:Renault RS10 1979.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Renault_RS10_1979.jpg"
+  },
+  "bt49-1981-piquet": {
+    "credito": "Fordcapri at English Wikipedia · Public domain · Wikimedia Commons",
+    "archivo": "File:Brabham BT49 Nelson Piquet.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Brabham_BT49_Nelson_Piquet.jpg"
+  },
+  "011-1982-alboreto": {
+    "credito": "David Merrett from Daventry, England · CC BY 2.0 · Wikimedia Commons",
+    "archivo": "File:Michele Alboreto's 1982 Tyrrell 011 (51352139022).jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Michele_Alboreto%27s_1982_Tyrrell_011_(51352139022).jpg"
+  },
+  "126c2-1982-andretti": {
+    "credito": "Clyde94 · CC BY-SA 4.0 · Wikimedia Commons",
+    "archivo": "File:Ferrari 126 C2 di Didier Pironi del 1982 in cui si può vedere chiaramente la sponsorizzazione Longines.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Ferrari_126_C2_di_Didier_Pironi_del_1982_in_cui_si_pu%C3%B2_vedere_chiaramente_la_sponsorizzazione_Longines.jpg"
+  },
+  "tg184-1984-senna": {
+    "credito": "PSParrot · CC BY 2.0 · Wikimedia Commons",
+    "archivo": "File:Ayrton Senna Toleman TG184 1984 British GP Brands Hatch 001.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Ayrton_Senna_Toleman_TG184_1984_British_GP_Brands_Hatch_001.jpg"
+  },
+  "97t-1985-senna": {
+    "credito": "Dima Moroz · CC BY 2.0 · Wikimedia Commons",
+    "archivo": "File:Lotus 97T of Ayrton Senna, 1985.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Lotus_97T_of_Ayrton_Senna,_1985.jpg"
+  },
+  "mp4-8-1993-senna": {
+    "credito": "Martin Lee from London, UK · CC BY-SA 2.0 · Wikimedia Commons",
+    "archivo": "File:Ayrton Senna - Mclaren MP4-8 at the 1993 British Grand Prix (32844043794).jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Ayrton_Senna_-_Mclaren_MP4-8_at_the_1993_British_Grand_Prix_(32844043794).jpg"
+  },
+  "fw15c-1993-prost": {
+    "credito": "Martin Lee from London, UK · CC BY-SA 2.0 · Wikimedia Commons",
+    "archivo": "File:Alain Prost - Williams FW15C at the 1993 British Grand Prix (32873616913).jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Alain_Prost_-_Williams_FW15C_at_the_1993_British_Grand_Prix_(32873616913).jpg"
+  },
+  "fw19-1997-villeneuve": {
+    "credito": "Phil Guest · CC BY-SA 2.0 · Wikimedia Commons",
+    "archivo": "File:Williams FW19 of Jacques Villeneuve, 1997.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Williams_FW19_of_Jacques_Villeneuve,_1997.jpg"
+  },
+  "f399-1999-salo": {
+    "credito": "Sausius · Public domain · Wikimedia Commons",
+    "archivo": "File:1999 Ferrari F399 2.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:1999_Ferrari_F399_2.jpg"
+  },
+  "jordan199-1999-frentzen": {
+    "credito": "Paul Lannuier from Sussex, NJ, USA · CC BY-SA 2.0 · Wikimedia Commons",
+    "archivo": "File:Heinz-Harald Frentzen 1999 Canada.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Heinz-Harald_Frentzen_1999_Canada.jpg"
+  },
+  "mp4-14-1999-hakkinen": {
+    "credito": "Ank Kumar · CC BY-SA 4.0 · Wikimedia Commons",
+    "archivo": "File:Mika Häkkinen's 1999 McLaren Mercedes MP4 14 F1 car display at London Science Museum (Ank Kumar, INFOSYS Limited) 02.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Mika_H%C3%A4kkinen%27s_1999_McLaren_Mercedes_MP4_14_F1_car_display_at_London_Science_Museum_(Ank_Kumar,_INFOSYS_Limited)_02.jpg"
+  },
+  "f2001-2001-schumacher": {
+    "credito": "Original: Peter Wright from United Kingdom / Derivative work · CC BY-SA 2.0 · Wikimedia Commons",
+    "archivo": "File:Michael Schumacher, Ferrari F2001 (8968595731) (cropped).jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Michael_Schumacher,_Ferrari_F2001_(8968595731)_(cropped).jpg"
+  },
+  "f2002-2002-schumacher": {
+    "credito": "LeonWiki01 · CC BY-SA 4.0 · Wikimedia Commons",
+    "archivo": "File:Ferrari F2002.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Ferrari_F2002.jpg"
+  },
+  "f2004-2004-barrichello": {
+    "credito": "Martin Lee from London, UK · CC BY-SA 2.0 · Wikimedia Commons",
+    "archivo": "File:Rubens Barrichello - Ferrari F2004 at the 2004 British Grand Prix (50838015736).jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Rubens_Barrichello_-_Ferrari_F2004_at_the_2004_British_Grand_Prix_(50838015736).jpg"
+  },
+  "c23-2004-massa": {
+    "credito": "Martin Lee from London, UK · CC BY-SA 2.0 · Wikimedia Commons",
+    "archivo": "File:Felipe Massa - Sauber C23 at the 2004 British Grand Prix (50835367887).jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Felipe_Massa_-_Sauber_C23_at_the_2004_British_Grand_Prix_(50835367887).jpg"
+  },
+  "r24-2004-trulli": {
+    "credito": "Martin Lee from London, UK · CC BY-SA 2.0 · Wikimedia Commons",
+    "archivo": "File:Jarno Trulli - Renault R24 at the 2004 British Grand Prix (50838100142).jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Jarno_Trulli_-_Renault_R24_at_the_2004_British_Grand_Prix_(50838100142).jpg"
+  },
+  "ra106-2006-button": {
+    "credito": "BWard 1997 · CC BY 4.0 · Wikimedia Commons",
+    "archivo": "File:Honda RACING Gallery 2006 Honda RA106 Jenson Button (1).jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Honda_RACING_Gallery_2006_Honda_RA106_Jenson_Button_(1).jpg"
+  },
+  "f2007-2007-raikkonen": {
+    "credito": "Nic Redhead · CC BY-SA 2.0 · Wikimedia Commons",
+    "archivo": "File:Ferrari F2007 Kimi Räikkönen at Goodwood 2014 001.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Ferrari_F2007_Kimi_R%C3%A4ikk%C3%B6nen_at_Goodwood_2014_001.jpg"
+  },
+  "f108-2008-kubica": {
+    "credito": "Rick W. Dryve from Berlin, Germany · CC BY 2.0 · Wikimedia Commons",
+    "archivo": "File:BMW Sauber F1.08 - AMI Leipzig 2008 (4844556208).jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:BMW_Sauber_F1.08_-_AMI_Leipzig_2008_(4844556208).jpg"
+  },
+  "str3-2008-vettel": {
+    "credito": "Lukas Raich · CC BY-SA 4.0 · Wikimedia Commons",
+    "archivo": "File:Toro Rosso STR3 Hangar 7.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Toro_Rosso_STR3_Hangar_7.jpg"
+  },
+  "bgp001-2009-button": {
+    "credito": "Cord Rodefeld from Ulm, Germany · CC BY-SA 2.0 · Wikimedia Commons",
+    "archivo": "File:Jenson Button 2009 Germany.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Jenson_Button_2009_Germany.jpg"
+  },
+  "f138-2013-alonso": {
+    "credito": "TaurusEmerald · CC BY-SA 4.0 · Wikimedia Commons",
+    "archivo": "File:Fernando Alonso Ferrari F138 Petersen Automotive Museum.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Fernando_Alonso_Ferrari_F138_Petersen_Automotive_Museum.jpg"
+  },
+  "rb9-2013-vettel": {
+    "credito": "Leo Hidalgo (@yompyHERE) · CC BY 2.0 · Wikimedia Commons",
+    "archivo": "File:Red Bull RB9 Vettel F1 Jerez 2013.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Red_Bull_RB9_Vettel_F1_Jerez_2013.jpg"
+  },
+  "fw36-2014-bottas": {
+    "credito": "big-ashb · CC BY 2.0 · Wikimedia Commons",
+    "archivo": "File:2014 Williams FW36 Martini (14550628576).jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:2014_Williams_FW36_Martini_(14550628576).jpg"
+  },
+  "w05-2014-hamilton": {
+    "credito": "nhayashida · CC BY 2.0 · Wikimedia Commons",
+    "archivo": "File:Mercedes F1 W05 Hybrid (Lewis Hamilton).jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Mercedes_F1_W05_Hybrid_(Lewis_Hamilton).jpg"
+  },
+  "sf15t-2015-vettel": {
+    "credito": "Scott Cresswell from Melbourne, Australia · CC BY 2.0 · Wikimedia Commons",
+    "archivo": "File:Sebastian Vettel on Ferrari SF15-T - 2015 Australian Grand Prix - Qualifying (16700799680).jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Sebastian_Vettel_on_Ferrari_SF15-T_-_2015_Australian_Grand_Prix_-_Qualifying_(16700799680).jpg"
+  },
+  "sf70h-2017-vettel": {
+    "credito": "Original: Stephen Grimes Derivative work: Danyele · CC BY-SA 2.0 · Wikimedia Commons",
+    "archivo": "File:2017 British GP - Vettel's Ferrari SF70H with 'Shield' system (1) (edited).jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:2017_British_GP_-_Vettel%27s_Ferrari_SF70H_with_%27Shield%27_system_(1)_(edited).jpg"
+  },
+  "w11-2020-hamilton": {
+    "credito": "Artes Max from Spain · CC BY-SA 2.0 · Wikimedia Commons",
+    "archivo": "File:2020 Formula One tests Barcelona, Mercedes-AMG F1 W11 EQ Performance, Hamilton.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:2020_Formula_One_tests_Barcelona,_Mercedes-AMG_F1_W11_EQ_Performance,_Hamilton.jpg"
+  },
+  "rb18-2022-verstappen": {
+    "credito": "Dcmaradiaga · CC BY-SA 4.0 · Wikimedia Commons",
+    "archivo": "File:2022 Miami GP - Red Bull RB18 of Sergio Pérez.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:2022_Miami_GP_-_Red_Bull_RB18_of_Sergio_P%C3%A9rez.jpg"
+  },
+  "512f1-1964-bandini": {
+    "credito": "Neil · CC BY 2.0 · Wikimedia Commons",
+    "archivo": "File:Ferrari 1512 (35681758636).jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Ferrari_1512_(35681758636).jpg"
+  },
+  "bt52b-1983-piquet": {
+    "credito": "Jake Archibald · CC BY 2.0 · Wikimedia Commons",
+    "archivo": "File:Nelson Piquet driving Brabham BT52 2013 Goodwood Festival of Speed.jpg",
+    "pagina": "https://commons.wikimedia.org/wiki/File:Nelson_Piquet_driving_Brabham_BT52_2013_Goodwood_Festival_of_Speed.jpg"
   }
 }

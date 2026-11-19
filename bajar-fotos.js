@@ -17,7 +17,7 @@ const cred = fs.existsSync(CRED) ? JSON.parse(fs.readFileSync(CRED, "utf8")) : {
 const norm = (s) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase();
 const compact = (s) => norm(s).replace(/[^A-Z0-9]/g, "");
 // Lo que NO queremos: modelos a escala, réplicas, cascos, motores, logos, etc.
-const MALO = /model|scale|1[:_-]?(18|20|24|43)\b|diecast|die-cast|replica|lego|toy|miniatur|maqueta|helmet|casco|logo|badge|emblem|engine|motor\b|steering|cockpit|poster|stamp|sello|livery\b|drawing|sketch|\.svg$/i;
+const MALO = /model|scale|1[:_-]?(18|20|24|43)\b|diecast|die-cast|replica|lego|toy|miniatur|maqueta|helmet|casco|logo|badge|emblem|engine|motor\b|steering|cockpit|poster|stamp|sello|livery\b|drawing|sketch|\.svg$|pitot|probe|fl[uü]gel|\bnase\b|wheel|suspension|gearbox|detail|museum of jordan|jordan museum/i;
 
 async function api(params) {
   for (let i = 0; i < 6; i++) {
@@ -32,7 +32,16 @@ async function api(params) {
 // Para cambiar una: poné acá el archivo que quieras, borrá fotos/<id>.jpg y corré  node bajar-fotos.js <id>
 const FIJAS = {
   // tu modelo es la versión carenada (ruedas tapadas), no la de ruedas descubiertas
-  "w196-1955-fangio": "File:Paris - Retromobile 2014 - Mercedes-Benz W 196 R Stromlinie- 1954 - 001.jpg"
+  "w196-1955-fangio": "File:Paris - Retromobile 2014 - Mercedes-Benz W 196 R Stromlinie- 1954 - 001.jpg",
+  // la búsqueda automática eligió mal (estatua del museo de Jordania, Lotus rosa, auto diminuto…)
+  "jordan199-1999-frentzen": "File:Heinz-Harald Frentzen 1999 Canada.jpg",
+  "72d-1972-fittipaldi": "File:Emerson Fittipaldi 1972 Austrian GP.jpg",
+  "312t2-1977-lauda": "File:Niki Lauda - Ferrari 312T2 - 1976 Race of Champions, Brands Hatch.jpg",
+  "bgp001-2009-button": "File:Jenson Button 2009 Germany.jpg",
+  // no las encontraba solo
+  "a1b-1979-patrese": "File:Riccardo Patrese 1979 Imola.jpg",
+  "bt52b-1983-piquet": "File:Nelson Piquet driving Brabham BT52 2013 Goodwood Festival of Speed.jpg",
+  "512f1-1964-bandini": "File:Ferrari 1512 (35681758636).jpg"
 };
 
 function puntaje(title, car) {
@@ -80,19 +89,35 @@ async function info(title) {
   const plano = (v) => String((v && v.value) || "").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
   const autor = plano(m.Artist).slice(0, 60) || "autor desconocido";
   const lic = plano(m.LicenseShortName) || "ver Commons";
-  return { url: ii.thumburl || ii.url, pagina: ii.descriptionurl, credito: `${autor} · ${lic} · Wikimedia Commons` };
+  // si la miniatura de 1280 no está generada Wikimedia responde 429: probamos 960 y después el original
+  const urls = [ii.thumburl, ii.thumburl && ii.thumburl.replace(/\/1280px-/, "/960px-"), ii.url].filter((u, k, a) => u && a.indexOf(u) === k);
+  return { urls, original: ii.url, pagina: ii.descriptionurl, credito: `${autor} · ${lic} · Wikimedia Commons` };
 }
 
-async function bajar(url, dest) {
-  for (let i = 0; i < 8; i++) {
-    const r = await fetch(url, { headers: { "User-Agent": UA } });
-    if (r.ok) { fs.writeFileSync(dest, Buffer.from(await r.arrayBuffer())); return true; }
-    if (r.status !== 429 && r.status < 500) return false;
-    const espera = Math.min(600, 60 * 2 ** i);
-    console.log(`     (Wikimedia frena: ${r.status}, espero ${espera}s)`);
-    await sleep(espera * 1000);
+// El original puede pesar varios MB: lo dejamos en 1280 px de ancho (Windows, con System.Drawing).
+function achicar(file) {
+  const ps = `Add-Type -AssemblyName System.Drawing; $i=[System.Drawing.Image]::FromFile('${file}');
+    if ($i.Width -le 1280) { $i.Dispose(); exit }
+    $w=1280; $h=[int]($i.Height*1280/$i.Width); $b=New-Object System.Drawing.Bitmap $w,$h; $g=[System.Drawing.Graphics]::FromImage($b);
+    $g.InterpolationMode='HighQualityBicubic'; $g.DrawImage($i,0,0,$w,$h); $i.Dispose();
+    $c=[System.Drawing.Imaging.ImageCodecInfo]::GetImageEncoders()|?{$_.MimeType -eq 'image/jpeg'}; $p=New-Object System.Drawing.Imaging.EncoderParameters 1;
+    $p.Param[0]=New-Object System.Drawing.Imaging.EncoderParameter([System.Drawing.Imaging.Encoder]::Quality,[long]85); $b.Save('${file}',$c,$p)`;
+  try { require("child_process").execFileSync("powershell", ["-NoProfile", "-Command", ps.replace(/\n\s*/g, " ")]); }
+  catch (e) { console.log(`     (no pude achicar ${path.basename(file)}: queda el original)`); }
+}
+
+async function bajar(urls, dest) {
+  for (const url of urls) {
+    for (let i = 0; i < 3; i++) {
+      const r = await fetch(url, { headers: { "User-Agent": UA } });
+      if (r.ok) { fs.writeFileSync(dest, Buffer.from(await r.arrayBuffer())); return url; }
+      if (r.status !== 429 && r.status < 500) break;
+      const espera = 60 * (i + 1);
+      console.log(`     (Wikimedia frena: ${r.status}, espero ${espera}s)`);
+      await sleep(espera * 1000);
+    }
   }
-  return false;
+  return null;
 }
 
 (async () => {
@@ -111,7 +136,9 @@ async function bajar(url, dest) {
       if (probar) { console.log(`? ${nombre} ← ${title}`); ok++; continue; }
       const i = await info(title);
       if (!i) { console.log(`✗ ${nombre}: sin datos de ${title}`); sinResultado.push(car.id); continue; }
-      if (await bajar(i.url, path.join(DIR, car.id + ".jpg"))) {
+      const dest = path.join(DIR, car.id + ".jpg"), usada = await bajar(i.urls, dest);
+      if (usada) {
+        if (usada === i.original) achicar(dest);
         cred[car.id] = { credito: i.credito, archivo: title, pagina: i.pagina };
         fs.writeFileSync(CRED, JSON.stringify(cred, null, 2));
         ok++; console.log(`✓ ${nombre} ← ${title}`);

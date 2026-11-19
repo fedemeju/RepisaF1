@@ -5,3 +5,7 @@ node_modules/
 
 # Audios largos de trabajo (se cortan con cortar.js)
 audio/bloques/
+
+# Hojas para revisar fotos (locales)
+revision-fotos*.jpg
+revision-fotos.html
