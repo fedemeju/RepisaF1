@@ -471,3 +471,72 @@ a.driver .meta, .driver .meta { flex: 1; min-width: 0; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* ============ Repisa 3D ============ */
+.r3d-cta { border-color: rgba(160, 170, 175, .35); background: radial-gradient(300px 120px at 0% 50%, rgba(150, 160, 166, .22), transparent 70%), var(--surface); }
+.r3d-cta .tc-ic { background: linear-gradient(135deg, #a9b1b5, #6e777c); box-shadow: 0 6px 16px rgba(0, 0, 0, .35); }
+.r3d { margin: 0 -16px; }
+.r3d-stage {
+  position: relative; overflow: hidden; touch-action: none; user-select: none; -webkit-user-select: none;
+  perspective: 1100px; perspective-origin: 50% 45%;
+  display: grid; place-items: center; min-height: 360px;
+  background: radial-gradient(70% 60% at 50% 40%, #2a2c31, #101114 75%);
+}
+.r3d-cam, .r3d-world, .r3d-shelf { transform-style: preserve-3d; }
+.r3d-cam, .r3d-world { will-change: transform; }
+.r3d-stage.anim .r3d-cam, .r3d-stage.anim .r3d-world { transition: transform .6s var(--ease); }
+.r3d-shelf { position: relative; }
+.r3d-shelf > * { position: absolute; left: 0; top: 0; backface-visibility: visible; }
+.r3d-cam, .r3d-world, .r3d-shelf, .r3d-back, .r3d-div, .r3d-board, .r3d-edge { pointer-events: none; }
+.r3d-cell { pointer-events: auto; }
+.r3d-div, .r3d-board { backface-visibility: hidden !important; }
+/* MDF gris, como el mueble */
+.r3d-back { background: linear-gradient(180deg, #8b9296, #7a8185); box-shadow: inset 0 0 40px rgba(0, 0, 0, .35); }
+.r3d-div.r { background: linear-gradient(90deg, #7d8589, #a3aaae); }
+.r3d-div.l { background: linear-gradient(90deg, #6a7276, #575f63); }
+.r3d-board.top { background: linear-gradient(180deg, #8f969a, #b5bbbe); }
+.r3d-board.bot { background: linear-gradient(0deg, #4a5155, #616a6e); }
+.r3d-edge { background: #a7aeb1; box-shadow: 0 0 0 .5px rgba(0, 0, 0, .25); }
+.r3d-edge.outer { background: #9aa1a4; }
+.r3d-cell {
+  padding: 0; border: 0; background: #1b1c20; cursor: pointer; overflow: hidden; border-radius: 2px;
+  transform: translateZ(var(--z)); transition: transform .45s var(--ease), box-shadow .45s var(--ease);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .35);
+}
+.r3d-cell img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+/* sombra del estante de arriba sobre la cajita */
+.r3d-cell::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(0, 0, 0, .38), transparent 30%); }
+.r3d-cell.pop { transform: translateZ(var(--pop)) scale(1.04); box-shadow: 0 18px 40px rgba(0, 0, 0, .6), 0 0 0 2px var(--red-2); }
+.r3d-cell.pop::after { opacity: 0; }
+.r3d-cell.sin img { filter: grayscale(.6) brightness(.8); }
+.r3d-b { position: absolute; z-index: 1; top: 3px; width: 14px; height: 14px; border-radius: 50%; display: grid; place-items: center; font-size: 9px; font-weight: 800; line-height: 1; }
+.r3d-b.heard { left: 3px; background: #22c55e; color: #fff; }
+.r3d-b.fav { right: 3px; background: var(--gold); color: #1a1300; }
+.r3d-b.sin { left: 50%; top: 50%; transform: translate(-50%, -50%); width: 22px; height: 22px; font-size: 14px; background: rgba(0, 0, 0, .7); color: #fff; border: 1px solid rgba(255, 255, 255, .4); }
+.r3d-hint {
+  position: absolute; left: 0; right: 0; bottom: 12px; margin: 0; text-align: center; font-size: 12.5px; color: rgba(255, 255, 255, .7);
+  pointer-events: none; transition: opacity .6s;
+}
+.r3d-hint.gone { opacity: 0; }
+.r3d-zoom { position: absolute; right: 10px; top: 10px; display: flex; flex-direction: column; gap: 6px; z-index: 2; }
+.r3d-zoom button {
+  width: 38px; height: 38px; border-radius: 12px; border: 1px solid var(--line-2); cursor: pointer; font-size: 20px; line-height: 1;
+  background: rgba(24, 24, 31, .8); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+.r3d-panel {
+  position: relative; margin: -18px 12px 0; z-index: 3; padding: 16px 18px 18px; border-radius: var(--r-lg);
+  background: rgba(24, 24, 31, .96); border: 1px solid var(--line-2); box-shadow: 0 -10px 30px rgba(0, 0, 0, .45);
+  animation: r3dUp .35s var(--ease);
+}
+.r3d-panel[hidden] { display: none; }
+@keyframes r3dUp { from { opacity: 0; transform: translateY(14px); } }
+.r3d-panel h3 { font-size: 26px; line-height: 1.1; margin: 2px 0 2px; }
+.r3d-k { font-size: 12.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.r3d-k .gold { color: var(--gold); font-weight: 700; }
+.r3d-sub { margin: 0 0 12px; color: var(--muted); font-size: 14.5px; }
+.r3d-act { display: flex; gap: 8px; flex-wrap: wrap; }
+.r3d-act button { flex: 1 1 140px; height: 44px; border-radius: 14px; border: 1px solid var(--line-2); cursor: pointer; font-weight: 700; }
+.r3d-act .btn-play { background: linear-gradient(135deg, var(--red-2), var(--red)); border-color: transparent; color: #fff; }
+.r3d-act .btn-ficha { background: var(--surface-3); }
+.r3d-x { position: absolute; right: 10px; top: 8px; width: 32px; height: 32px; border-radius: 50%; border: 0; background: var(--surface-3); font-size: 20px; line-height: 1; cursor: pointer; }
+@media (prefers-reduced-motion: reduce) { .r3d-stage.anim .r3d-cam, .r3d-stage.anim .r3d-world, .r3d-cell { transition: none; } }

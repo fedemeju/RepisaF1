@@ -49,6 +49,7 @@
     book: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M4 4h6a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4zM20 4h-6a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h6z"/></svg>',
     link: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>',
     chev: '<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>',
+    cube: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 2.5l8.5 4.8v9.4L12 21.5l-8.5-4.8V7.3z"/><path d="M3.5 7.3L12 12l8.5-4.7M12 12v9.5"/></svg>',
     search: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>',
     headphonesBig: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="5" height="7" rx="2"/><rect x="16" y="14" width="5" height="7" rx="2"/></svg>',
     headphones: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="5" height="7" rx="2"/><rect x="16" y="14" width="5" height="7" rx="2"/></svg>',
@@ -213,6 +214,11 @@
         <span class="tc-txt"><b>Escuchar la repisa</b><small>Las historias una tras otra, como en un museo</small></span>
         ${ICON.chev}
       </button>
+      <a class="tour-cta r3d-cta" href="#/repisa">
+        <span class="tc-ic">${ICON.cube}</span>
+        <span class="tc-txt"><b>Ver la repisa en 3D</b><small>Tu mueble, cada auto en su lugar</small></span>
+        ${ICON.chev}
+      </a>
       <div class="searchbox">${ICON.search}<input class="search" id="q" type="search" placeholder="${tab === "autos" ? "Buscar equipo, piloto o año" : "Buscar piloto o país"}" value="${esc(query)}" autocomplete="off"></div>
       ${tab === "autos" ? `<div class="filters" role="group" aria-label="Mostrar">
           ${[["todos", "Todos", cars.length], ["favoritos", "★ Favoritos", cars.filter((c) => store.fav(c.id)).length], ["sin-escuchar", "Sin escuchar", cars.filter((c) => withAudio.has(c.id) && !store.heard(c.id)).length]]
@@ -640,13 +646,31 @@
     }));
   }
 
+  // ---------- Repisa 3D (repisa3d.js + data/repisa.js) ----------
+  let unmount3d = null, volverA = "#/";
+  function shelf3d() {
+    back.hidden = false;
+    appbarTitle.textContent = "Tu repisa";
+    unmount3d = Repisa3D.mount(view, {
+      byId, isChampion,
+      heard: (id) => store.heard(id), fav: (id) => store.fav(id), hasAudio: (id) => withAudio.has(id),
+      open: (id, autoplay) => { autoplayNext = !!autoplay; location.hash = "#/auto/" + id; }
+    });
+  }
+
   function route() {
     // si el usuario se va a otra pantalla, el recorrido termina
     if (tour && location.hash !== "#/auto/" + tour.ids[tour.i]) endTour(false);
     if (player) { player.stop(); player = null; }
     const m = location.hash.match(/^#\/auto\/(.+)$/);
     const p = location.hash.match(/^#\/piloto\/(.+)$/);
-    if (m) detail(decodeURIComponent(m[1]));
+    if (unmount3d) { unmount3d(); unmount3d = null; }
+    // la flecha de volver lleva a la lista o a la repisa 3D, según de dónde se vino
+    if (location.hash === "#/repisa") volverA = "#/repisa";
+    else if (!m && !p) volverA = "#/";
+    back.setAttribute("href", volverA);
+    if (location.hash === "#/repisa") shelf3d();
+    else if (m) detail(decodeURIComponent(m[1]));
     else if (p) driverPage(decodeURIComponent(p[1]));
     else home();
     view.style.animation = "none"; void view.offsetWidth; view.style.animation = "";
@@ -655,7 +679,10 @@
   window.addEventListener("hashchange", route);
   route();
   // cuando se sabe qué autos tienen mp3, se actualiza el inicio (etiquetas y contadores)
-  audioCheck.then(() => { if (!/^#\/(auto|piloto)\//.test(location.hash)) { const y = scrollY; home(); scrollTo(0, y); } });
+  audioCheck.then(() => {
+    if (location.hash === "#/repisa") route();
+    else if (!/^#\/(auto|piloto)\//.test(location.hash)) { const y = scrollY; home(); scrollTo(0, y); }
+  });
 
   if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
     navigator.serviceWorker.register("sw.js").catch(() => {});
