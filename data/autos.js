@@ -3003,5 +3003,105 @@ window.AUTOS = [
         texto: "Tres años después de este debut, Schumacher fue campeón por primera vez."
       }
     ]
+  },
+
+  {
+    id: "mp4-2b-1985-prost",
+    etiqueta: {
+      equipo: "McLaren",
+      chasis: "MP4/2B",
+      anio: 1985,
+      piloto: "Alain Prost",
+      carrera: null
+    },
+    alias: ["MP 4/2B", "MP4 2B", "MP4-2B", "MP42B", "TAG"],
+    color: "#f2f2f2",
+    acento: "#d40000",
+    numero: 2,
+    ficha: [
+      ["Motor", "TAG-Porsche TTE PO1 · 1.5 L V6 turbo"],
+      ["Diseño", "John Barnard"],
+      ["Chasis", "Monocasco de fibra de carbono, la idea con la que McLaren se adelantó a todos"],
+      ["Neumáticos", "Goodyear"]
+    ],
+    pilotos: [
+      { nombre: "Alain Prost", numero: 2, resultado: "Campeón del mundo · 5 victorias" },
+      { nombre: "Niki Lauda", numero: 1, resultado: "Ganó en Países Bajos: la última victoria de su carrera" }
+    ],
+    temporada: {
+      carreras: 16,
+      victorias: 6,
+      poles: null,
+      constructores: "1.º",
+      pilotos: "Prost campeón (1.er título)"
+    },
+    titulos: ["Campeonato de Pilotos 1985 — Alain Prost", "Campeonato de Constructores 1985 — McLaren"],
+    carreraModelo: null,
+    importancia: [
+      "Primer título de Alain Prost y primer campeón del mundo francés.",
+      "El chasis de fibra de carbono de McLaren, que todos copiaron después.",
+      "Segundo año seguido de McLaren campeón: en 1984 ganó Lauda con el MP4/2."
+    ],
+    curiosidades: [
+      "Prost ganó en San Marino y lo descalificaron: el auto pesaba menos que el mínimo porque se había quedado sin nafta.",
+      "Su compañero era Niki Lauda, que en 1984 le había ganado el título por medio punto.",
+      "Lauda ganó en Zandvoort con este auto, la última de sus 25 victorias, y a fin de año se retiró."
+    ],
+    relato: "Medio punto. Por esa diferencia Alain Prost perdió el campeonato de 1984 contra su compañero Niki Lauda. Al año siguiente, con este McLaren MP4/2B, se tomó revancha. El auto tenía un chasis de fibra de carbono, la gran idea del diseñador John Barnard, y un motor turbo de Porsche. Prost ganó cinco carreras. Y podrían haber sido seis: en San Marino cruzó primero, pero el auto se había quedado sin nafta y pesaba menos que el mínimo. Lo descalificaron. Igual fue campeón, el primero de Francia en la historia. Lauda, en su último año, ganó una vez más en Holanda, la última victoria de su carrera, y se retiró. Era el comienzo de la era Prost.",
+    audio: "audio/mp4-2b-1985-prost.mp3",
+    conexiones: [
+      { id: "fw15c-1993-prost", texto: "Ocho años después Prost ganó su cuarto y último título con el Williams FW15C." },
+      { id: "312t2-1977-lauda", texto: "Lauda, su compañero ese año, había sido campeón con Ferrari." }
+    ]
+  },
+
+  {
+    id: "fw11b-1987-piquet",
+    etiqueta: {
+      equipo: "Williams",
+      chasis: "FW11B",
+      anio: 1987,
+      piloto: "Nelson Piquet",
+      carrera: null
+    },
+    alias: ["FW 11B", "FW11 B", "FW11", "CANON", "HONDA"],
+    color: "#0a2a8a",
+    acento: "#f5d000",
+    numero: 6,
+    ficha: [
+      ["Motor", "Honda RA167E · 1.5 L V6 turbo"],
+      ["Diseño", "Patrick Head · Frank Dernie"],
+      ["Neumáticos", "Goodyear"],
+      ["Patrocinio", "Canon"]
+    ],
+    pilotos: [
+      { nombre: "Nelson Piquet", numero: 6, resultado: "Campeón del mundo · 3 victorias" },
+      { nombre: "Nigel Mansell", numero: 5, resultado: "2.º · 6 victorias" }
+    ],
+    temporada: {
+      carreras: 16,
+      victorias: 9,
+      poles: null,
+      constructores: "1.º",
+      pilotos: "Piquet campeón (3.er título)"
+    },
+    titulos: ["Campeonato de Pilotos 1987 — Nelson Piquet", "Campeonato de Constructores 1987 — Williams"],
+    carreraModelo: null,
+    importancia: [
+      "Tercer título de Nelson Piquet, que igualó así a Lauda, Brabham y Stewart.",
+      "Williams-Honda fue el auto a vencer: ganó nueve carreras y los dos campeonatos.",
+      "En Monza, Piquet ganó con suspensión activa: el comienzo de la tecnología del FW14B."
+    ],
+    curiosidades: [
+      "Piquet y Mansell, compañeros de equipo, no se hablaban: la pelea más dura del año era adentro del box.",
+      "Piquet tuvo un accidente fortísimo en Imola y se perdió esa carrera, pero siguió corriendo.",
+      "Mansell se lastimó la espalda en la clasificación de Japón y Piquet quedó campeón sin correr esa carrera."
+    ],
+    relato: "Ganar menos y ser campeón. Eso hizo Nelson Piquet en 1987 con este Williams FW11B. Su compañero, Nigel Mansell, ganó seis carreras; Piquet, solo tres. Pero Piquet sumaba puntos siempre, y los dos se llevaban tan mal que casi no se hablaban dentro del mismo equipo. El auto, con motor turbo Honda, era el mejor de la grilla. En Imola, Piquet tuvo un accidente tremendo en la curva Tamburello, y aun así siguió peleando. En Monza ganó con un auto de suspensión activa, la tecnología que años después haría imbatible al FW14B. Y en Japón, Mansell se golpeó la espalda en la clasificación y no pudo correr. Piquet fue campeón por tercera vez.",
+    audio: "audio/fw11b-1987-piquet.mp3",
+    conexiones: [
+      { id: "bt52b-1983-piquet", texto: "Su título anterior, con el Brabham turbo de 1983." },
+      { id: "fw14b-1992-mansell", texto: "Mansell, su rival en el box, fue campeón con el FW14B en 1992." }
+    ]
   }
 ];

@@ -7,6 +7,9 @@
 (function () {
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const IDLE = { rx: 4, ry: -10 };
+  // El mueble se arma K veces más grande y se achica con la cámara: el navegador dibuja cada
+  // cajita a su tamaño en el armado, así al acercar se ve nítida (al revés se ve pixelada).
+  const K = 3;
   let saved = null; // vista que queda al salir (para volver al mismo lugar)
 
   function mount(view, api) {
@@ -31,10 +34,13 @@
     let W, H, cw, ch, D, t;
     function build() {
       const avail = stage.clientWidth - 28;
-      W = Math.min(avail, 820); cw = W / R.columnas; ch = cw * 0.48; H = ch * R.filas;
-      D = cw * 0.62; t = Math.max(3, cw * 0.05);
-      stage.style.height = Math.round(Math.min(H + 120, innerHeight - 150 > H + 40 ? innerHeight - 150 : H + 120)) + "px";
+      W = Math.min(avail, 820) * K; cw = W / R.columnas; ch = cw * 0.48; H = ch * R.filas;
+      D = cw * 0.62; t = Math.max(3 * K, cw * 0.05);
+      const Hv = H / K;
+      stage.style.height = Math.round(Math.min(Hv + 120, innerHeight - 150 > Hv + 40 ? innerHeight - 150 : Hv + 120)) + "px";
+      shelf.style.setProperty("--k", K);
       shelf.style.width = W + "px"; shelf.style.height = H + "px";
+      shelf.style.left = -W / 2 + "px"; shelf.style.top = -H / 2 + "px";
       let html = `<div class="r3d-back" style="width:${W}px;height:${H}px;transform:translateZ(${-D}px)"></div>`;
       // Paredes y estantes en pedazos de un compartimento: así ningún plano atraviesa a otro
       // (si se cruzan, el navegador los dibuja cortados en triángulos).
@@ -68,12 +74,13 @@
     const tilt = { x: 0, y: 0, tx: 0, ty: 0 };
     let sel = null, before = null;
     function apply() {
-      cam.style.transform = `translate(${st.px}px, ${st.py}px) scale(${st.s})`;
+      const k = st.s / K;
+      cam.style.transform = `translate(${st.px}px, ${st.py}px) scale3d(${k}, ${k}, ${k})`;
       world.style.transform = `rotateX(${(st.rx + tilt.x).toFixed(2)}deg) rotateY(${(st.ry + tilt.y).toFixed(2)}deg)`;
     }
     function animate(on) { stage.classList.toggle("anim", on); }
     function limitPan() {
-      const mx = Math.max(0, (W * st.s - stage.clientWidth) / 2 + 40), my = Math.max(0, (H * st.s - stage.clientHeight) / 2 + 60);
+      const mx = Math.max(0, (W / K * st.s - stage.clientWidth) / 2 + 40), my = Math.max(0, (H / K * st.s - stage.clientHeight) / 2 + 60);
       st.px = clamp(st.px, -mx, mx); st.py = clamp(st.py, -my, my);
     }
     function zoomTo(s, cx = 0, cy = 0) { // cx, cy: punto de la pantalla (relativo al centro) que queda fijo
@@ -93,8 +100,8 @@
       if (sel === cell) return openCar(id);
       if (sel) sel.classList.remove("pop"); else before = { ...st };
       sel = cell; cell.classList.add("pop");
-      const s = clamp((stage.clientWidth * 0.78) / cw, 1.6, 3.2);
-      const cx = (c + 0.5) * cw - W / 2, cy = (r + 0.5) * ch - H / 2;
+      const s = clamp((stage.clientWidth * 0.78) / (cw / K), 1.6, 3.2);
+      const cx = ((c + 0.5) * cw - W / 2) / K, cy = ((r + 0.5) * ch - H / 2) / K;
       animate(true);
       st.s = s; st.px = -cx * s; st.py = -cy * s - stage.clientHeight * 0.12; st.rx = 2; st.ry = 0;
       apply();
