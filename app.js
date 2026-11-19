@@ -226,7 +226,7 @@
         <nav class="jump" aria-label="Ir a década">${decades.map((d) => `<button class="chip" data-d="${d}">${decadeName(d)}</button>`).join("")}</nav>` : ""}
       <div id="list"></div>`;
     renderList();
-    document.getElementById("tourBtn").onclick = openTourSheet;
+    document.getElementById("tourBtn").onclick = () => openTourSheet();
     view.querySelectorAll(".filter").forEach((b) => (b.onclick = () => { listFilter = b.dataset.f; home(); }));
     const qi = document.getElementById("q");
     qi.oninput = () => { query = qi.value; renderList(); };
@@ -571,45 +571,115 @@
   async function keepAwake() { try { wakeLock = await navigator.wakeLock.request("screen"); } catch (_) {} }
   document.addEventListener("visibilitychange", () => { if (tour && document.visibilityState === "visible") keepAwake(); });
 
-  function openTourSheet() {
-    const pool = cars.filter((c) => withAudio.size ? withAudio.has(c.id) : !!c.audio);
-    const opts = [
-      ["todo", "Toda la repisa", pool],
-      ["sin", "Las que no escuchaste", pool.filter((c) => !store.heard(c.id))],
-      ["fav", "Tus favoritos", pool.filter((c) => store.fav(c.id))],
-      ...[...new Set(pool.map(decadeOf))].map((d) => ["d" + d, decadeName(d), pool.filter((c) => decadeOf(c) === d)])
-    ].filter(([, , list]) => list.length);
+  // Dos formas de recorrer: "3d" (la cámara viaja por la repisa 3D de caja en caja) o "fichas"
+  // (abre la ficha de cada auto). Se recuerda la última elegida.
+  let tourModo = "3d";
+  try { tourModo = localStorage.getItem("repisa-tour-modo") || "3d"; } catch (_) {}
+  const enRepisa = () => (window.REPISA ? REPISA.lugares.flat().filter(Boolean) : []);
+
+  function openTourSheet(modoIni) {
+    let modo = modoIni || tourModo;
+    const optsFor = (m) => {
+      const orden = enRepisa();
+      let pool = cars.filter((c) => withAudio.size ? withAudio.has(c.id) : !!c.audio);
+      // en la repisa 3D: solo los autos que están en el mueble, en el orden del mueble
+      if (m === "3d") pool = pool.filter((c) => orden.includes(c.id)).sort((a, b) => orden.indexOf(a.id) - orden.indexOf(b.id));
+      return [
+        ["todo", "Toda la repisa", pool],
+        ["sin", "Las que no escuchaste", pool.filter((c) => !store.heard(c.id))],
+        ["fav", "Tus favoritos", pool.filter((c) => store.fav(c.id))],
+        ...[...new Set(pool.map(decadeOf))].sort().map((d) => ["d" + d, decadeName(d), pool.filter((c) => decadeOf(c) === d)])
+      ].filter(([, , list]) => list.length);
+    };
     const sheet = document.createElement("div");
     sheet.className = "sheet-back";
     sheet.innerHTML = `<div class="sheet" role="dialog" aria-label="Escuchar la repisa">
       <div class="sheet-grab"></div>
       <h2>Escuchar la repisa</h2>
       <p>Las historias se reproducen una tras otra, mostrando cada auto. Dejá el celu y que la repisa se cuente sola.</p>
-      <div class="sheet-opts">${opts.map(([k, l, list], i) => `<button class="sheet-opt ${i === 0 ? "main" : ""}" data-k="${k}">
-        <b>${l}</b><small>${list.length} ${list.length === 1 ? "historia" : "historias"} · ~${minutos(list.length)} min</small>${ICON.chev}</button>`).join("")}</div>
+      <div class="sheet-mode" role="group" aria-label="Cómo mostrar los autos">
+        <button data-m="3d">${ICON.cube} En la repisa 3D</button>
+        <button data-m="fichas">Con las fichas</button>
+      </div>
+      <div class="sheet-opts"></div>
       <button class="btn sheet-cancel">Cancelar</button></div>`;
     document.body.appendChild(sheet);
     const close = () => sheet.remove();
     sheet.onclick = (ev) => { if (ev.target === sheet) close(); };
     sheet.querySelector(".sheet-cancel").onclick = close;
-    sheet.querySelectorAll(".sheet-opt").forEach((b) => (b.onclick = () => {
-      const [, l, list] = opts.find(([k]) => k === b.dataset.k);
-      close();
-      startTour(list.map((c) => c.id), l);
+    const render = () => {
+      const opts = optsFor(modo);
+      sheet.querySelectorAll(".sheet-mode button").forEach((b) => b.classList.toggle("on", b.dataset.m === modo));
+      const box = sheet.querySelector(".sheet-opts");
+      box.innerHTML = opts.map(([k, l, list], i) => `<button class="sheet-opt ${i === 0 ? "main" : ""}" data-k="${k}">
+        <b>${l}</b><small>${list.length} ${list.length === 1 ? "historia" : "historias"} · ~${minutos(list.length)} min</small>${ICON.chev}</button>`).join("");
+      box.querySelectorAll(".sheet-opt").forEach((b) => (b.onclick = () => {
+        const [, l, list] = opts.find(([k]) => k === b.dataset.k);
+        close();
+        startTour(list.map((c) => c.id), l, modo);
+      }));
+    };
+    sheet.querySelectorAll(".sheet-mode button").forEach((b) => (b.onclick = () => {
+      modo = b.dataset.m; tourModo = modo;
+      try { localStorage.setItem("repisa-tour-modo", modo); } catch (_) {}
+      render();
     }));
+    render();
   }
 
-  function startTour(ids, nombre) {
+  // Un solo reproductor para el recorrido 3D: se "destraba" con el toque que arranca el recorrido,
+  // así el celu después lo deja sonar solo de auto en auto.
+  const tourAudio = new Audio();
+  let tourT = 0;
+  function startTour(ids, nombre, modo = "fichas") {
     if (!ids.length) return;
-    tour = { ids, i: 0, nombre };
+    tour = { ids, i: 0, nombre, modo };
+    if (modo === "3d") { tourAudio.src = byId[ids[0]].audio || ""; tourAudio.play().then(() => tourAudio.pause()).catch(() => {}); }
     keepAwake();
     goTour();
   }
   function goTour() {
+    if (tour.modo === "3d") {
+      autoplayNext = false;
+      if (location.hash !== "#/repisa") location.hash = "#/repisa"; // al montar la repisa sigue con focusTour3d
+      else focusTour3d();
+      tourBarSync();
+      return;
+    }
     autoplayNext = true;
     const h = "#/auto/" + tour.ids[tour.i];
     if (location.hash === h) route(); else location.hash = h;
     tourBarSync();
+  }
+  // Recorrido 3D: la cámara va a la caja, la caja sale para adelante y arranca el relato
+  function focusTour3d() {
+    if (!tour || tour.modo !== "3d" || !Repisa3D.current) return;
+    clearTimeout(tourT);
+    if (player) { player.stop(); player = null; }
+    const car = byId[tour.ids[tour.i]];
+    Repisa3D.current.focus(car.id);
+    tourBarSync();
+    tourT = setTimeout(() => playTour3d(car), 900);
+  }
+  function playTour3d(car) {
+    if (!tour || !car.audio) { tourT = setTimeout(() => tourStep(1), 800); return; }
+    const a = tourAudio;
+    let playing = false;
+    const onEnd = () => {
+      playing = false; store.setHeard(car.id);
+      if (Repisa3D.current) Repisa3D.current.markHeard(car.id);
+      tourT = setTimeout(() => tourStep(1), 1500); // pausa corta y al próximo auto
+    };
+    const onErr = () => { playing = false; tourT = setTimeout(() => tourStep(1), 800); };
+    a.onended = onEnd; a.onerror = onErr;
+    a.src = car.audio;
+    const play = () => a.play().then(() => { playing = true; tourBarSync(); }).catch(() => { playing = false; tourBarSync(); });
+    player = {
+      stop: () => { a.pause(); a.onended = a.onerror = null; playing = false; },
+      toggle: () => { if (playing) { a.pause(); playing = false; tourBarSync(); } else play(); },
+      isPlaying: () => playing
+    };
+    play();
   }
   function tourStep(d) {
     if (!tour) return;
@@ -619,10 +689,16 @@
     tour.i = n; goTour();
   }
   function endTour(terminado) {
+    const modo = tour && tour.modo;
     tour = null;
+    clearTimeout(tourT);
+    if (modo === "3d" && player) { player.stop(); player = null; }
     if (wakeLock) { wakeLock.release().catch(() => {}); wakeLock = null; }
     tourBarSync();
-    if (terminado) { location.hash = "#/"; }
+    if (terminado) {
+      if (modo === "3d") { if (Repisa3D.current) Repisa3D.current.clear(); }
+      else location.hash = "#/";
+    }
   }
   function tourBarSync() {
     if (!tour) { tourBar.hidden = true; fab.hidden = false; return; }
@@ -653,13 +729,24 @@
     unmount3d = Repisa3D.mount(view, {
       byId, isChampion,
       heard: (id) => store.heard(id), fav: (id) => store.fav(id), hasAudio: (id) => withAudio.has(id),
-      open: (id, autoplay) => { autoplayNext = !!autoplay; location.hash = "#/auto/" + id; }
+      open: (id, autoplay) => { autoplayNext = !!autoplay; location.hash = "#/auto/" + id; },
+      // recorrido guiado dentro de la repisa
+      startTour: () => openTourSheet("3d"),
+      touring: () => !!(tour && tour.modo === "3d"),
+      onTap: (id) => { // tocar un auto durante el recorrido: salta a ese auto (o pausa si es el actual)
+        if (!tour || tour.modo !== "3d") return false;
+        const i = tour.ids.indexOf(id);
+        if (i === tour.i) { if (player) player.toggle(); return true; }
+        if (i >= 0) { tour.i = i; goTour(); return true; }
+        endTour(false); return false;
+      }
     });
+    if (tour && tour.modo === "3d") setTimeout(focusTour3d, 800); // deja terminar la entrada del mueble
   }
 
   function route() {
     // si el usuario se va a otra pantalla, el recorrido termina
-    if (tour && location.hash !== "#/auto/" + tour.ids[tour.i]) endTour(false);
+    if (tour && location.hash !== (tour.modo === "3d" ? "#/repisa" : "#/auto/" + tour.ids[tour.i])) endTour(false);
     if (player) { player.stop(); player = null; }
     const m = location.hash.match(/^#\/auto\/(.+)$/);
     const p = location.hash.match(/^#\/piloto\/(.+)$/);
@@ -679,7 +766,7 @@
   route();
   // cuando se sabe qué autos tienen mp3, se actualiza el inicio (etiquetas y contadores)
   audioCheck.then(() => {
-    if (location.hash === "#/repisa") route();
+    if (location.hash === "#/repisa" && !tour) route();
     else if (!/^#\/(auto|piloto)\//.test(location.hash)) { const y = scrollY; home(); scrollTo(0, y); }
   });
 

@@ -426,6 +426,14 @@ a.driver .meta, .driver .meta { flex: 1; min-width: 0; }
 .sheet-opt small { color: var(--muted); font-size: 13px; margin-left: auto; white-space: nowrap; }
 .sheet-opt.main { border-color: rgba(255, 59, 48, .45); background: linear-gradient(100deg, rgba(225, 6, 0, .22), var(--surface-2) 70%); }
 .sheet-cancel { width: 100%; margin-top: 12px; }
+/* elegir cómo se muestra el recorrido: en la repisa 3D o con las fichas */
+.sheet-mode { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; margin: 0 0 12px; border-radius: 14px; background: var(--surface-2); border: 1px solid var(--line); }
+.sheet-mode button {
+  display: flex; align-items: center; justify-content: center; gap: 6px; height: 40px; border: 0; border-radius: 10px; cursor: pointer;
+  background: none; color: var(--muted); font-family: var(--display); font-weight: 700; font-size: 14.5px;
+}
+.sheet-mode button svg { width: 17px; height: 17px; }
+.sheet-mode button.on { background: var(--text); color: #111; }
 
 /* ============ Escáner ============ */
 .scanner { position: fixed; inset: 0; z-index: 30; background: #000; }
@@ -599,6 +607,10 @@ a.driver .meta, .driver .meta { flex: 1; min-width: 0; }
 .r3d-act button { flex: 1 1 140px; height: 44px; border-radius: 14px; border: 1px solid var(--line-2); cursor: pointer; font-weight: 700; }
 .r3d-act .btn-play { background: linear-gradient(135deg, var(--red-2), var(--red)); border-color: transparent; color: #fff; }
 .r3d-act .btn-ficha { background: var(--surface-3); }
+/* durante el recorrido guiado */
+.r3d-now { flex: 1 1 140px; display: flex; align-items: center; justify-content: center; gap: 8px; height: 44px; border-radius: 14px; background: rgba(255, 59, 48, .14); color: var(--red-2); font-weight: 700; font-size: 14px; }
+.r3d-now i { width: 8px; height: 8px; border-radius: 50%; background: var(--red-2); animation: pulse 1.2s ease-in-out infinite; }
+.r3d-zoom .r3d-tourbtn { margin-top: 6px; background: linear-gradient(135deg, var(--red-2), var(--red)); border-color: transparent; color: #fff; font-size: 15px; box-shadow: 0 6px 16px rgba(225, 6, 0, .35); }
 .r3d-x { position: absolute; right: 10px; top: 8px; width: 32px; height: 32px; border-radius: 50%; border: 0; background: var(--surface-3); font-size: 20px; line-height: 1; cursor: pointer; }
 @media (prefers-reduced-motion: reduce) { .r3d-stage.anim .r3d-cam, .r3d-stage.anim .r3d-world, .r3d-cell { transition: none; } }
 

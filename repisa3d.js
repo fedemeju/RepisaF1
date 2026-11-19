@@ -32,6 +32,7 @@
             <button id="r3dIn" aria-label="Acercar">+</button>
             <button id="r3dOut" aria-label="Alejar">−</button>
             <button id="r3dReset" aria-label="Ver el mueble entero">⟲</button>
+            ${api.startTour ? '<button id="r3dTour" class="r3d-tourbtn" aria-label="Recorrido guiado: la repisa se cuenta sola">▶</button>' : ""}
           </div>
         </div>
         <div class="r3d-panel" id="r3dPanel" hidden></div>
@@ -114,9 +115,11 @@
     if (!saved) requestAnimationFrame(() => { animate(true); st.ry = IDLE.ry; apply(); setTimeout(() => animate(false), 900); });
 
     // ---------- selección ----------
-    function select(cell) {
+    // user: lo tocó la persona (no el recorrido guiado)
+    function select(cell, user) {
       const r = +cell.dataset.r, c = +cell.dataset.c, id = R.lugares[r][c];
-      if (sel === cell) return openCar(id);
+      if (user && id && api.onTap && api.onTap(id)) return;
+      if (sel === cell) return user ? openCar(id) : undefined;
       if (sel) sel.classList.remove("pop"); else before = { ...st };
       sel = cell; cell.classList.add("pop");
       const s = clamp((stage.clientWidth * 0.78) / (cw / K), 1.6, 3.2);
@@ -152,7 +155,8 @@
           <h3>${e.chasis}</h3>
           <p class="r3d-sub">${e.piloto}${e.carrera ? ` · ${e.carrera}` : ""}</p>
           <div class="r3d-act">
-            ${api.hasAudio(id) ? `<button class="btn-play" id="r3dPlay">▶ Escuchar la historia</button>` : ""}
+            ${api.touring && api.touring() ? '<span class="r3d-now"><i></i>Contando su historia</span>'
+              : api.hasAudio(id) ? `<button class="btn-play" id="r3dPlay">▶ Escuchar la historia</button>` : ""}
             <button class="btn-ficha" id="r3dOpen">Ver ficha ›</button>
           </div>`;
         const pl = document.getElementById("r3dPlay");
@@ -199,7 +203,7 @@
       if (gesture && !gesture.pinch && !gesture.moved && Date.now() - p.t0 < 400) {
         const cell = document.elementFromPoint(ev.clientX, ev.clientY)?.closest(".r3d-cell");
         const now = Date.now();
-        if (cell) select(cell);
+        if (cell) select(cell, true);
         else if (sel) deselect();
         else if (now - lastTap < 320) { // doble toque en el mueble: acercar ahí o volver
           const [cx, cy] = center();
@@ -214,7 +218,8 @@
     const step = (k) => { animate(true); zoomTo(clamp(st.s * k, 1, 4.5)); apply(); setTimeout(() => animate(false), 400); };
     $("r3dIn").onclick = () => step(1.5);
     $("r3dOut").onclick = () => step(1 / 1.5);
-    $("r3dReset").onclick = () => { if (sel) { sel.classList.remove("pop"); sel = null; panel.hidden = true; } animate(true); Object.assign(st, { rx: IDLE.rx, ry: IDLE.ry, s: 1, px: 0, py: 0 }); apply(); setTimeout(() => animate(false), 600); };
+    if ($("r3dTour")) $("r3dTour").onclick = () => api.startTour();
+    $("r3dReset").onclick =() => { if (sel) { sel.classList.remove("pop"); sel = null; panel.hidden = true; } animate(true); Object.assign(st, { rx: IDLE.rx, ry: IDLE.ry, s: 1, px: 0, py: 0 }); apply(); setTimeout(() => animate(false), 600); };
 
     // ---------- inclinar el celu ----------
     let raf = 0, gyroAsked = false;
@@ -239,7 +244,24 @@
 
     const onResize = () => { build(); limitPan(); apply(); };
     addEventListener("resize", onResize);
+
+    // ---------- control desde afuera (recorrido guiado) ----------
+    const cellOf = (id) => {
+      for (let r = 0; r < R.filas; r++) { const c = R.lugares[r].indexOf(id); if (c >= 0) return shelf.querySelector(`.r3d-cell[data-r="${r}"][data-c="${c}"]`); }
+      return null;
+    };
+    const ctl = {
+      focus: (id) => { const cell = cellOf(id); if (cell) { $("r3dHint").classList.add("gone"); select(cell, false); } },
+      markHeard: (id) => {
+        const cell = cellOf(id);
+        if (cell && !cell.querySelector(".r3d-b.heard")) cell.insertAdjacentHTML("beforeend", '<span class="r3d-b heard" title="Escuchado">✓</span>');
+      },
+      clear: () => deselect()
+    };
+    window.Repisa3D.current = ctl;
+
     return () => { // al salir de la pantalla
+      if (window.Repisa3D.current === ctl) window.Repisa3D.current = null;
       removeEventListener("resize", onResize); removeEventListener("deviceorientation", onTilt);
       if (raf) cancelAnimationFrame(raf);
       clearTimeout(glareT);
@@ -247,5 +269,5 @@
     };
   }
 
-  window.Repisa3D = { mount, reset: () => { saved = null; } };
+  window.Repisa3D = { mount, reset: () => { saved = null; }, current: null };
 })();
