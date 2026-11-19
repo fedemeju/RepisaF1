@@ -120,6 +120,10 @@ window.FOTOS = {
     "src": "fotos/fw07-1979-regazzoni.jpg",
     "credito": "Martin Lee from London, UK · CC BY-SA 2.0 · Wikimedia Commons"
   },
+  "fw14b-1992-mansell": {
+    "src": "fotos/fw14b-1992-mansell.jpg",
+    "credito": "David Merrett from Daventry, England · CC BY 2.0 · Wikimedia Commons"
+  },
   "fw15c-1993-prost": {
     "src": "fotos/fw15c-1993-prost.jpg",
     "credito": "Martin Lee from London, UK · CC BY-SA 2.0 · Wikimedia Commons"

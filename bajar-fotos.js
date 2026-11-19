@@ -31,6 +31,8 @@ async function api(params) {
 // Fotos elegidas a mano cuando el modelo es una versión especial (id del auto → archivo de Commons).
 // Para cambiar una: poné acá el archivo que quieras, borrá fotos/<id>.jpg y corré  node bajar-fotos.js <id>
 const FIJAS = {
+  // la que encontraba sola era desde la tribuna, con el auto chiquito
+  "fw14b-1992-mansell": "File:Nigel Mansell's World Championship Winning 1992 Williams Renault FW14B (49254927811).jpg",
   // la de Ascari era roja con el 12 (la blanca "Grant Piston Rings" es otra 375 Indy)
   "375indy-1952-ascari": "File:Ferrari 375 Indy 500.jpg",
   // tu modelo es la versión carenada (ruedas tapadas), no la de ruedas descubiertas
