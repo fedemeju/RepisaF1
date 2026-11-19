@@ -575,7 +575,8 @@
   // (abre la ficha de cada auto). Se recuerda la última elegida.
   let tourModo = "3d";
   try { tourModo = localStorage.getItem("repisa-tour-modo") || "3d"; } catch (_) {}
-  const enRepisa = () => (window.REPISA ? REPISA.lugares.flat().filter(Boolean) : []);
+  // orden del mueble (el que armaste en la app, si lo cambiaste)
+  const enRepisa = () => (window.Repisa3D ? Repisa3D.orden().flat().filter((x) => x && x[0] !== "@") : []);
 
   function openTourSheet(modoIni) {
     let modo = modoIni || tourModo;

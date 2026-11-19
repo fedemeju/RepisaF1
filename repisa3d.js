@@ -5,6 +5,7 @@
 //   - Pellizcar o los botones: acerca. Doble toque: acerca ahí / vuelve.
 //   - Inclinar el celu: el mueble se mueve un poco (profundidad).
 //   - Tocar un auto: la cajita sale para adelante y abajo aparece su ficha corta.
+//   - Mantener apretado un auto (o el botón ⇄): modo ordenar, para intercambiar autos de lugar.
 (function () {
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const esc = (s) => String(s).replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
@@ -20,8 +21,39 @@
   const ZMAX = LITE ? 6.5 : 4.5;
   let saved = null; // vista que queda al salir (para volver al mismo lugar)
 
+  // ---------- orden de los autos ----------
+  // data/repisa.js es el orden original (y las fotos repisa/ y repisa-salvat/ están nombradas por ese
+  // lugar original). Si reordenás desde la app, el orden nuevo se guarda en este celu/compu; cada auto
+  // sigue usando la foto de su lugar original. Los lugares sin ficha se anotan "@fila-columna".
+  const ORDEN_KEY = "repisa-orden";
+  const pad = (n) => String(n).padStart(2, "0");
+  function original() {
+    return window.REPISA.lugares.map((fila, r) => fila.map((id, c) => id || `@${r + 1}-${c + 1}`));
+  }
+  function orden() {
+    const base = original();
+    try {
+      const s = JSON.parse(localStorage.getItem(ORDEN_KEY) || "null");
+      const ok = Array.isArray(s) && s.length === base.length && s.every((f, r) => Array.isArray(f) && f.length === base[r].length)
+        && JSON.stringify(s.flat().slice().sort()) === JSON.stringify(base.flat().slice().sort());
+      if (ok) return s;
+    } catch (_) {}
+    return base;
+  }
+  function guardarOrden(L) {
+    try {
+      if (JSON.stringify(L) === JSON.stringify(original())) localStorage.removeItem(ORDEN_KEY);
+      else localStorage.setItem(ORDEN_KEY, JSON.stringify(L));
+    } catch (_) {}
+  }
+  const idDe = (tok) => (tok && tok[0] !== "@" ? tok : null);
+
   function mount(view, api) {
     const R = window.REPISA;
+    let L = orden();
+    // foto de cada auto = la de su lugar original
+    const foto = {};
+    original().forEach((fila, r) => fila.forEach((tok, c) => { foto[tok] = `${pad(r + 1)}-${c + 1}`; }));
     // De dónde salen las fotos de cada lugar: repisa-salvat/ (fotos de catálogo) o, con
     // { dir: "repisa", ext: "webp" }, los recortes de la foto del mueble. Si falta una, se usa la del mueble.
     const F = api.fotos || { dir: "repisa-salvat", ext: "jpg" };
@@ -29,11 +61,17 @@
       <section class="r3d${F.dir !== "repisa" ? " r3d-cat" : ""}">
         <div class="r3d-stage" id="r3dStage">
           <div class="r3d-cam" id="r3dCam"><div class="r3d-world" id="r3dWorld"><div class="r3d-shelf" id="r3dShelf"></div></div></div>
-          <p class="r3d-hint" id="r3dHint">Arrastrá para girar · pellizcá para acercar · tocá un auto</p>
+          <p class="r3d-hint" id="r3dHint">Arrastrá para girar · tocá un auto · mantenelo apretado para moverlo</p>
+          <div class="r3d-editbar" id="r3dEditBar" hidden>
+            <span>Arrastrá un auto sobre otro (o tocá los dos) para intercambiarlos</span>
+            <button id="r3dEditReset">Orden original</button>
+            <button id="r3dEditOk" class="ok">Listo</button>
+          </div>
           <div class="r3d-zoom">
             <button id="r3dIn" aria-label="Acercar">+</button>
             <button id="r3dOut" aria-label="Alejar">−</button>
             <button id="r3dReset" aria-label="Ver el mueble entero">⟲</button>
+            <button id="r3dEdit" aria-label="Ordenar los autos">⇄</button>
             ${api.startTour ? '<button id="r3dTour" class="r3d-tourbtn" aria-label="Recorrido guiado: la repisa se cuenta sola">▶</button>' : ""}
           </div>
         </div>
@@ -66,14 +104,14 @@
         for (let c = 0; c < R.columnas; c++) for (const [cls, a] of [["top", 90], ["bot", -90]]) html += `<div class="r3d-board ${cls}" style="left:${c * cw}px;top:${j * ch - D / 2}px;width:${cw}px;height:${D}px;transform:translateZ(${-D / 2}px) rotateX(${a}deg)"></div>`;
         html += `<div class="r3d-edge h${j === 0 || j === R.filas ? " outer" : ""}" style="top:${j * ch - t / 2}px;width:${W}px;height:${t}px"></div>`;
       }
-      R.lugares.forEach((fila, r) => fila.forEach((id, c) => {
-        const car = id && api.byId[id];
-        const key = `${r + 1}-${c + 1}`;
-        const label = car ? `${car.etiqueta.equipo} ${car.etiqueta.chasis} · ${car.etiqueta.anio} · ${car.etiqueta.piloto}` : (R.sinFicha[key] || "Auto sin ficha");
+      L.forEach((fila, r) => fila.forEach((tok, c) => {
+        const id = idDe(tok), car = id && api.byId[id];
+        const fk = foto[tok]; // foto (lugar original) de este auto
+        const label = car ? `${car.etiqueta.equipo} ${car.etiqueta.chasis} · ${car.etiqueta.anio} · ${car.etiqueta.piloto}` : (R.sinFicha[tok.slice(1)] || "Auto sin ficha");
         html += `<button class="r3d-cell${car ? "" : " sin"}" data-r="${r}" data-c="${c}" aria-label="${label.replace(/"/g, "&quot;")}"
             style="left:${c * cw + t / 2}px;top:${r * ch + t / 2}px;width:${cw - t}px;height:${ch - t}px;--z:${(-D * 0.68).toFixed(1)}px;--dg:${(D * 0.58).toFixed(1)}px;--pop:${(D * 0.55).toFixed(1)}px;--o:${((c - (R.columnas - 1) / 2) * -7 + (r - (R.filas - 1) / 2) * -1.5).toFixed(1)}">
-            <span class="r3d-photo"><img src="${F.dir}/${String(r + 1).padStart(2, "0")}-${c + 1}.${F.ext}" alt="" draggable="false" loading="lazy"
-              ${F.dir !== "repisa" ? `onerror="this.onerror=null;this.src='repisa/${String(r + 1).padStart(2, "0")}-${c + 1}.webp'"` : ""}></span>
+            <span class="r3d-photo"><img src="${F.dir}/${fk}.${F.ext}" alt="" draggable="false" loading="lazy"
+              ${F.dir !== "repisa" ? `onerror="this.onerror=null;this.src='repisa/${fk}.webp'"` : ""}></span>
             ${LITE ? "" : '<span class="r3d-wall l"></span><span class="r3d-wall r"></span><span class="r3d-wall t"></span>'}<span class="r3d-floor"></span>
             <span class="r3d-glass"></span>
             <span class="r3d-base"><span class="r3d-plate">${car
@@ -85,12 +123,13 @@
           </button>`;
       }));
       shelf.innerHTML = html;
+      if (editing) growForEdit(); // build vuelve a medir el escenario
     }
 
     // ---------- cámara ----------
     const st = saved ? { ...saved } : { rx: IDLE.rx, ry: -26, s: 1, px: 0, py: 0 };
     const tilt = { x: 0, y: 0, tx: 0, ty: 0 };
-    let sel = null, before = null, glareT = 0;
+    let sel = null, before = null, glareT = 0, editing = false;
     function apply() {
       const k = st.s / K;
       cam.style.transform = `translate(${st.px}px, ${st.py}px) scale3d(${k}, ${k}, ${k})`;
@@ -119,7 +158,7 @@
     // ---------- selección ----------
     // user: lo tocó la persona (no el recorrido guiado)
     function select(cell, user) {
-      const r = +cell.dataset.r, c = +cell.dataset.c, id = R.lugares[r][c];
+      const r = +cell.dataset.r, c = +cell.dataset.c, tok = L[r][c], id = idDe(tok);
       if (user && id && api.onTap && api.onTap(id)) return;
       if (sel === cell) return user ? openCar(id) : undefined;
       if (sel) sel.classList.remove("pop"); else before = { ...st };
@@ -130,7 +169,7 @@
       st.s = s; st.px = -cx * s; st.py = -cy * s - stage.clientHeight * 0.12; st.rx = 2; st.ry = 0;
       apply();
       setTimeout(() => animate(false), 650);
-      showPanel(r, c, id);
+      showPanel(r, c, id, tok);
     }
     function deselect() {
       if (!sel) return;
@@ -143,12 +182,12 @@
       saved = { ...st }; if (before) saved = { ...before };
       api.open(id, autoplay);
     }
-    function showPanel(r, c, id) {
+    function showPanel(r, c, id, tok) {
       const car = id && api.byId[id];
       if (!car) {
         panel.innerHTML = `<button class="r3d-x" aria-label="Cerrar">×</button>
           <div class="r3d-k">Fila ${r + 1} · lugar ${c + 1}</div>
-          <h3>${R.sinFicha[`${r + 1}-${c + 1}`] || "Auto sin ficha"}</h3>
+          <h3>${esc(R.sinFicha[tok.slice(1)] || "Auto sin ficha")}</h3>
           <p class="r3d-sub">Todavía no está cargado en la app. Sacale una foto a su etiqueta y lo sumamos.</p>`;
       } else {
         const e = car.etiqueta;
@@ -169,30 +208,116 @@
       panel.hidden = false;
     }
 
+    // ---------- ordenar los autos ----------
+    // Mantener apretado un auto (o el botón ⇄) entra en "modo ordenar": el mueble se pone de frente,
+    // y arrastrando un auto sobre otro (o tocando uno y después el otro) se intercambian.
+    let picked = null, ghost = null, dropOn = null;
+    const editBar = $("r3dEditBar");
+    // la barra de "ordenar" va debajo del mueble: se agranda el escenario para que no tape las últimas filas
+    const editExtra = () => editBar.offsetHeight + 14;
+    function growForEdit() { stage.style.height = parseFloat(stage.style.height) + editExtra() + "px"; }
+    function enterEdit() {
+      if (editing || (api.touring && api.touring())) return;
+      editing = true;
+      if (sel) { sel.classList.remove("pop"); sel = null; panel.hidden = true; }
+      stage.classList.add("editing"); editBar.hidden = false; $("r3dHint").classList.add("gone");
+      growForEdit();
+      tilt.tx = tilt.ty = tilt.x = tilt.y = 0;
+      animate(true); st.rx = 0; st.ry = 0; st.py -= editExtra() / 2; apply(); setTimeout(() => animate(false), 600);
+    }
+    function exitEdit() {
+      if (!editing) return;
+      const extra = editExtra();
+      editing = false; unpick(); endDrag();
+      stage.classList.remove("editing"); editBar.hidden = true;
+      stage.style.height = parseFloat(stage.style.height) - extra + "px";
+      animate(true); st.rx = IDLE.rx; st.ry = IDLE.ry; st.py += extra / 2; limitPan(); apply(); setTimeout(() => animate(false), 600);
+    }
+    const unpick = () => { if (picked) picked.classList.remove("picked"); picked = null; };
+    function swap(a, b) {
+      const ra = +a.dataset.r, ca = +a.dataset.c, rb = +b.dataset.r, cb = +b.dataset.c;
+      [L[ra][ca], L[rb][cb]] = [L[rb][cb], L[ra][ca]];
+      guardarOrden(L);
+      unpick(); build();
+      for (const [r, c] of [[ra, ca], [rb, cb]]) {
+        const cell = shelf.querySelector(`.r3d-cell[data-r="${r}"][data-c="${c}"]`);
+        cell.classList.add("swapped"); setTimeout(() => cell.classList.remove("swapped"), 900);
+      }
+      if (navigator.vibrate) navigator.vibrate(15);
+    }
+    function startDrag(cell, x, y) {
+      unpick();
+      cell.classList.add("dragging");
+      ghost = document.createElement("div"); ghost.className = "r3d-ghost";
+      ghost.innerHTML = `<img src="${cell.querySelector("img").src}" alt="">`;
+      stage.appendChild(ghost); moveGhost(x, y);
+      return cell;
+    }
+    function moveGhost(x, y) {
+      const b = stage.getBoundingClientRect();
+      ghost.style.transform = `translate(${x - b.left}px, ${y - b.top}px) translate(-50%, -60%)`;
+      const over = document.elementFromPoint(x, y)?.closest(".r3d-cell");
+      const target = over && over !== gesture.src ? over : null;
+      if (target !== dropOn) { if (dropOn) dropOn.classList.remove("drop"); dropOn = target; if (dropOn) dropOn.classList.add("drop"); }
+    }
+    function endDrag() {
+      if (ghost) { ghost.remove(); ghost = null; }
+      if (dropOn) { dropOn.classList.remove("drop"); dropOn = null; }
+      shelf.querySelectorAll(".r3d-cell.dragging").forEach((c) => c.classList.remove("dragging"));
+    }
+    $("r3dEdit").onclick = () => (editing ? exitEdit() : enterEdit());
+    $("r3dEditOk").onclick = exitEdit;
+    $("r3dEditReset").onclick = () => { L = original(); guardarOrden(L); unpick(); build(); };
+    stage.addEventListener("contextmenu", (ev) => ev.preventDefault()); // sin menú al mantener apretado
+
     // ---------- gestos ----------
     const pts = new Map();
-    let gesture = null, lastTap = 0;
+    let gesture = null, lastTap = 0, lpT = 0;
     const center = () => { const b = stage.getBoundingClientRect(); return [b.left + b.width / 2, b.top + b.height / 2]; };
     stage.addEventListener("pointerdown", (ev) => {
-      if (ev.target.closest(".r3d-zoom")) return;
-      stage.setPointerCapture(ev.pointerId);
+      if (ev.target.closest(".r3d-zoom, .r3d-editbar")) return;
+      try { stage.setPointerCapture(ev.pointerId); } catch (_) {}
       pts.set(ev.pointerId, { x: ev.clientX, y: ev.clientY, x0: ev.clientX, y0: ev.clientY, t0: Date.now() });
       askGyro();
       $("r3dHint").classList.add("gone");
+      clearTimeout(lpT);
       if (pts.size === 2) {
+        endDrag();
         const [a, b] = [...pts.values()];
         gesture = { pinch: true, d0: Math.hypot(a.x - b.x, a.y - b.y), s0: st.s, mx: (a.x + b.x) / 2, my: (a.y + b.y) / 2 };
-      } else gesture = { pinch: false, moved: false };
+        return;
+      }
+      const cell = ev.target.closest(".r3d-cell");
+      gesture = { pinch: false, moved: false, src: editing ? cell : null, dragging: false };
+      // mantener apretado un auto: entra en modo ordenar y lo levanta
+      if (!editing && cell && !sel) {
+        const p = pts.get(ev.pointerId);
+        lpT = setTimeout(() => {
+          if (!gesture || gesture.pinch || gesture.moved || pts.size !== 1) return;
+          enterEdit();
+          if (!editing) return;
+          gesture.src = cell; gesture.dragging = true; gesture.lp = true;
+          startDrag(cell, p.x, p.y);
+          if (navigator.vibrate) navigator.vibrate(25);
+        }, 550);
+      }
     });
     stage.addEventListener("pointermove", (ev) => {
       const p = pts.get(ev.pointerId); if (!p) return;
       const dx = ev.clientX - p.x, dy = ev.clientY - p.y; p.x = ev.clientX; p.y = ev.clientY;
-      if (Math.hypot(p.x - p.x0, p.y - p.y0) > 8) gesture.moved = true;
+      if (Math.hypot(p.x - p.x0, p.y - p.y0) > 8) { gesture.moved = true; if (!gesture.dragging) clearTimeout(lpT); }
       if (gesture.pinch && pts.size === 2) {
         const [a, b] = [...pts.values()];
         const [cx, cy] = center();
         zoomTo(clamp(gesture.s0 * Math.hypot(a.x - b.x, a.y - b.y) / gesture.d0, 1, ZMAX), gesture.mx - cx, gesture.my - cy);
         apply(); return;
+      }
+      if (gesture.dragging) { moveGhost(p.x, p.y); return; }
+      if (editing) {
+        // en modo ordenar: arrastrar un auto lo levanta; arrastrar afuera mueve la vista (sin girar)
+        if (gesture.src && gesture.moved) { gesture.dragging = true; startDrag(gesture.src, p.x, p.y); return; }
+        if (gesture.moved && st.s > 1.05) { st.px += dx; st.py += dy; limitPan(); apply(); }
+        return;
       }
       if (!gesture.moved || sel) return;
       if (st.s > 1.05) { st.px += dx; st.py += dy; limitPan(); st.ry = clamp(st.ry + dx * 0.04, -30, 30); }
@@ -202,6 +327,24 @@
     const up = (ev) => {
       const p = pts.get(ev.pointerId); if (!p) return;
       pts.delete(ev.pointerId);
+      clearTimeout(lpT);
+      if (gesture && gesture.dragging) { // soltar el auto arrastrado
+        const target = dropOn, src = gesture.src;
+        endDrag();
+        if (target && ev.type === "pointerup") swap(src, target);
+        if (pts.size === 0) gesture = null;
+        return;
+      }
+      if (editing) { // tocar uno y después otro: se intercambian
+        if (gesture && !gesture.pinch && !gesture.moved) {
+          const cell = document.elementFromPoint(ev.clientX, ev.clientY)?.closest(".r3d-cell");
+          if (cell && picked && picked !== cell) swap(picked, cell);
+          else if (cell && picked === cell) unpick();
+          else if (cell) { picked = cell; cell.classList.add("picked"); }
+        }
+        if (pts.size === 0) gesture = null;
+        return;
+      }
       if (gesture && !gesture.pinch && !gesture.moved && Date.now() - p.t0 < 400) {
         const cell = document.elementFromPoint(ev.clientX, ev.clientY)?.closest(".r3d-cell");
         const now = Date.now();
@@ -220,13 +363,16 @@
     const step = (k) => { animate(true); zoomTo(clamp(st.s * k, 1, ZMAX)); apply(); setTimeout(() => animate(false), 400); };
     $("r3dIn").onclick = () => step(1.5);
     $("r3dOut").onclick = () => step(1 / 1.5);
-    if ($("r3dTour")) $("r3dTour").onclick = () => api.startTour();
-    $("r3dReset").onclick =() => { if (sel) { sel.classList.remove("pop"); sel = null; panel.hidden = true; } animate(true); Object.assign(st, { rx: IDLE.rx, ry: IDLE.ry, s: 1, px: 0, py: 0 }); apply(); setTimeout(() => animate(false), 600); };
+    if ($("r3dTour")) $("r3dTour").onclick = () => { exitEdit(); api.startTour(); };
+    $("r3dReset").onclick = () => {
+      if (sel) { sel.classList.remove("pop"); sel = null; panel.hidden = true; }
+      animate(true); Object.assign(st, editing ? { rx: 0, ry: 0 } : { rx: IDLE.rx, ry: IDLE.ry }, { s: 1, px: 0, py: 0 }); apply(); setTimeout(() => animate(false), 600);
+    };
 
     // ---------- inclinar el celu ----------
     let raf = 0, gyroAsked = false;
     function onTilt(e) {
-      if (e.gamma == null) return;
+      if (e.gamma == null || editing) return; // ordenando, el mueble queda quieto
       tilt.ty = clamp(e.gamma * 0.35, -10, 10);
       tilt.tx = clamp(-(e.beta - 45) * 0.25, -8, 8);
       if (!raf) raf = requestAnimationFrame(loop);
@@ -249,7 +395,7 @@
 
     // ---------- control desde afuera (recorrido guiado) ----------
     const cellOf = (id) => {
-      for (let r = 0; r < R.filas; r++) { const c = R.lugares[r].indexOf(id); if (c >= 0) return shelf.querySelector(`.r3d-cell[data-r="${r}"][data-c="${c}"]`); }
+      for (let r = 0; r < R.filas; r++) { const c = L[r].indexOf(id); if (c >= 0) return shelf.querySelector(`.r3d-cell[data-r="${r}"][data-c="${c}"]`); }
       return null;
     };
     const ctl = {
@@ -266,10 +412,11 @@
       if (window.Repisa3D.current === ctl) window.Repisa3D.current = null;
       removeEventListener("resize", onResize); removeEventListener("deviceorientation", onTilt);
       if (raf) cancelAnimationFrame(raf);
-      clearTimeout(glareT);
+      clearTimeout(glareT); clearTimeout(lpT);
+      if (editing) { editing = false; st.rx = IDLE.rx; st.ry = IDLE.ry; }
       if (!saved) saved = { ...(before || st) };
     };
   }
 
-  window.Repisa3D = { mount, reset: () => { saved = null; }, current: null };
+  window.Repisa3D = { mount, reset: () => { saved = null; }, current: null, orden };
 })();
