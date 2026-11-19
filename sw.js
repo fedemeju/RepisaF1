@@ -1,5 +1,5 @@
-﻿// Guarda la app en el celular para que funcione sin internet.
-// SubÃ­ el nÃºmero de versiÃ³n cuando cambies archivos para forzar la actualizaciÃ³n.
+// Guarda la app en el celular para que funcione sin internet.
+// Subí el número de versión cuando cambies archivos para forzar la actualización.
 const CACHE = "repisa-f1-v31";
 const SHELL = ["./", "index.html", "app.css", "app.js", "matcher.js", "detector.js", "scanner.js", "reconocer.js", "data/autos.js", "data/pilotos.js", "data/logos.js", "data/repisa.js", "repisa3d.js", "data/fotos.js", "img/f1.webp", "manifest.webmanifest", "icon.svg", "img/icono/icon-192.png", "img/icono/favicon-64.png"];
 
@@ -14,8 +14,8 @@ self.addEventListener("fetch", (e) => {
   if (req.method !== "GET" || req.headers.has("range")) return;
   const url = new URL(req.url);
   const sameOrigin = url.origin === location.origin;
-  // Archivos propios: red primero (para ver cambios), cache si no hay seÃ±al.
-  // LibrerÃ­a de OCR (CDN): cache primero.
+  // Archivos propios: red primero (para ver cambios), cache si no hay señal.
+  // Librería de OCR (CDN): cache primero.
   if (sameOrigin) {
     e.respondWith(
       fetch(req).then((res) => {
