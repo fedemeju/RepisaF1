@@ -84,17 +84,18 @@ main { max-width: 920px; margin: 0 auto; padding: 16px 16px calc(110px + var(--s
 .icon-btn { width: 44px; height: 44px; border-radius: 50%; border: 0; display: grid; place-items: center; background: rgba(0, 0, 0, .45); color: #fff; backdrop-filter: blur(8px); cursor: pointer; }
 
 /* ============ Escudo de equipo (logo o siglas) ============ */
+/* todos los escudos del mismo tamaño (el del logo más ancho): los logos más chicos quedan centrados */
 .badge {
-  flex: none; width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; overflow: hidden;
+  flex: none; width: 84px; height: 44px; border-radius: 12px; display: grid; place-items: center; overflow: hidden;
   background: linear-gradient(145deg, var(--c1), color-mix(in srgb, var(--c1) 55%, #000));
   border: 1px solid rgba(255, 255, 255, .14);
   font-family: var(--display); font-weight: 900; font-style: italic; font-size: 13px; letter-spacing: .02em;
   color: var(--c2); text-shadow: 0 1px 2px rgba(0, 0, 0, .35);
 }
-.badge.has-logo { display: flex; align-items: center; justify-content: center; background: #fff; padding: 6px; }
+.badge.has-logo { display: flex; align-items: center; justify-content: center; background: #fff; padding: 6px 8px; }
 /* el logo entra completo sea vertical (Ferrari) o apaisado (Williams), sin deformarse ni cortarse */
 .badge img { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
-.badge.lg { width: 56px; height: 56px; border-radius: 14px; font-size: 16px; }
+.badge.lg { width: 120px; height: 56px; border-radius: 14px; font-size: 16px; }
 
 /* ============ Inicio ============ */
 .intro { padding: 8px 0 4px; }
@@ -324,10 +325,6 @@ main { max-width: 920px; margin: 0 auto; padding: 16px 16px calc(110px + var(--s
 .pager a.next { text-align: right; grid-column: 2; }
 .pager small { display: block; color: var(--faint); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
 .pager b { display: block; font-family: var(--display); font-weight: 700; font-size: 17px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-/* ============ Logos anchos ============ */
-.badge.has-logo.wide { width: 84px; padding: 6px 8px; }
-.badge.lg.has-logo.wide { width: 120px; }
 
 /* ============ Pestañas Autos / Pilotos ============ */
 .tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 18px; padding: 4px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); }
