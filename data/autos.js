@@ -116,7 +116,6 @@ window.AUTOS = [
 
   {
     id: "fw14b-1992-mansell",
-    oculto: true, // auto de ejemplo: no confirmado en la repisa
     etiqueta: {
       equipo: "Williams",
       chasis: "FW14B",
