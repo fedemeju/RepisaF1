@@ -39,3 +39,10 @@ La app vuelve sola a los escudos con siglas y colores de cada equipo.
 
 "F1", "Formula 1" y el logo de F1 (img/f1.webp, en la barra de arriba) son marcas registradas:
 la versión pública necesita otro nombre y sacar ese logo.
+
+## 4. Fotos de los autos
+
+Las fotos de `fotos/` salen de Wikimedia Commons con licencias libres (autor y licencia en
+`fotos/creditos.json`, y la app muestra el crédito). Casi todas piden atribución (CC BY / BY-SA),
+que ya está. La excepción es **f2001-2001-schumacher.jpg** (Monza 2001): la pasó el dueño de
+la repisa y no se sabe de quién es; antes de publicar, reemplazarla por una con licencia.

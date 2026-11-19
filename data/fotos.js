@@ -98,7 +98,7 @@ window.FOTOS = {
   },
   "f2001-2001-schumacher": {
     "src": "fotos/f2001-2001-schumacher.jpg",
-    "credito": "Original: Peter Wright from United Kingdom / Derivative work · CC BY-SA 2.0 · Wikimedia Commons"
+    "credito": "GP de Italia 2001 · foto aportada (autor sin confirmar)"
   },
   "f2002-2002-schumacher": {
     "src": "fotos/f2002-2002-schumacher.jpg",
