@@ -16,6 +16,8 @@
   // de video y los autos titilan.
   const LITE = matchMedia("(pointer: coarse)").matches;
   const K = LITE ? 2 : 3;
+  // zoom máximo: en el celu la repisa entera mide ~350 px, así que deja acercar más para leer las placas
+  const ZMAX = LITE ? 6.5 : 4.5;
   let saved = null; // vista que queda al salir (para volver al mismo lugar)
 
   function mount(view, api) {
@@ -122,7 +124,7 @@
       if (sel === cell) return user ? openCar(id) : undefined;
       if (sel) sel.classList.remove("pop"); else before = { ...st };
       sel = cell; cell.classList.add("pop");
-      const s = clamp((stage.clientWidth * 0.78) / (cw / K), 1.6, 3.2);
+      const s = clamp((stage.clientWidth * 0.78) / (cw / K), 1.6, LITE ? 4.6 : 3.2);
       const cx = ((c + 0.5) * cw - W / 2) / K, cy = ((r + 0.5) * ch - H / 2) / K;
       animate(true);
       st.s = s; st.px = -cx * s; st.py = -cy * s - stage.clientHeight * 0.12; st.rx = 2; st.ry = 0;
@@ -189,7 +191,7 @@
       if (gesture.pinch && pts.size === 2) {
         const [a, b] = [...pts.values()];
         const [cx, cy] = center();
-        zoomTo(clamp(gesture.s0 * Math.hypot(a.x - b.x, a.y - b.y) / gesture.d0, 1, 4.5), gesture.mx - cx, gesture.my - cy);
+        zoomTo(clamp(gesture.s0 * Math.hypot(a.x - b.x, a.y - b.y) / gesture.d0, 1, ZMAX), gesture.mx - cx, gesture.my - cy);
         apply(); return;
       }
       if (!gesture.moved || sel) return;
@@ -215,7 +217,7 @@
     };
     stage.addEventListener("pointerup", up);
     stage.addEventListener("pointercancel", up);
-    const step = (k) => { animate(true); zoomTo(clamp(st.s * k, 1, 4.5)); apply(); setTimeout(() => animate(false), 400); };
+    const step = (k) => { animate(true); zoomTo(clamp(st.s * k, 1, ZMAX)); apply(); setTimeout(() => animate(false), 400); };
     $("r3dIn").onclick = () => step(1.5);
     $("r3dOut").onclick = () => step(1 / 1.5);
     if ($("r3dTour")) $("r3dTour").onclick = () => api.startTour();

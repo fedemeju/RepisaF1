@@ -524,11 +524,11 @@ a.driver .meta, .driver .meta { flex: 1; min-width: 0; }
 .r3d-cell.sin img { filter: grayscale(.6) brightness(.8); }
 /* Fotos de catálogo: fondo de estudio claro, el auto un poco más abajo del centro */
 .r3d-cat .r3d-photo { background: #e4e6e8; }
-.r3d-cat .r3d-photo img { object-position: 50% 80%; }
+.r3d-cat .r3d-photo img { object-position: 50% 84%; }
 /* paredes de la caja: acrílico visto de canto, más brillante cerca de la tapa */
 .r3d-wall { backface-visibility: visible; }
 /* La caja apoya sobre la base de Salvat: --hb es la altura de la base (pista + placa) */
-.r3d-cell { --hb: 16%; }
+.r3d-cell { --hb: 18%; }
 .r3d-wall.l, .r3d-wall.r { top: 0; width: var(--dg); height: calc(100% - var(--hb)); transform-origin: 0 50%; transform: rotateY(-90deg); }
 .r3d-wall.l { left: 0; background: linear-gradient(90deg, rgba(255, 255, 255, .02), rgba(255, 255, 255, .07) 94%, rgba(255, 255, 255, .4)); }
 .r3d-wall.r { left: 100%; background: linear-gradient(90deg, rgba(0, 0, 0, .04), rgba(255, 255, 255, .05) 94%, rgba(255, 255, 255, .35)); }
@@ -546,16 +546,19 @@ a.driver .meta, .driver .meta { flex: 1; min-width: 0; }
 .r3d-base {
   left: 0; width: 100%; top: calc(100% - var(--hb)); height: var(--hb); transform: translateZ(var(--dg));
   background: linear-gradient(180deg, #686d71, #4b5054 18%, #3f4447); box-shadow: inset 0 calc(1px * var(--k, 1)) 0 rgba(255, 255, 255, .25);
-  display: flex; align-items: center; justify-content: flex-end; padding-right: 5%;
+  display: flex; align-items: center; justify-content: center; padding: 0 3%;
 }
+/* La placa ocupa todo el ancho de la base. El texto se mide contra la placa (unidades cqh), no en px:
+   así entra igual en la compu y en el celu, donde la repisa es mucho más chica. */
 .r3d-plate {
-  width: 50%; height: 64%; background: #0d0d0e; border-radius: calc(1px * var(--k, 1));
+  container-type: size; width: 100%; height: 84%; background: #0d0d0e; border-radius: calc(1px * var(--k, 1));
   box-shadow: inset 0 0 0 calc(.5px * var(--k, 1)) rgba(255, 255, 255, .25);
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4%;
-  color: #f2f2f2; text-align: center; line-height: 1; overflow: hidden; white-space: nowrap;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: #f2f2f2; text-align: center; line-height: 1.04; overflow: hidden; white-space: nowrap;
 }
-.r3d-plate b { font-size: calc(3.6px * var(--k, 1)); font-weight: 700; letter-spacing: .01em; }
-.r3d-plate i { font-size: calc(3.2px * var(--k, 1)); font-style: normal; opacity: .9; }
+.r3d-plate b, .r3d-plate i { display: block; max-width: 94%; overflow: hidden; text-overflow: ellipsis; }
+.r3d-plate b { font-size: 46cqh; font-weight: 700; letter-spacing: .01em; }
+.r3d-plate i { font-size: 37cqh; font-style: normal; opacity: .9; }
 /* Tapa de acrílico: bordes que brillan + una franja de reflejo que se mueve con el giro del
    mueble (--g, desde repisa3d.js) y según dónde está la cajita (--o). */
 .r3d-glass {
