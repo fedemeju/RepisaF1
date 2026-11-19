@@ -31,6 +31,8 @@ async function api(params) {
 // Fotos elegidas a mano cuando el modelo es una versión especial (id del auto → archivo de Commons).
 // Para cambiar una: poné acá el archivo que quieras, borrá fotos/<id>.jpg y corré  node bajar-fotos.js <id>
 const FIJAS = {
+  // la de Ascari era roja con el 12 (la blanca "Grant Piston Rings" es otra 375 Indy)
+  "375indy-1952-ascari": "File:Ferrari 375 Indy 500.jpg",
   // tu modelo es la versión carenada (ruedas tapadas), no la de ruedas descubiertas
   "w196-1955-fangio": "File:Paris - Retromobile 2014 - Mercedes-Benz W 196 R Stromlinie- 1954 - 001.jpg",
   // la búsqueda automática eligió mal (estatua del museo de Jordania, Lotus rosa, auto diminuto…)

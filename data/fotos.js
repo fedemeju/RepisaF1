@@ -34,7 +34,7 @@ window.FOTOS = {
   },
   "375indy-1952-ascari": {
     "src": "fotos/375indy-1952-ascari.jpg",
-    "credito": "Morio · CC BY-SA 3.0 · Wikimedia Commons"
+    "credito": "autor desconocido · CC BY-SA 3.0 · Wikimedia Commons"
   },
   "512f1-1964-bandini": {
     "src": "fotos/512f1-1964-bandini.jpg",
