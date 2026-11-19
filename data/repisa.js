@@ -3,7 +3,8 @@
   =======================================================
   10 filas × 6 columnas, de arriba a la izquierda hacia abajo a la derecha, igual que el mueble.
   Cada lugar: el id del auto (de data/autos.js) o null si el auto todavía no tiene ficha.
-  La imagen de cada lugar es repisa/<fila>-<columna>.webp (recortada de la foto del mueble).
+  La imagen de cada lugar es repisa-salvat/<fila>-<columna>.jpg (foto de catálogo); si no está,
+  repisa/<fila>-<columna>.webp (recortada de la foto del mueble).
   Si movés un auto de lugar en el mueble, cambiá el id acá (y la imagen, si querés que coincida).
 */
 window.REPISA = {

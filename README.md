@@ -15,6 +15,8 @@ texto (Tesseract) corre dentro del propio celular.
 | `app.js` / `app.css` | Pantallas: repisa, búsqueda, filtros por época, ficha y reproductor. |
 | `data/pilotos.js` | Fichas de pilotos. Se enlazan solas con los autos por el nombre. |
 | `logos/` + `indexar-logos.js` | Logos de equipos (opcional). Después de agregar o borrar uno: `node indexar-logos.js` |
+| `repisa3d.js` + `data/repisa.js` | Repisa 3D: el mueble con cada auto en su lugar. |
+| `repisa-salvat/` + `bajar-salvat.js` | Fotos de catálogo de la repisa 3D (`<fila>-<columna>.jpg`). Si falta una, usa el recorte del mueble de `repisa/`. Solo uso personal. |
 | `servidor.js` | Para probar en la compu: `node servidor.js` → http://localhost:8080 |
 
 > ⚠️ **Antes de publicar o compartir el link:** los audios usan un clon de la voz de

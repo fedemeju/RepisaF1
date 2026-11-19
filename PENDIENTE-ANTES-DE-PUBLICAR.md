@@ -46,3 +46,11 @@ Las fotos de `fotos/` salen de Wikimedia Commons con licencias libres (autor y l
 `fotos/creditos.json`, y la app muestra el crédito). Casi todas piden atribución (CC BY / BY-SA),
 que ya está. La excepción es **f2001-2001-schumacher.jpg** (Monza 2001): la pasó el dueño de
 la repisa y no se sabe de quién es; antes de publicar, reemplazarla por una con licencia.
+
+## 5. Fotos de catálogo de la repisa 3D
+
+La repisa 3D usa `repisa-salvat/`: fotos de estudio de las miniaturas Salvat bajadas de
+coleccionablesblog.com.ar (con `node bajar-salvat.js`), más seis puestas a mano (W11, RB18, BT44B, TG184, 97T y FW15C,
+sacadas de tiendas). **Ninguna tiene licencia libre**: solo uso personal.
+Antes de publicar: borrar la carpeta `repisa-salvat/` (la repisa vuelve sola a los recortes del mueble
+de `repisa/`), o reemplazarlas por fotos propias de las miniaturas con el mismo nombre.

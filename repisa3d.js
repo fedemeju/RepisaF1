@@ -1,5 +1,6 @@
 // Repisa en 3D: el mueble de verdad (10 filas × 6 columnas) con cada auto en su lugar.
-// Sin librerías: transformaciones 3D de CSS. Cada auto es la foto de su cajita (repisa/<fila>-<col>.webp).
+// Sin librerías: transformaciones 3D de CSS. Cada auto es su foto de catálogo (repisa-salvat/<fila>-<col>.jpg);
+// si falta, la foto de su cajita en el mueble (repisa/<fila>-<col>.webp).
 //   - Arrastrar: gira el mueble. Con zoom: lo mueve.
 //   - Pellizcar o los botones: acerca. Doble toque: acerca ahí / vuelve.
 //   - Inclinar el celu: el mueble se mueve un poco (profundidad).
@@ -14,8 +15,11 @@
 
   function mount(view, api) {
     const R = window.REPISA;
+    // De dónde salen las fotos de cada lugar: repisa-salvat/ (fotos de catálogo) o, con
+    // { dir: "repisa", ext: "webp" }, los recortes de la foto del mueble. Si falta una, se usa la del mueble.
+    const F = api.fotos || { dir: "repisa-salvat", ext: "jpg" };
     view.innerHTML = `
-      <section class="r3d">
+      <section class="r3d${F.dir !== "repisa" ? " r3d-cat" : ""}">
         <div class="r3d-stage" id="r3dStage">
           <div class="r3d-cam" id="r3dCam"><div class="r3d-world" id="r3dWorld"><div class="r3d-shelf" id="r3dShelf"></div></div></div>
           <p class="r3d-hint" id="r3dHint">Arrastrá para girar · pellizcá para acercar · tocá un auto</p>
@@ -59,8 +63,11 @@
         const key = `${r + 1}-${c + 1}`;
         const label = car ? `${car.etiqueta.equipo} ${car.etiqueta.chasis} · ${car.etiqueta.anio} · ${car.etiqueta.piloto}` : (R.sinFicha[key] || "Auto sin ficha");
         html += `<button class="r3d-cell${car ? "" : " sin"}" data-r="${r}" data-c="${c}" aria-label="${label.replace(/"/g, "&quot;")}"
-            style="left:${c * cw + t / 2}px;top:${r * ch + t / 2}px;width:${cw - t}px;height:${ch - t}px;--z:${(-D * 0.4).toFixed(1)}px;--pop:${(D * 0.55).toFixed(1)}px">
-            <img src="repisa/${String(r + 1).padStart(2, "0")}-${c + 1}.webp" alt="" draggable="false" loading="lazy">
+            style="left:${c * cw + t / 2}px;top:${r * ch + t / 2}px;width:${cw - t}px;height:${ch - t}px;--z:${(-D * 0.68).toFixed(1)}px;--dg:${(D * 0.58).toFixed(1)}px;--pop:${(D * 0.55).toFixed(1)}px;--o:${((c - (R.columnas - 1) / 2) * -7 + (r - (R.filas - 1) / 2) * -1.5).toFixed(1)}">
+            <span class="r3d-photo"><img src="${F.dir}/${String(r + 1).padStart(2, "0")}-${c + 1}.${F.ext}" alt="" draggable="false" loading="lazy"
+              ${F.dir !== "repisa" ? `onerror="this.onerror=null;this.src='repisa/${String(r + 1).padStart(2, "0")}-${c + 1}.webp'"` : ""}></span>
+            <span class="r3d-wall l"></span><span class="r3d-wall r"></span><span class="r3d-wall t"></span><span class="r3d-wall b"></span>
+            <span class="r3d-glass"></span>
             ${car && api.heard(id) ? '<span class="r3d-b heard" title="Escuchado">✓</span>' : ""}
             ${car && api.fav(id) ? '<span class="r3d-b fav" title="Favorito">★</span>' : ""}
             ${car ? "" : '<span class="r3d-b sin">?</span>'}
@@ -77,6 +84,8 @@
       const k = st.s / K;
       cam.style.transform = `translate(${st.px}px, ${st.py}px) scale3d(${k}, ${k}, ${k})`;
       world.style.transform = `rotateX(${(st.rx + tilt.x).toFixed(2)}deg) rotateY(${(st.ry + tilt.y).toFixed(2)}deg)`;
+      // reflejo del acrílico: la franja de luz se corre al girar el mueble o inclinar el celu
+      shelf.style.setProperty("--g", ((st.ry + tilt.y) * 1.2 - (st.rx + tilt.x) * 0.6 + st.px / 40).toFixed(1));
     }
     function animate(on) { stage.classList.toggle("anim", on); }
     function limitPan() {

@@ -218,8 +218,7 @@
         <span class="tc-ic">${ICON.cube}</span>
         <span class="tc-txt"><b>Ver la repisa en 3D</b><small>Tu mueble, cada auto en su lugar</small></span>
         ${ICON.chev}
-      </a>
-      <div class="searchbox">${ICON.search}<input class="search" id="q" type="search" placeholder="${tab === "autos" ? "Buscar equipo, piloto o año" : "Buscar piloto o país"}" value="${esc(query)}" autocomplete="off"></div>
+      </a>      <div class="searchbox">${ICON.search}<input class="search" id="q" type="search" placeholder="${tab === "autos" ? "Buscar equipo, piloto o año" : "Buscar piloto o país"}" value="${esc(query)}" autocomplete="off"></div>
       ${tab === "autos" ? `<div class="filters" role="group" aria-label="Mostrar">
           ${[["todos", "Todos", cars.length], ["favoritos", "★ Favoritos", cars.filter((c) => store.fav(c.id)).length], ["sin-escuchar", "Sin escuchar", cars.filter((c) => withAudio.has(c.id) && !store.heard(c.id)).length]]
             .map(([k, l, n]) => `<button class="filter ${listFilter === k ? "on" : ""}" data-f="${k}">${l} <span>${n}</span></button>`).join("")}
