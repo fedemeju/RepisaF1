@@ -7,6 +7,7 @@
 //   - Tocar un auto: la cajita sale para adelante y abajo aparece su ficha corta.
 (function () {
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const esc = (s) => String(s).replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
   const IDLE = { rx: 4, ry: -10 };
   // El mueble se arma K veces más grande y se achica con la cámara: el navegador dibuja cada
   // cajita a su tamaño en el armado, así al acercar se ve nítida (al revés se ve pixelada).
@@ -66,8 +67,11 @@
             style="left:${c * cw + t / 2}px;top:${r * ch + t / 2}px;width:${cw - t}px;height:${ch - t}px;--z:${(-D * 0.68).toFixed(1)}px;--dg:${(D * 0.58).toFixed(1)}px;--pop:${(D * 0.55).toFixed(1)}px;--o:${((c - (R.columnas - 1) / 2) * -7 + (r - (R.filas - 1) / 2) * -1.5).toFixed(1)}">
             <span class="r3d-photo"><img src="${F.dir}/${String(r + 1).padStart(2, "0")}-${c + 1}.${F.ext}" alt="" draggable="false" loading="lazy"
               ${F.dir !== "repisa" ? `onerror="this.onerror=null;this.src='repisa/${String(r + 1).padStart(2, "0")}-${c + 1}.webp'"` : ""}></span>
-            <span class="r3d-wall l"></span><span class="r3d-wall r"></span><span class="r3d-wall t"></span><span class="r3d-wall b"></span>
+            <span class="r3d-wall l"></span><span class="r3d-wall r"></span><span class="r3d-wall t"></span><span class="r3d-floor"></span>
             <span class="r3d-glass"></span>
+            <span class="r3d-base"><span class="r3d-plate">${car
+              ? `<b>${esc(`${car.etiqueta.equipo} ${car.etiqueta.chasis} - ${car.etiqueta.anio}`)}</b><i>${esc(car.etiqueta.piloto)}</i>`
+              : `<b>${esc(label)}</b>`}</span></span>
             ${car && api.heard(id) ? '<span class="r3d-b heard" title="Escuchado">✓</span>' : ""}
             ${car && api.fav(id) ? '<span class="r3d-b fav" title="Favorito">★</span>' : ""}
             ${car ? "" : '<span class="r3d-b sin">?</span>'}
