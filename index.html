@@ -62,7 +62,7 @@
           Cámara del celu<input type="file" accept="image/*" capture="environment" id="fileInput" hidden>
         </label>
         <button class="shutter" id="btnShutter" aria-label="Capturar etiqueta" hidden><span></span></button>
-        <span class="side"></span>
+        <button class="btn btn-light side car-btn" id="btnCar" hidden>Reconocer el auto</button>
       </div>
     </div>
   </section>
@@ -75,6 +75,7 @@
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js" defer></script>
   <script src="matcher.js"></script>
   <script src="detector.js"></script>
+  <script src="reconocer.js"></script>
   <script src="scanner.js"></script>
   <script src="repisa3d.js"></script>
   <script src="app.js"></script>

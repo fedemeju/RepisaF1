@@ -70,3 +70,6 @@ Para uso personal no hay problema, pero no los incluyas si publicás la app.
 - Acercá el celu hasta que la etiqueta llene el recuadro blanco.
 - Evitá el reflejo de la vitrina de acrílico: inclinalo un poco o sacá la tapa.
 - Si duda entre dos autos, te muestra botones para elegir.
+- Si la etiqueta no se lee, tocá **Reconocer el auto** (abajo a la derecha) y encuadrá la cajita entera:
+  reconoce el auto por cómo se ve, comparándolo con las fotos de `repisa/` (`reconocer.js`). La primera vez
+  baja OpenCV (~10 MB) y después anda sin internet. Si no está seguro, te muestra los más parecidos.

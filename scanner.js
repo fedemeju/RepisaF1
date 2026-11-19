@@ -14,8 +14,11 @@
     status: $("scanStatus"), ocr: $("scanOcr"), cands: $("scanCands"),
     torch: $("btnTorch"), close: $("btnCloseScan"), file: $("fileInput"), photo: $("photo"),
     shutter: $("btnShutter"), zoom: $("zoomBar"), ring: $("focusRing"),
-    switchCam: $("btnSwitch"), debug: $("scanDebug")
+    switchCam: $("btnSwitch"), debug: $("scanDebug"), car: $("btnCar")
   };
+  const porId = Object.fromEntries(VISIBLES.map((a) => [a.id, a]));
+  // modo "texto": lee la etiqueta (por defecto) · modo "auto": reconoce el auto por la imagen (reconocer.js)
+  let modo = "texto", abiertoEn = 0, sugerido = false;
   // Línea de diagnóstico: qué cámara, si enfoca, nitidez y estado del lector
   const diag = { cam: "", res: "", foco: "", zoom: "", nitidez: "", lector: "cargando" };
   function showDiag(patch) {
@@ -185,13 +188,19 @@
 
   // ---------- Lectura en vivo ----------
   async function loop() {
-    let w;
-    try {
-      el.status.textContent = "Preparando lector de texto…";
-      w = await getWorker();
-    } catch (e) { el.status.textContent = e.message; return; }
+    // El lector de texto carga aparte: si falla, el modo "Reconocer el auto" sigue andando
+    let w = null, sinLector = false;
+    el.status.textContent = "Preparando lector de texto…";
+    getWorker().then((x) => { w = x; }).catch((e) => {
+      sinLector = true;
+      if (modo === "texto") el.status.textContent = e.message;
+      sugerirAuto();
+    });
     let frame = 0, blurCount = 0;
     while (running) {
+      if (modo === "auto") { await pasoAuto(); continue; }
+      if (!sugerido && Date.now() - abiertoEn > 8000) sugerirAuto();
+      if (!w) { await sleep(sinLector ? 400 : 150); continue; }
       if (!busy && Date.now() > holdUntil && el.video.readyState >= 2 && el.video.videoWidth) {
         const [sx, sy, sw, sh] = guideToVideo();
         const sh_ = sharpness(el.video, sx, sy, sw, sh);
@@ -247,6 +256,7 @@
       // la foto puede tener otra proporción que el video (4:3 vs 16:9): ajusto como recorte centrado
       const s = Math.max(W / VW, H / VH), ox = (W - VW * s) / 2, oy = (H - VH * s) / 2;
       const guided = { x: Math.max(0, gx * s + ox), y: Math.max(0, gy * s + oy), w: Math.min(W, gw * s), h: Math.min(H, gh * s) };
+      if (modo === "auto") { await reconocerEn(still, guided); return; }
       el.status.textContent = "Leyendo la etiqueta…";
       const w = await getWorker();
       // primero la placa detectada adentro (o cerca) del recuadro, después el recuadro tal cual
@@ -366,6 +376,7 @@
 
   async function open(cb) {
     onFound = cb; recent = [];
+    abiertoEn = Date.now(); sugerido = false; ponerModo("texto");
     el.root.hidden = false; el.guide.classList.remove("hit", "blurry"); el.photo.hidden = true;
     el.cands.innerHTML = ""; el.ocr.textContent = ""; el.zoom.hidden = true; el.shutter.hidden = true;
     el.status.textContent = "Iniciando cámara…";
@@ -381,7 +392,7 @@
     }
     try {
       await attach(await chooseCamera());
-      el.shutter.hidden = false;
+      el.shutter.hidden = false; el.car.hidden = !window.Reconocer;
       running = true;
       loop();
     } catch (e) {
@@ -453,6 +464,61 @@
       askTap(img, w);
     } catch (e) { el.status.textContent = e.message; }
   }
+
+  // ---------- Reconocer el auto (plan B) ----------
+  function ponerModo(m) {
+    modo = m;
+    el.guide.classList.toggle("car", m === "auto");
+    el.tip.textContent = m === "auto" ? "La cajita entera adentro" : "Etiqueta adentro, a unos 15 cm";
+    el.car.textContent = m === "auto" ? "Leer la etiqueta" : "Reconocer el auto";
+    el.car.classList.remove("pulse");
+    el.cands.innerHTML = "";
+    el.shutter.setAttribute("aria-label", m === "auto" ? "Reconocer el auto" : "Capturar etiqueta");
+    if (m === "auto") {
+      el.status.textContent = "Preparando el reconocedor…";
+      Reconocer.referencias((f) => { if (modo === "auto") el.status.textContent = `Preparando el reconocedor… ${Math.round(f * 100)} %`; })
+        .then(() => { if (modo === "auto") el.status.textContent = "Encuadrá la cajita entera"; })
+        .catch((e) => { el.status.textContent = e.message; ponerModo("texto"); });
+    }
+  }
+  function sugerirAuto() {
+    sugerido = true;
+    if (!window.Reconocer || el.car.hidden) return;
+    el.car.classList.add("pulse");
+    el.ocr.textContent = "¿No lee la etiqueta? Probá «Reconocer el auto»";
+  }
+  // Muestra hasta 3 autos parecidos para elegir (cuando no está seguro)
+  function opcionesAuto(rk) {
+    el.cands.innerHTML = "";
+    for (const r of rk.slice(0, 3).filter((x) => x.score >= 6)) {
+      const car = porId[r.id]; if (!car) continue;
+      const e = car.etiqueta, b = document.createElement("button");
+      b.className = "btn btn-light";
+      b.textContent = `¿${e.equipo} ${e.chasis} · ${e.anio} · ${e.piloto}?`;
+      b.onclick = () => found(car);
+      el.cands.appendChild(b);
+    }
+  }
+  async function reconocerEn(img, r) {
+    el.status.textContent = "Mirando el auto…";
+    const rk = await Reconocer.ranking(img, r);
+    if (!running && img === el.video) return false;
+    if (Reconocer.seguro(rk) && porId[rk[0].id]) { found(porId[rk[0].id]); return true; }
+    opcionesAuto(rk);
+    el.status.textContent = el.cands.children.length ? "¿Es alguno de estos? Si no, acercate o cambiá el ángulo" : "No lo reconozco: encuadrá la cajita entera, sin reflejo";
+    return false;
+  }
+  async function pasoAuto() {
+    if (busy || Date.now() < holdUntil || el.video.readyState < 2 || !el.video.videoWidth) return sleep(250);
+    try {
+      await Reconocer.referencias();
+      if (modo !== "auto" || !running) return;
+      const [sx, sy, sw, sh] = guideToVideo();
+      if (await reconocerEn(el.video, { x: sx, y: sy, w: sw, h: sh })) { running = false; return; }
+    } catch (e) { el.status.textContent = e.message; ponerModo("texto"); }
+    await sleep(500);
+  }
+  el.car.onclick = (ev) => { ev.stopPropagation(); ponerModo(modo === "auto" ? "texto" : "auto"); };
 
   el.close.onclick = close;
   el.shutter.onclick = (ev) => { ev.stopPropagation(); capture(); };

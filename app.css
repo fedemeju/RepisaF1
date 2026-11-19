@@ -543,3 +543,10 @@ a.driver .meta, .driver .meta { flex: 1; min-width: 0; }
 .r3d-act .btn-ficha { background: var(--surface-3); }
 .r3d-x { position: absolute; right: 10px; top: 8px; width: 32px; height: 32px; border-radius: 50%; border: 0; background: var(--surface-3); font-size: 20px; line-height: 1; cursor: pointer; }
 @media (prefers-reduced-motion: reduce) { .r3d-stage.anim .r3d-cam, .r3d-stage.anim .r3d-world, .r3d-cell { transition: none; } }
+
+/* ============ Escáner: reconocer el auto ============ */
+.guide.car { aspect-ratio: 2.13 / 1; width: min(92vw, 600px); }
+.car-btn { font-size: 13.5px; line-height: 1.15; padding: 0 12px; text-align: center; }
+.car-btn.pulse { border-color: var(--red-2); box-shadow: 0 0 0 0 rgba(255, 59, 48, .6); animation: carPulse 1.6s infinite; }
+@keyframes carPulse { 70% { box-shadow: 0 0 0 12px rgba(255, 59, 48, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0); } }
+@media (prefers-reduced-motion: reduce) { .car-btn.pulse { animation: none; } }

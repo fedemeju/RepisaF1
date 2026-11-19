@@ -1,7 +1,7 @@
 // Guarda la app en el celular para que funcione sin internet.
 // Subí el número de versión cuando cambies archivos para forzar la actualización.
-const CACHE = "repisa-f1-v27";
-const SHELL = ["./", "index.html", "app.css", "app.js", "matcher.js", "detector.js", "scanner.js", "data/autos.js", "data/pilotos.js", "data/logos.js", "data/repisa.js", "repisa3d.js", "data/fotos.js", "img/f1.webp", "manifest.webmanifest", "icon.svg", "img/icono/icon-192.png", "img/icono/favicon-64.png"];
+const CACHE = "repisa-f1-v28";
+const SHELL = ["./", "index.html", "app.css", "app.js", "matcher.js", "detector.js", "scanner.js", "reconocer.js", "data/autos.js", "data/pilotos.js", "data/logos.js", "data/repisa.js", "repisa3d.js", "data/fotos.js", "img/f1.webp", "manifest.webmanifest", "icon.svg", "img/icono/icon-192.png", "img/icono/favicon-64.png"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
