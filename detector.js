@@ -15,6 +15,19 @@
     let all = [];
     // radio de cierre 2: letras finas; 4: letras grandes que ocupan casi toda la placa
     for (const R of [2, 4]) for (const T of [30, 42, 55, 70, 85, 100]) all = all.concat(atThreshold(T, R));
+    // Con reflejo o polvo en el acrílico la placa se ve gris, no negra: ningún umbral fijo la separa.
+    // Entonces se busca lo que es bastante más oscuro que lo que lo rodea (umbral local).
+    const sum = new Float64Array((W + 1) * (H + 1));
+    for (let y = 0; y < H; y++) { let row = 0; for (let x = 0; x < W; x++) { row += lum[y * W + x]; sum[(y + 1) * (W + 1) + x + 1] = sum[y * (W + 1) + x + 1] + row; } }
+    const localMean = (x, y, r) => {
+      const x0 = Math.max(0, x - r), y0 = Math.max(0, y - r), x1 = Math.min(W, x + r + 1), y1 = Math.min(H, y + r + 1);
+      return (sum[y1 * (W + 1) + x1] - sum[y0 * (W + 1) + x1] - sum[y1 * (W + 1) + x0] + sum[y0 * (W + 1) + x0]) / ((x1 - x0) * (y1 - y0));
+    };
+    for (const [r, delta] of [[24, 30], [40, 30], [40, 50]]) {
+      const m = new Uint8Array(W * H);
+      for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) m[y * W + x] = lum[y * W + x] < localMean(x, y, r) - delta ? 1 : 0;
+      for (const R of [2, 4]) all = all.concat(fromMask(m, R, null));
+    }
     all.sort((a, b) => b.score - a.score);
     const out = [];
     for (const c of all) {
@@ -35,9 +48,14 @@
     }
 
     function atThreshold(T, R) {
+      const m = new Uint8Array(W * H);
+      for (let j = 0; j < lum.length; j++) m[j] = lum[j] < T ? 1 : 0;
+      return fromMask(m, R, T);
+    }
+
+    // T: umbral fijo con el que se armó la máscara; null = umbral local (se toma el gris de la placa)
+    function fromMask(m, R, T) {
     // máscara oscura, cerrada (dilatar + erosionar) para tapar las letras
-    let m = new Uint8Array(W * H);
-    for (let j = 0; j < lum.length; j++) m[j] = lum[j] < T ? 1 : 0;
     const dil = (a, r) => {
       const o = new Uint8Array(W * H);
       for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
@@ -75,12 +93,21 @@
     for (const cp of comps) {
       const bw = cp.x1 - cp.x0 + 1, bh = cp.y1 - cp.y0 + 1;
       const ar = bw / bh, fill = cp.n / (bw * bh);
-      if (bw < W * 0.12 || bh < 6 || ar < 2.2 || ar > 12 || fill < 0.7) continue;
+      // con umbral local la placa con reflejo queda a medias: se acepta menos relleno
+      if (bw < W * 0.12 || bh < 6 || ar < 2.2 || ar > 12 || fill < (T === null ? 0.4 : 0.7)) continue;
       // letras claras adentro (en la imagen sin cerrar) y fondo más claro alrededor
+      let Tc = T;
+      if (Tc === null) { // gris típico de la placa: el valor más común entre sus píxeles oscuros
+        const h = new Uint32Array(256);
+        for (let y = cp.y0; y <= cp.y1; y++) for (let x = cp.x0; x <= cp.x1; x++) h[lum[y * W + x]]++;
+        let acc = 0, half = 0; for (let v = 0; v < 256; v++) half += h[v]; half *= 0.35;
+        for (Tc = 0; Tc < 255 && acc + h[Tc] < half; Tc++) acc += h[Tc];
+        Tc += 12;
+      }
       let bright = 0, tot = 0, dark = 0;
       for (let y = cp.y0; y <= cp.y1; y++) for (let x = cp.x0; x <= cp.x1; x++) {
         const v = lum[y * W + x]; tot++;
-        if (v > T + 50) bright++; else if (v < T) dark++;
+        if (v > Tc + 50) bright++; else if (v < Tc) dark++;
       }
       const br = bright / tot;
       if (br < 0.02 || br > 0.45) continue;
@@ -89,7 +116,7 @@
       for (let x = cp.x0; x <= cp.x1; x += 2) {
         for (const y of [cp.y0 - 4, cp.y1 + 4]) if (y >= 0 && y < H) { ring += lum[y * W + x]; rn++; }
       }
-      const darkMean = T * 0.6;
+      const darkMean = Tc * 0.6;
       const edge = rn ? Math.min(1, Math.max(0, (ring / rn - darkMean) / 40)) : 0.5;
       const score = fill * fill * Math.min(1, br / 0.08) * Math.sqrt(bw * bh) * (ar >= 3 && ar <= 9 ? 1 : 0.6) * (0.3 + edge);
       cands.push({ score, x0: cp.x0, y0: cp.y0, bw, bh });

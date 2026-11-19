@@ -61,7 +61,9 @@
   }
 
   // Pasa a gris, invierte si el fondo es oscuro (etiqueta negra) y estira el contraste
-  function prep(src, sx, sy, sw, sh, targetW) {
+  // local = true: compara cada punto con lo que lo rodea en vez de con toda la imagen.
+  // Sirve cuando un reflejo en el acrílico aclara media placa y las letras casi no se distinguen.
+  function prep(src, sx, sy, sw, sh, targetW, local = false, forceDark = null) {
     const scale = Math.max(1, targetW / sw);
     const c = document.createElement("canvas");
     c.width = Math.round(sw * scale); c.height = Math.round(sh * scale);
@@ -75,7 +77,35 @@
       const v = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
       g[j] = v; sum += v;
     }
-    const dark = sum / g.length < 110;
+    // Fondo oscuro (placa) = la mayoría de los píxeles está del lado oscuro. Con reflejo la placa
+    // se ve gris y el promedio no alcanza para saberlo.
+    const hist = new Uint32Array(256); for (let j = 0; j < g.length; j++) hist[g[j] | 0]++;
+    const pct = (q) => { let a = 0; for (let v = 0; v < 256; v++) { a += hist[v]; if (a >= q * g.length) return v; } return 255; };
+    const p5 = pct(0.05), p50 = pct(0.5), p95 = pct(0.95);
+    const dark = forceDark !== null ? forceDark : p50 < (p5 + p95) / 2 || sum / g.length < 110;
+    if (local) {
+      const Wc = c.width, Hc = c.height, r = Math.max(8, Math.round(Math.min(Wc, Hc) / 8));
+      const S = new Float64Array((Wc + 1) * (Hc + 1));
+      for (let y = 0; y < Hc; y++) { let row = 0; for (let x = 0; x < Wc; x++) { row += g[y * Wc + x]; S[(y + 1) * (Wc + 1) + x + 1] = S[y * (Wc + 1) + x + 1] + row; } }
+      const diff = new Float32Array(g.length);
+      for (let y = 0; y < Hc; y++) {
+        const y0 = Math.max(0, y - r), y1 = Math.min(Hc, y + r + 1);
+        for (let x = 0; x < Wc; x++) {
+          const x0 = Math.max(0, x - r), x1 = Math.min(Wc, x + r + 1);
+          const mean = (S[y1 * (Wc + 1) + x1] - S[y0 * (Wc + 1) + x1] - S[y1 * (Wc + 1) + x0] + S[y0 * (Wc + 1) + x0]) / ((x1 - x0) * (y1 - y0));
+          const v = g[y * Wc + x] - mean;
+          diff[y * Wc + x] = dark ? v : -v; // positivo = letra
+        }
+      }
+      const pos = Array.from(diff.filter((v) => v > 0)).sort((a, b) => a - b);
+      const top = pos.length ? pos[Math.floor(pos.length * 0.93)] : 1;
+      for (let i = 0, j = 0; i < d.length; i += 4, j++) {
+        const v = 255 - Math.max(0, Math.min(255, (diff[j] / Math.max(1, top)) * 255));
+        d[i] = d[i + 1] = d[i + 2] = v;
+      }
+      ctx.putImageData(img, 0, 0);
+      return c;
+    }
     for (let j = 0; j < g.length; j++) { if (dark) g[j] = 255 - g[j]; if (g[j] < min) min = g[j]; if (g[j] > max) max = g[j]; }
     const k = 255 / Math.max(1, max - min);
     for (let i = 0, j = 0; i < d.length; i += 4, j++) {
@@ -175,7 +205,9 @@
         }
         if (!blurry || tryAnyway) {
           if (!blurry) el.status.textContent = "Leyendo… o tocá el botón para capturar";
-          const canvas = prep(el.video, sx, sy, sw, sh, frame++ % 2 ? 900 : 1400);
+          // va rotando: normal grande, local (para placas con reflejo), normal chica
+          const modo = frame++ % 3;
+          const canvas = prep(el.video, sx, sy, sw, sh, modo === 2 ? 900 : 1400, modo === 1, modo === 1 ? true : null);
           try {
             const { data } = await w.recognize(canvas);
             if (!running) break;
@@ -370,8 +402,9 @@
   // y juntas suelen tener el dato bien escrito al menos una vez.
   async function readRegion(w, img, r) {
     let text = "";
-    for (const width of [1400, 900]) {
-      const { data } = await w.recognize(prep(img, r.x, r.y, r.w, r.h, width));
+    // Las etiquetas de la colección son todas negras con letras claras: la versión local va con fondo oscuro.
+    for (const [width, local] of [[1400, false], [1400, true], [900, false]]) {
+      const { data } = await w.recognize(prep(img, r.x, r.y, r.w, r.h, width, local, local ? true : null));
       text += " " + data.text;
     }
     return text;
@@ -433,5 +466,7 @@
     track.applyConstraints({ advanced: [{ torch: torchOn }] }).catch(() => {});
   };
 
-  window.Scanner = { open, close, fromPhoto, set onFound(f) { onFound = f; }, _sharpness: sharpness };
+  window.Scanner = { open, close, fromPhoto, set onFound(f) { onFound = f; }, _sharpness: sharpness,
+    // para pruebas: lee una región de una imagen como lo hace la captura
+    _leer: async (img, r) => readRegion(await getWorker(), img, r), _prep: prep };
 })();
