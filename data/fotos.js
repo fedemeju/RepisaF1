@@ -16,6 +16,10 @@ window.FOTOS = {
     "src": "fotos/177-1979-giacomelli.jpg",
     "credito": "traumautoarchiv.de · CC BY-SA 2.0 · Wikimedia Commons"
   },
+  "191-1991-schumacher": {
+    "src": "fotos/191-1991-schumacher.jpg",
+    "credito": "Valder137 · CC BY 2.0 · Wikimedia Commons"
+  },
   "246f1-1958-hawthorn": {
     "src": "fotos/246f1-1958-hawthorn.jpg",
     "credito": "https://www.flickr.com/photos/davehamster/ · CC BY 2.0 · Wikimedia Commons"
@@ -23,6 +27,10 @@ window.FOTOS = {
   "308b-1975-hunt": {
     "src": "fotos/308b-1975-hunt.jpg",
     "credito": "Neil · CC BY 2.0 · Wikimedia Commons"
+  },
+  "312t2-1977-lauda": {
+    "src": "fotos/312t2-1977-lauda.jpg",
+    "credito": "Martin Lee · CC BY-SA 2.0 · Wikimedia Commons"
   },
   "375indy-1952-ascari": {
     "src": "fotos/375indy-1952-ascari.jpg",
@@ -36,9 +44,21 @@ window.FOTOS = {
     "src": "fotos/72d-1972-fittipaldi.jpg",
     "credito": "User Pop1 on en.wikipedia · CC BY-SA 3.0 · Wikimedia Commons"
   },
+  "751-1975-brambilla": {
+    "src": "fotos/751-1975-brambilla.jpg",
+    "credito": "Gillfoto · CC BY-SA 3.0 · Wikimedia Commons"
+  },
   "97t-1985-senna": {
     "src": "fotos/97t-1985-senna.jpg",
     "credito": "Dima Moroz · CC BY 2.0 · Wikimedia Commons"
+  },
+  "a1b-1979-patrese": {
+    "src": "fotos/a1b-1979-patrese.jpg",
+    "credito": "Gilberto Benni from Bologna, Italia · CC BY-SA 2.0 · Wikimedia Commons"
+  },
+  "b194-1994-schumacher": {
+    "src": "fotos/b194-1994-schumacher.jpg",
+    "credito": "The original uploader was Stahlkocher at German Wikipedia. · CC BY-SA 3.0 · Wikimedia Commons"
   },
   "bgp001-2009-button": {
     "src": "fotos/bgp001-2009-button.jpg",
@@ -128,9 +148,17 @@ window.FOTOS = {
     "src": "fotos/lotus79-1978-andretti.jpg",
     "credito": "Martin Lee from London, UK · CC BY-SA 2.0 · Wikimedia Commons"
   },
+  "m23-1976-hunt": {
+    "src": "fotos/m23-1976-hunt.jpg",
+    "credito": "David Merrett from Daventry, England · CC BY 2.0 · Wikimedia Commons"
+  },
   "mp4-14-1999-hakkinen": {
     "src": "fotos/mp4-14-1999-hakkinen.jpg",
     "credito": "Ank Kumar · CC BY-SA 4.0 · Wikimedia Commons"
+  },
+  "mp4-23-2008-hamilton": {
+    "src": "fotos/mp4-23-2008-hamilton.jpg",
+    "credito": "David Merrett from Daventry, England · CC BY 2.0 · Wikimedia Commons"
   },
   "mp4-8-1993-senna": {
     "src": "fotos/mp4-8-1993-senna.jpg",
@@ -151,6 +179,10 @@ window.FOTOS = {
   "r24-2004-trulli": {
     "src": "fotos/r24-2004-trulli.jpg",
     "credito": "Martin Lee from London, UK · CC BY-SA 2.0 · Wikimedia Commons"
+  },
+  "r25-2005-alonso": {
+    "src": "fotos/r25-2005-alonso.jpg",
+    "credito": "Willtron · CC BY-SA 3.0 · Wikimedia Commons"
   },
   "ra106-2006-button": {
     "src": "fotos/ra106-2006-button.jpg",

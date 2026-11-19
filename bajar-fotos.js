@@ -41,7 +41,10 @@ const FIJAS = {
   // no las encontraba solo
   "a1b-1979-patrese": "File:Riccardo Patrese 1979 Imola.jpg",
   "bt52b-1983-piquet": "File:Nelson Piquet driving Brabham BT52 2013 Goodwood Festival of Speed.jpg",
-  "512f1-1964-bandini": "File:Ferrari 1512 (35681758636).jpg"
+  "512f1-1964-bandini": "File:Ferrari 1512 (35681758636).jpg",
+  // el archivo que elegía la búsqueda está bloqueado en Wikimedia
+  "m23-1976-hunt": "File:James Hunt's 1976 World Championship Winning McLaren M23 (6838108365).jpg",
+  "mp4-23-2008-hamilton": "File:Lewis Hamilton's 2008 Mclaren MP4-23 (52337835592).jpg"
 };
 
 function puntaje(title, car) {
@@ -106,7 +109,14 @@ function achicar(file) {
   catch (e) { console.log(`     (no pude achicar ${path.basename(file)}: queda el original)`); }
 }
 
+// Wikimedia le contesta 429 al fetch de Node con algunos archivos y a curl no: probamos curl primero.
+function conCurl(url, dest) {
+  try { require("child_process").execFileSync("curl", ["-sfL", "-A", UA, "-o", dest, url]); return fs.statSync(dest).size > 1000; }
+  catch (_) { try { fs.unlinkSync(dest); } catch (__) {} return false; }
+}
+
 async function bajar(urls, dest) {
+  for (const url of urls) if (conCurl(url, dest)) return url;
   for (const url of urls) {
     for (let i = 0; i < 3; i++) {
       const r = await fetch(url, { headers: { "User-Agent": UA } });
