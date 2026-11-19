@@ -11,7 +11,11 @@
   const IDLE = { rx: 4, ry: -10 };
   // El mueble se arma K veces más grande y se achica con la cámara: el navegador dibuja cada
   // cajita a su tamaño en el armado, así al acercar se ve nítida (al revés se ve pixelada).
-  const K = 3;
+  // En el celu (pantalla táctil) va el modo liviano: menos sobremuestreo (K), cajas sin paredes de
+  // acrílico y el reflejo se acomoda recién cuando dejás de mover. Con todo, el celu se queda sin memoria
+  // de video y los autos titilan.
+  const LITE = matchMedia("(pointer: coarse)").matches;
+  const K = LITE ? 2 : 3;
   let saved = null; // vista que queda al salir (para volver al mismo lugar)
 
   function mount(view, api) {
@@ -67,7 +71,7 @@
             style="left:${c * cw + t / 2}px;top:${r * ch + t / 2}px;width:${cw - t}px;height:${ch - t}px;--z:${(-D * 0.68).toFixed(1)}px;--dg:${(D * 0.58).toFixed(1)}px;--pop:${(D * 0.55).toFixed(1)}px;--o:${((c - (R.columnas - 1) / 2) * -7 + (r - (R.filas - 1) / 2) * -1.5).toFixed(1)}">
             <span class="r3d-photo"><img src="${F.dir}/${String(r + 1).padStart(2, "0")}-${c + 1}.${F.ext}" alt="" draggable="false" loading="lazy"
               ${F.dir !== "repisa" ? `onerror="this.onerror=null;this.src='repisa/${String(r + 1).padStart(2, "0")}-${c + 1}.webp'"` : ""}></span>
-            <span class="r3d-wall l"></span><span class="r3d-wall r"></span><span class="r3d-wall t"></span><span class="r3d-floor"></span>
+            ${LITE ? "" : '<span class="r3d-wall l"></span><span class="r3d-wall r"></span><span class="r3d-wall t"></span>'}<span class="r3d-floor"></span>
             <span class="r3d-glass"></span>
             <span class="r3d-base"><span class="r3d-plate">${car
               ? `<b>${esc(`${car.etiqueta.equipo} ${car.etiqueta.chasis} - ${car.etiqueta.anio}`)}</b><i>${esc(car.etiqueta.piloto)}</i>`
@@ -83,13 +87,15 @@
     // ---------- cámara ----------
     const st = saved ? { ...saved } : { rx: IDLE.rx, ry: -26, s: 1, px: 0, py: 0 };
     const tilt = { x: 0, y: 0, tx: 0, ty: 0 };
-    let sel = null, before = null;
+    let sel = null, before = null, glareT = 0;
     function apply() {
       const k = st.s / K;
       cam.style.transform = `translate(${st.px}px, ${st.py}px) scale3d(${k}, ${k}, ${k})`;
       world.style.transform = `rotateX(${(st.rx + tilt.x).toFixed(2)}deg) rotateY(${(st.ry + tilt.y).toFixed(2)}deg)`;
       // reflejo del acrílico: la franja de luz se corre al girar el mueble o inclinar el celu
-      shelf.style.setProperty("--g", ((st.ry + tilt.y) * 1.2 - (st.rx + tilt.x) * 0.6 + st.px / 40).toFixed(1));
+      const g = ((st.ry + tilt.y) * 1.2 - (st.rx + tilt.x) * 0.6 + st.px / 40).toFixed(1);
+      if (!LITE) shelf.style.setProperty("--g", g);
+      else { clearTimeout(glareT); glareT = setTimeout(() => shelf.style.setProperty("--g", g), 250); }
     }
     function animate(on) { stage.classList.toggle("anim", on); }
     function limitPan() {
@@ -236,6 +242,7 @@
     return () => { // al salir de la pantalla
       removeEventListener("resize", onResize); removeEventListener("deviceorientation", onTilt);
       if (raf) cancelAnimationFrame(raf);
+      clearTimeout(glareT);
       if (!saved) saved = { ...(before || st) };
     };
   }
