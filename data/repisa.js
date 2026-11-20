@@ -26,5 +26,8 @@ window.REPISA = {
     ["f138-2013-alonso", "fw36-2014-bottas", "w05-2014-hamilton", "w11-2020-hamilton", "sf70h-2017-vettel", "rb18-2022-verstappen"]
   ],
   // Autos que están en el mueble pero todavía no tienen ficha: "fila-columna": "descripción"
-  sinFicha: {}
+  sinFicha: {},
+  // Lugares con el auto recortado sin fondo (repisa-salvat/recorte/<fila>-<columna>.png, PNG transparente):
+  // en la repisa 3D el auto va suelto a mitad de la caja, entre el fondo blanco y el acrílico.
+  recortes: ["04-3"]
 };

@@ -27,6 +27,8 @@
   // sigue usando la foto de su lugar original. Los lugares sin ficha se anotan "@fila-columna".
   const ORDEN_KEY = "repisa-orden";
   const pad = (n) => String(n).padStart(2, "0");
+  // Lugares con el auto recortado sin fondo (repisa-salvat/recorte/<fila>-<columna>.png), ver data/repisa.js
+  const RECORTES = new Set((window.REPISA && window.REPISA.recortes) || []);
   function original() {
     return window.REPISA.lugares.map((fila, r) => fila.map((id, c) => id || `@${r + 1}-${c + 1}`));
   }
@@ -107,11 +109,15 @@
       L.forEach((fila, r) => fila.forEach((tok, c) => {
         const id = idDe(tok), car = id && api.byId[id];
         const fk = foto[tok]; // foto (lugar original) de este auto
+        // Auto recortado (PNG sin fondo): va suelto a mitad de la caja, con el fondo blanco atrás
+        const rec = F.dir !== "repisa" && RECORTES.has(fk);
         const label = car ? `${car.etiqueta.equipo} ${car.etiqueta.chasis} · ${car.etiqueta.anio} · ${car.etiqueta.piloto}` : (R.sinFicha[tok.slice(1)] || "Auto sin ficha");
-        html += `<button class="r3d-cell${car ? "" : " sin"}" data-r="${r}" data-c="${c}" aria-label="${label.replace(/"/g, "&quot;")}"
+        html += `<button class="r3d-cell${car ? "" : " sin"}${rec ? " rec" : ""}" data-r="${r}" data-c="${c}" aria-label="${label.replace(/"/g, "&quot;")}"
             style="left:${c * cw + t / 2}px;top:${r * ch + t / 2}px;width:${cw - t}px;height:${ch - t}px;--z:${(-D * 0.68).toFixed(1)}px;--dg:${(D * 0.58).toFixed(1)}px;--pop:${(D * 0.55).toFixed(1)}px;--o:${((c - (R.columnas - 1) / 2) * -7 + (r - (R.filas - 1) / 2) * -1.5).toFixed(1)}">
-            <span class="r3d-photo"><img src="${F.dir}/${fk}.${F.ext}" alt="" draggable="false" loading="lazy"
-              ${F.dir !== "repisa" ? `onerror="this.onerror=null;this.src='repisa/${fk}.webp'"` : ""}></span>
+            ${rec
+              ? `<span class="r3d-photo"></span><span class="r3d-car"><img src="${F.dir}/recorte/${fk}.png" alt="" draggable="false" loading="lazy"></span>`
+              : `<span class="r3d-photo"><img src="${F.dir}/${fk}.${F.ext}" alt="" draggable="false" loading="lazy"
+              ${F.dir !== "repisa" ? `onerror="this.onerror=null;this.src='repisa/${fk}.webp'"` : ""}></span>`}
             ${LITE ? "" : '<span class="r3d-wall l"></span><span class="r3d-wall r"></span><span class="r3d-wall t"></span>'}<span class="r3d-floor"></span>
             <span class="r3d-glass"></span>
             <span class="r3d-base"><span class="r3d-plate">${car

@@ -525,6 +525,22 @@ a.driver .meta, .driver .meta { flex: 1; min-width: 0; }
 /* Fotos de catálogo: fondo de estudio claro, el auto un poco más abajo del centro */
 .r3d-cat .r3d-photo { background: #e4e6e8; }
 .r3d-cat .r3d-photo img { object-position: 50% 84%; }
+/* Auto recortado (sin fondo): el fondo de la caja queda blanco y el auto va suelto a mitad de camino
+   entre el fondo y el acrílico, apoyado en la pista. Al girar el mueble se mueve distinto que el fondo. */
+.r3d-cell.rec .r3d-photo { background: linear-gradient(180deg, #f4f5f6, #fff 45%, #f1f2f3); }
+.r3d-car {
+  left: 5%; right: 5%; bottom: var(--hb); height: 72%;
+  transform: translateZ(calc(var(--dg) * .45)); transform-origin: 50% 100%;
+}
+.r3d-car img { width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; display: block; }
+/* sombra del auto sobre la pista, justo donde está parado (45% de la profundidad) */
+.r3d-cell.rec .r3d-floor {
+  background:
+    radial-gradient(ellipse 44% 13% at 50% 45%, rgba(0, 0, 0, .42), rgba(0, 0, 0, .18) 55%, transparent 75%),
+    linear-gradient(180deg, transparent 4%, rgba(0, 0, 0, .25) 4%, transparent 7%, transparent 100%),
+    repeating-linear-gradient(90deg, #d0262c 0 7%, #f1f1f1 7% 14%) 0 4% / 100% 20% no-repeat,
+    linear-gradient(180deg, #6d7276, #80868a 60%, #8a9094);
+}
 /* paredes de la caja: acrílico visto de canto, más brillante cerca de la tapa */
 .r3d-wall { backface-visibility: visible; }
 /* La caja apoya sobre la base de Salvat: --hb es la altura de la base (pista + placa) */
