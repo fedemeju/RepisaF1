@@ -9,7 +9,7 @@
 (function () {
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const esc = (s) => String(s).replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
-  const IDLE = { rx: 4, ry: -10 };
+  const IDLE = { rx: -4, ry: -10 }; // un poco desde arriba, como mirándolo parado (rx negativo = desde arriba)
   // El mueble se arma K veces más grande y se achica con la cámara: el navegador dibuja cada
   // cajita a su tamaño en el armado, así al acercar se ve nítida (al revés se ve pixelada).
   // En el celu (pantalla táctil) va el modo liviano: menos sobremuestreo (K), cajas sin paredes de
@@ -80,24 +80,20 @@
     const $ = (id) => document.getElementById(id);
     const stage = $("r3dStage"), cam = $("r3dCam"), world = $("r3dWorld"), shelf = $("r3dShelf"), panel = $("r3dPanel");
 
-    // ---------- la habitación: pared blanca atrás, piso gris donde se refleja el mueble ----------
-    // Pared y piso son planos grandes de puro degradé: se dibujan chicos y se agrandan (SC), así no pesan.
-    // El reflejo es real: una copia invertida de las dos filas de abajo, colgada debajo del piso, que se
-    // ve a través del piso (semitransparente). Debajo hay un contrapiso opaco.
+    // ---------- la habitación: pared blanca atrás, piso gris medio ----------
+    // El mueble está colgado en la pared, a un metro del piso (el mueble mide más o menos un metro de
+    // ancho, así que un metro ≈ W). Pared y piso son planos grandes de puro degradé: se dibujan chicos y
+    // se agrandan (SC), así no pesan.
     const SC = 8;
+    const alPiso = () => H + t / 2 + W; // del borde de arriba del mueble al piso
     function room() {
-      const ft = H + t / 2, FD = D + 3 + 700 * K, RH = 2 * ch, z0 = -D - 3;
+      const ft = alPiso(), FD = D + 3 + 900 * K, z0 = -D - 3;
       const plano = (cls, top, h, tf, extra = "") =>
         `<div class="r3d-room ${cls}" style="left:${-2 * W}px;top:${top}px;width:${(5 * W) / SC}px;height:${h / SC}px;transform:${tf} scale(${SC});${extra}"></div>`;
-      let refl = "";
-      for (let k = 0; k < 2; k++) L[R.filas - 2 + k].forEach((tok, c) => {
-        refl += `<i style="left:${c * cw + t / 2}px;top:${k * ch + t / 2}px;width:${cw - t}px;height:${ch - t}px"><img src="${F.dir}/${foto[tok]}.${F.ext}" alt="" loading="lazy"></i>`;
-      });
-      return plano("wall", -1.6 * H, 2.6 * H + t / 2, `translateZ(${z0}px)`) +
-        `<div class="r3d-room wsh" style="left:${-t / 2}px;top:${-t / 2}px;width:${W + t}px;height:${ft + t / 2}px;transform:translateZ(${z0 + 1}px)"></div>` +
-        plano("sub", ft + RH + 2, FD, `translateZ(${z0}px) rotateX(90deg)`) +
-        `<div class="r3d-refl" style="left:0;top:${ft}px;width:${W}px;height:${RH}px;transform:translateZ(${(-D * 0.1).toFixed(1)}px)"><div class="r3d-refl-in">${refl}</div></div>` +
-        plano("floor", ft, FD, `translateZ(${z0}px) rotateX(90deg)`, `--sw:${((W * 0.62) / SC).toFixed(1)}px;--sd:${((D + 3) / SC).toFixed(1)}px`);
+      return plano("wall", -1.6 * H, 1.6 * H + ft, `translateZ(${z0}px)`) +
+        `<div class="r3d-room wsh" style="left:${-t / 2}px;top:${-t / 2}px;width:${W + t}px;height:${H + t}px;transform:translateZ(${z0 + 1}px)"></div>` +
+        // porcelanato de 60 × 90 cm: 90 a lo largo de la pared (0,9 W) y 60 hacia adelante (0,6 W)
+        plano("floor", ft, FD, `translateZ(${z0}px) rotateX(90deg)`, `--tx:${((W * 0.9) / SC).toFixed(2)}px;--ty:${((W * 0.6) / SC).toFixed(2)}px`);
     }
 
     // ---------- medidas ----------
@@ -107,11 +103,14 @@
       // el mueble un poco más chico que el ancho, para que se vea la habitación alrededor
       W = Math.min(avail * 0.88, 760) * K; cw = W / R.columnas; ch = cw * 0.48; H = ch * R.filas;
       D = cw * 0.62; t = Math.max(3 * K, cw * 0.05);
-      const Hv = H / K, piso = Math.min(140, Hv * 0.22); // lo que se ve de piso debajo del mueble
+      // Debajo del mueble: la pared hasta el piso (un metro) y un poco de piso, si entra en la pantalla.
+      // Si no entra (compu con pantalla baja), el piso aparece al mirar desde arriba.
+      const Hv = H / K, hasta = (W / K) * 0.95 + 60;
+      const piso = Math.max(70, Math.min(hasta, innerHeight - 140 - Hv - 70));
       stage.style.height = Math.round(Hv + piso + 70) + "px";
       shelf.style.setProperty("--k", K);
       shelf.style.width = W + "px"; shelf.style.height = H + "px";
-      // centrado un poco más arriba: abajo queda lugar para el piso y el reflejo
+      // el mueble arriba (70 px de margen), abajo queda la pared y el piso
       OY = -(piso - 70) / 2;
       shelf.style.left = -W / 2 + "px"; shelf.style.top = -H / 2 + OY * K + "px";
       let html = room() + `<div class="r3d-back" style="width:${W}px;height:${H}px;transform:translateZ(${-D}px)"></div>`;
@@ -165,7 +164,7 @@
     // rx positivo = mirar desde abajo. Hasta dónde se puede sin que la cámara baje del nivel del piso
     // (si baja, el piso tapa las filas de abajo). Depende del zoom: de cerca la cámara está más cerca.
     function rxMax() {
-      const piso = H / 2 + t / 2 + OY * K, cam = (1100 * K) / st.s;
+      const piso = alPiso() - H / 2 + OY * K, cam = (1100 * K) / st.s;
       return (Math.asin(Math.min(1, piso / cam)) * 180) / Math.PI - 1.5;
     }
     function animate(on) { stage.classList.toggle("anim", on); }

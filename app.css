@@ -487,8 +487,8 @@ a.driver .meta, .driver .meta { flex: 1; min-width: 0; }
   display: grid; place-items: center; min-height: 360px;
   background: linear-gradient(180deg, #e9ecee, #dfe2e5);
 }
-/* La habitación: pared blanca, piso gris medio con el reflejo del mueble. La luz (un foco en la pared y
-   un brillo en el piso) se corre con el giro, con la misma --g que el reflejo del acrílico. */
+/* La habitación: pared blanca y piso de porcelanato gris medio mate. La luz (un foco en la pared y una
+   claridad suave en el piso) se corre con el giro, con la misma --g que el reflejo del acrílico. */
 .r3d-shelf > .r3d-room { transform-origin: 0 0; pointer-events: none; }
 .r3d-room.wall {
   background:
@@ -498,23 +498,16 @@ a.driver .meta, .driver .meta { flex: 1; min-width: 0; }
 }
 /* sombra suave del mueble contra la pared */
 .r3d-room.wsh { background: rgba(0, 0, 0, .25); box-shadow: 0 calc(6px * var(--k, 1)) calc(36px * var(--k, 1)) calc(8px * var(--k, 1)) rgba(0, 0, 0, .24); }
+/* porcelanato mate de 60 × 90: gris medio parejo, juntas finas y apenas una claridad difusa (no refleja) */
 .r3d-room.floor {
   background:
-    radial-gradient(var(--sw) var(--sd) at 50% calc(var(--sd) * .5), rgba(0, 0, 0, .34), rgba(0, 0, 0, .12) 60%, transparent),
-    radial-gradient(34% 18% at calc(50% - var(--g, 0) * .7%) 3%, rgba(255, 255, 255, .2), transparent 80%),
-    linear-gradient(180deg, rgba(118, 122, 126, .74), rgba(134, 138, 142, .84) 35%, rgba(128, 132, 136, .94) 80%);
+    linear-gradient(180deg, rgba(0, 0, 0, .10), transparent 6%),
+    radial-gradient(45% 30% at calc(50% - var(--g, 0) * .5%) 0%, rgba(255, 255, 255, .07), transparent 85%),
+    repeating-linear-gradient(90deg, transparent 0 calc(var(--tx) - .3px), rgba(70, 73, 76, .35) calc(var(--tx) - .3px) var(--tx)),
+    repeating-linear-gradient(180deg, transparent 0 calc(var(--ty) - .3px), rgba(70, 73, 76, .35) calc(var(--ty) - .3px) var(--ty)),
+    #8a8d90;
+  background-position: 0 0, 0 0, 50% 0, 0 0, 0 0;
 }
-.r3d-room.sub { background: #6b6f73; }
-/* reflejo: las dos filas de abajo, dadas vuelta, que se apagan hacia abajo */
-.r3d-shelf > .r3d-refl {
-  pointer-events: none; opacity: .5;
-  -webkit-mask-image: linear-gradient(180deg, #000, rgba(0, 0, 0, .35) 40%, transparent 85%);
-  mask-image: linear-gradient(180deg, #000, rgba(0, 0, 0, .35) 40%, transparent 85%);
-}
-.r3d-refl-in { position: absolute; inset: 0; transform: scaleY(-1); background: #9aa1a4; }
-.r3d-refl-in i { position: absolute; overflow: hidden; background: #e4e6e8; }
-.r3d-refl-in img { position: absolute; left: 0; top: 0; width: 100%; height: 82%; object-fit: cover; object-position: 50% 84%; display: block; }
-.r3d-refl-in i::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 18%; background: linear-gradient(180deg, #555a5e, #3f4447); box-shadow: inset 0 0 0 calc(2px * var(--k, 1)) #3f4447; }
 .r3d-cam, .r3d-world, .r3d-shelf { transform-style: preserve-3d; }
 /* sin will-change: así el navegador vuelve a dibujar nítido después de acercar (con will-change agranda la imagen chica) */
 .r3d-stage.anim .r3d-cam, .r3d-stage.anim .r3d-world { transition: transform .6s var(--ease); }
