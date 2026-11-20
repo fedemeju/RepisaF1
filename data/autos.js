@@ -11,9 +11,10 @@
     leer el "relato" con la voz del celular.
   - relato: el texto que se lee en voz alta / el guion para generar el audio con IA.
   - juan: (opcional) comentario corto de Juan Fossaroli que suena pegado al relato, como un solo
-    audio: Juan "Fernando…" → Fernando "¿Sí, Juan?" → Juan este comentario. Las dos frases fijas
-    se graban una vez (audio/juan/juan-fernando.mp3 y fernando-si-juan.mp3) y el comentario va en
-    audio/juan/<id>.mp3. Si falta alguno, la app pasa solo el relato (ver node audios.js guiones).
+    audio: Juan "Fernando…" → Fernando "¿Sí, Juan?" → Juan una entrada ("Esta no la tenías, Fer",
+    "Mirá este dato"…, una al azar) → Juan este comentario. Las frases fijas y las entradas se graban
+    una vez (audio/juan/) y el comentario va en audio/juan/<id>.mp3. Por eso el comentario va sin
+    muletilla al principio: es el dato directo. Si falta algo, suena solo el relato (node audios.js guiones).
   - conexiones: [{ id, texto }] enlaces a otros autos de la repisa. Los autos del
     mismo piloto se enlazan solos. La época (década) también se calcula sola.
   - oculto: true → el auto queda guardado pero la app no lo muestra ni lo reconoce al escanear.
@@ -68,6 +69,7 @@ window.AUTOS = [
       "Pérez logró la pole en Arabia Saudita: la primera de su carrera."
     ],
     relato: "Quince victorias en un año. Ese récord de la Fórmula 1 lo puso este auto: el Red Bull RB18. En 2022 cambiaron todas las reglas y volvió el efecto suelo: los autos se pegaban al piso… y muchos rebotaban como pelotas en las rectas. El equipo de Adrian Newey fue el que mejor lo resolvió, y Max Verstappen, con el número uno en la trompa por primera vez, arrasó. Tu modelo es el de Japón, y esa carrera tiene una historia increíble: bajo una lluvia tremenda y con la carrera acortada, Max ganó, y por una regla que casi nadie conocía se dieron los puntos completos. Así fue campeón en ese mismo momento… y ni él lo sabía.",
+    juan: "Max debutó en la Fórmula 1 con diecisiete años, antes de tener el registro para manejar un auto por la calle.",
     audio: "audio/rb18-2022-verstappen.mp3"
   },
 
@@ -161,6 +163,7 @@ window.AUTOS = [
       "Fue uno de los primeros grandes autos de Adrian Newey, que después diseñaría para McLaren y Red Bull."
     ],
     relato: "Este auto era tan avanzado que terminaron prohibiendo su tecnología. Es el Williams FW14B de 1992. Tenía suspensión activa: computadoras que mantenían el auto siempre a la altura perfecta. Además, control de tracción y caja semiautomática, cuando los rivales apenas lo estaban probando. Lo diseñó Adrian Newey, el mismo que años después haría los Red Bull campeones. Nigel Mansell, el León, ganó las primeras cinco carreras del año y fue campeón en agosto, con cinco fechas por delante. Era su primer título, después de años de quedarse cerca. ¿Y qué hizo al año siguiente? Se fue a correr a Estados Unidos… y también fue campeón ahí, en su primera temporada.",
+    juan: "Al principio Mansell y su mujer vendieron su casa para poder pagarse las carreras.",
     audio: "audio/fw14b-1992-mansell.mp3"
   },
 
@@ -206,6 +209,7 @@ window.AUTOS = [
       "Las dos únicas victorias de Ferrari ese año que no fueron de Schumacher fueron las de Barrichello."
     ],
     relato: "Ser compañero de Michael Schumacher era el trabajo más difícil de la Fórmula 1. Rubens Barrichello lo hizo seis años. Esta es la F2004, la Ferrari más dominante de esa época: ganó quince de dieciocho carreras. Trece fueron de Schumacher… y las otras dos, de Rubinho. En Monza, delante de los tifosi, entró a boxes muy temprano, cayó atrás y remontó hasta ganar. Y unas semanas después ganó el primer Gran Premio de China de la historia, desde la pole. Terminó segundo en el campeonato, su mejor año. Barrichello se retiró con más de trescientas carreras, el récord de su época. Y en tu repisa también está la Ferrari con la que Schumacher arrasó en 2002.",
+    juan: "Barrichello se crió al lado de Interlagos: de chico veía las carreras desde la casa de los abuelos.",
     audio: "audio/f2004-2004-barrichello.mp3",
     conexiones: [
       { id: "f2002-2002-schumacher", texto: "La Ferrari anterior de la misma era dorada, con Schumacher." },
@@ -307,6 +311,7 @@ window.AUTOS = [
       "Hamilton cerró el título en Turquía, bajo lluvia, largando 6.º."
     ],
     relato: "Para muchos, el auto más rápido de la era híbrida. Es el Mercedes W11 de 2020, y corrió pintado de negro como mensaje contra el racismo. Tenía un truco que nadie más tenía: el DAS. En las rectas, Lewis Hamilton empujaba y tiraba del volante para cambiar el ángulo de las ruedas delanteras. Quince poles y trece victorias en diecisiete carreras. Con este auto, Hamilton superó las noventa y una victorias de Michael Schumacher y se convirtió en el piloto más ganador de la historia. Y en Turquía, bajo la lluvia y largando sexto, ganó y alcanzó sus siete títulos, igualando al alemán.",
+    juan: "A Lewis le pusieron ese nombre por Carl Lewis, el atleta olímpico.",
     audio: "audio/w11-2020-hamilton.mp3",
     conexiones: [
       { id: "w196-1955-fangio", texto: "Mercedes ya había dominado en los años 50 con Fangio; el W11 es la cumbre de su regreso." }
@@ -359,7 +364,7 @@ window.AUTOS = [
       "En 1986 Ferrari construyó un prototipo para Indy (el 637) como amenaza en una negociación con la F1, pero nunca corrió."
     ],
     relato: "¿Sabías que Ferrari corrió una sola vez, de manera oficial, las 500 Millas de Indianápolis? Fue con este auto. En 1952, Indianápolis contaba para el Mundial de Fórmula 1, pero los europeos casi nunca iban. Alberto Ascari, el mejor piloto del momento, se animó. Se perdió la primera carrera del año, en Suiza, para cruzar el océano con un Ferrari de motor V12 y el número doce. ¿Cómo le fue? Largó decimonoveno y en la vuelta cuarenta se le desarmó una rueda de rayos. Afuera. Pero la historia tiene revancha: volvió a Europa, ganó todas las carreras que corrió ese año y fue campeón del mundo. Ferrari nunca más volvió oficialmente a Indianápolis.",
-    juan: "Fer, no te olvides que Ascari era muy cábala: corría siempre con casco y remera celestes, y no los cambiaba por nada del mundo.",
+    juan: "Ascari era muy cábala: corría siempre con casco y remera celestes, y no los cambiaba por nada del mundo.",
     audio: "audio/375indy-1952-ascari.mp3",
     conexiones: [
       { id: "f2002-2002-schumacher", texto: "Medio siglo después, otra Ferrari arrasó: la F2002 de Schumacher." }
@@ -410,7 +415,7 @@ window.AUTOS = [
       "Debutó en Reims 1954 con esta carrocería carenada y ganó con un 1-2."
     ],
     relato: "Este auto ganó en su debut, y parece de otro planeta. Es el Mercedes W196, la Flecha de Plata de Juan Manuel Fangio. Mirá las ruedas: están tapadas. Es la versión carenada, pensada para circuitos rapidísimos como Reims y Monza. Por dentro tenía inyección directa y válvulas desmodrómicas, tecnología que los autos de calle tardaron décadas en tener. En el Gran Premio de Argentina de 1955 hizo tanto calor, más de cuarenta grados, que muchos pilotos pidieron relevo en plena carrera. Fangio no. Aguantó todo, se quemó la pierna con el escape, y ganó. Ese año fue campeón por tercera vez. Después de la tragedia de Le Mans, Mercedes se retiró de las carreras, y no volvió a la Fórmula 1 con equipo propio hasta 2010.",
-    juan: "Fer, acordate que a Fangio le decían el Chueco desde pibe, en Balcarce, porque jugaba al fútbol con las piernas arqueadas.",
+    juan: "A Fangio le decían el Chueco desde pibe, en Balcarce, porque jugaba al fútbol con las piernas arqueadas.",
     audio: "audio/w196-1955-fangio.mp3",
     conexiones: [
       { id: "w11-2020-hamilton", texto: "Sesenta y cinco años después, Mercedes volvió a dominar con Hamilton." }
@@ -561,6 +566,7 @@ window.AUTOS = [
       "El equipo Toleman después fue Benetton, Renault, Lotus y hoy Alpine: la misma fábrica de Enstone."
     ],
     relato: "Este es el auto con el que el mundo conoció a Ayrton Senna. Toleman era un equipo chico, con un motor de cuatro cilindros, y Senna era un debutante. Pero en Mónaco 1984, bajo una lluvia torrencial, largó decimotercero y empezó a pasar autos como si la pista estuviera seca. Iba directo a alcanzar al líder, Alain Prost, cuando la carrera se suspendió. Terminó segundo, y nadie se olvidó más de ese nombre. Dos datos que pocos saben. El auto lo diseñó Rory Byrne, el mismo que años después hizo las Ferrari de Schumacher. Y el equipo Toleman nunca desapareció: se transformó en Benetton, después en Renault, y hoy es Alpine.",
+    juan: "Ayrton en realidad era Ayrton Senna da Silva. Eligió correr con Senna, el apellido de la madre, porque Silva en Brasil hay millones.",
     audio: "audio/tg184-1984-senna.mp3",
     conexiones: [
       { id: "r25-2005-alonso", texto: "Mismo equipo, otra época: Toleman se convirtió en Renault y ganó con Alonso." },
@@ -661,6 +667,7 @@ window.AUTOS = [
       "Prost anunció su retiro en Portugal, la carrera donde aseguró el título."
     ],
     relato: "Para muchos, este es el auto más avanzado que corrió en la Fórmula 1. Es el Williams FW15C. Tenía suspensión activa, control de tracción, frenos ABS y dirección asistida, todo manejado por computadoras. Era tan superior que, para el año siguiente, la FIA prohibió casi todo eso. Alain Prost volvió de un año sabático para manejarlo, pero puso una condición en su contrato: Ayrton Senna no podía ser su compañero. Ganó siete carreras, hizo trece poles y fue campeón por cuarta vez. ¿Y después? Se retiró. Otro dato curioso: su compañero, Damon Hill, corrió con el número cero, porque el campeón del año anterior, Nigel Mansell, se había ido a correr a Estados Unidos.",
+    juan: "A Prost le decían el Profesor, por lo calculador que era: pensaba la carrera entera antes de largar.",
     audio: "audio/fw15c-1993-prost.mp3",
     conexiones: [
       { id: "fw14b-1992-mansell", texto: "Su antecesor directo: el FW14B de Mansell." },
@@ -762,7 +769,7 @@ window.AUTOS = [
       "La fábrica de Enstone donde se hizo es la misma del Toleman de Senna."
     ],
     relato: "Cinco años seguidos ganó Michael Schumacher. Hasta que llegó este auto. Es el Renault R25, y lo manejaba un español de veintitrés años: Fernando Alonso. En 2005 había una regla rarísima: no se podían cambiar los neumáticos durante la carrera. Había que cuidarlos como oro. En Imola, Schumacher venía mucho más rápido, pegado atrás, vuelta tras vuelta. Alonso no cometió un solo error, y ganó. Terminó el año con siete victorias y fue campeón en Brasil, con veinticuatro años: el más joven de la historia hasta ese momento. Y un dato que pocos saben: este equipo es el mismo que en 1984 tenía a Senna, cuando se llamaba Toleman.",
-    juan: "Fer, no te olvides que el primer karting de Alonso lo armó el padre para la hermana mayor, pero a ella no le gustó, y lo terminó manejando Fernando con tres años.",
+    juan: "El primer karting de Alonso lo armó el padre para la hermana mayor, pero a ella no le gustó, y lo terminó manejando Fernando con tres años.",
     audio: "audio/r25-2005-alonso.mp3",
     conexiones: [
       { id: "tg184-1984-senna", texto: "Hecho en Enstone, la misma fábrica que el Toleman de Senna en 1984." },
@@ -818,6 +825,7 @@ window.AUTOS = [
       "Murió en un accidente en la ruta en enero de 1959, pocos meses después de retirarse."
     ],
     relato: "Una victoria contra cuatro. Así terminó 1958: Stirling Moss ganó cuatro carreras, Mike Hawthorn una sola… y el campeón fue Hawthorn, por un punto. Lo hizo con este auto, la Ferrari Dino 246, con el motor adelante y el nombre del hijo de Enzo Ferrari, que había muerto dos años antes. Tu modelo es el de Holanda, en Zandvoort: ese día Hawthorn terminó quinto, a una vuelta. Parecía poca cosa, pero esos dos puntos valieron oro. Y hay más: en Portugal, Moss defendió a Hawthorn para que no lo descalificaran. Ese gesto de caballero le costó el título. Fue un año durísimo: murieron los dos compañeros de Hawthorn. Él se retiró apenas salió campeón, y pocos meses después murió en un accidente en la ruta.",
+    juan: "Hawthorn corría con corbata moño. Sí, con moño, arriba de un auto de carrera.",
     audio: "audio/246f1-1958-hawthorn.mp3"
   },
 
@@ -862,7 +870,7 @@ window.AUTOS = [
       "En Zandvoort 1963 Clark le sacó una vuelta a todos los demás."
     ],
     relato: "Este auto cambió cómo se construye un Fórmula 1. Es el Lotus 25, y fue el primero con chasis monocasco: en vez de un esqueleto de caños, una sola pieza como una bañera, liviana y durísima. Lo inventó Colin Chapman, el genio de Lotus, y todos los demás lo terminaron copiando. Adentro iba Jim Clark, casi acostado, un escocés tímido que en la pista era imparable. En 1963 ganó siete de las diez carreras y fue campeón. En Holanda le sacó una vuelta a todos. Ese récord de siete victorias en un año duró veinticinco años, hasta que llegó Ayrton Senna. Para muchos pilotos de su época, Clark fue el más rápido de todos.",
-    juan: "Fer, no te olvides que Jim Clark, entre carrera y carrera, volvía a Escocia a trabajar en el campo de la familia, con las ovejas.",
+    juan: "Jim Clark, entre carrera y carrera, volvía a Escocia a trabajar en el campo de la familia, con las ovejas.",
     audio: "audio/lotus25-1963-clark.mp3"
   },
 
@@ -1100,6 +1108,7 @@ window.AUTOS = [
       "Fittipaldi aseguró el título en Monza ganando la carrera."
     ],
     relato: "Negro y dorado: para muchos, el Fórmula 1 más lindo de la historia. Es el Lotus 72, con los colores de John Player Special. Tenía forma de cuña, los radiadores a los costados y los frenos escondidos adentro: Colin Chapman otra vez un paso adelante. Este auto corrió seis temporadas y ganó veinte carreras. En 1972 lo manejaba un brasileño de veinticinco años, Emerson Fittipaldi. Ganó cinco carreras y se coronó en Monza: el campeón más joven de la historia hasta ese momento, y el primero de Brasil. Detrás de él vinieron Nelson Piquet y Ayrton Senna. Y una historia triste: con este mismo modelo, Jochen Rindt fue campeón en 1970… después de morir en un accidente.",
+    juan: "Emerson después armó su propio equipo con su hermano Wilson: el Fittipaldi, el único equipo brasileño de la historia de la Fórmula 1.",
     audio: "audio/72d-1972-fittipaldi.mp3"
   },
 
@@ -1195,7 +1204,7 @@ window.AUTOS = [
       "Stewart dedicó el resto de su vida a mejorar la seguridad de los autódromos."
     ],
     relato: "Este es el último auto que manejó Jackie Stewart. El Tyrrell 006, azul como los autos franceses por su sponsor, Elf. En 1973 Stewart ganó cinco carreras, superó las veinticinco victorias de su gran amigo Jim Clark, llegó a veintisiete, un récord que duró catorce años, y fue campeón por tercera vez. Lo que nadie sabía es que ya había decidido retirarse. La última carrera del año, en Estados Unidos, iba a ser la número cien de su vida. Pero en la clasificación murió su compañero, François Cevert, el piloto al que preparaba para reemplazarlo. El equipo se retiró, y Stewart nunca corrió su carrera cien. Después dedicó su vida a que el automovilismo fuera más seguro.",
-    juan: "Fer, ¿sabías que Jackie Stewart era disléxico y se enteró recién pasados los cuarenta, cuando le diagnosticaron lo mismo a uno de sus hijos?",
+    juan: "Jackie Stewart era disléxico y se enteró recién pasados los cuarenta, cuando le diagnosticaron lo mismo a uno de sus hijos.",
     audio: "audio/006-1973-stewart.mp3",
     conexiones: [
       { id: "lotus25-1963-clark", texto: "Con este auto Stewart superó las 25 victorias de Clark, su amigo." }
@@ -1344,7 +1353,7 @@ window.AUTOS = [
       "Lauda había vuelto a correr 42 días después de casi morir quemado en Nürburgring."
     ],
     relato: "Un punto. Esa fue la diferencia en el campeonato más famoso de la historia, el que inspiró la película Rush. Este es el McLaren M23 de James Hunt. En 1976 Hunt y Niki Lauda pelearon todo el año. En Alemania, Lauda casi muere quemado en Nürburgring… y cuarenta y dos días después volvió a correr, con las vendas todavía puestas. La final fue en Japón, bajo un diluvio. Lauda se bajó del auto a las dos vueltas: dijo que su vida valía más que un título. Hunt siguió, tuvo que parar a cambiar gomas, y terminó tercero. Le alcanzó: campeón por un punto. Fuera de la pista eran amigos. Y este mismo modelo de auto ya había sido campeón dos años antes, con Emerson Fittipaldi.",
-    juan: "Fer, acordate que antes de la Fórmula 1 a Hunt le decían Hunt the Shunt, algo así como Hunt el choque, por la cantidad de autos que rompía.",
+    juan: "Antes de la Fórmula 1, a Hunt le decían Hunt the Shunt, algo así como Hunt el choque, por la cantidad de autos que rompía.",
     audio: "audio/m23-1976-hunt.mp3",
     conexiones: [
       { id: "312t2-1977-lauda", texto: "La Ferrari 312 T2 era el auto de Lauda en esa pelea de 1976." },
@@ -1444,7 +1453,7 @@ window.AUTOS = [
       "Andretti es el último estadounidense campeón del mundo de F1."
     ],
     relato: "Este auto descubrió un secreto: el aire que pasa por debajo puede pegarte al piso. Es el Lotus 79, la Belleza Negra. Colin Chapman le dio a los costados forma de ala de avión invertida, con unas polleras que sellaban contra el asfalto. El auto doblaba como si fuera sobre rieles. En 1978 Mario Andretti ganó seis carreras y su compañero Ronnie Peterson llegaba segundo una y otra vez, obedeciendo las órdenes del equipo. Pero el título tuvo un final triste: en Monza, el día en que Andretti se aseguró el campeonato, Peterson tuvo un accidente en la largada y murió al día siguiente. Andretti, nacido en Italia y criado en Estados Unidos, es hasta hoy el último campeón estadounidense.",
-    juan: "Fer, no te olvides que Mario Andretti es mellizo: su hermano Aldo también corría, y arrancaron juntos de pibes en Estados Unidos.",
+    juan: "Mario Andretti es mellizo: su hermano Aldo también corría, y arrancaron juntos de pibes en Estados Unidos.",
     audio: "audio/lotus79-1978-andretti.mp3",
     conexiones: [
       { id: "72d-1972-fittipaldi", texto: "Otro Lotus negro y dorado campeón, seis años antes." },
@@ -1788,6 +1797,7 @@ window.AUTOS = [
       "La FIA exigía 6 cm de altura al piso; el BT49 los cumplía solo cuando estaba quieto."
     ],
     relato: "Esta historia nos duele un poco a los argentinos. 1981, última carrera en Las Vegas, en un circuito armado en el estacionamiento de un hotel. Carlos Reutemann llega primero en el campeonato, un punto adelante de Nelson Piquet y su Brabham BT49. Reutemann larga desde la pole… y algo le pasa: termina octavo, sin puntos. Piquet, deshidratado y casi desmayado por el calor, llega quinto. Le alcanza: campeón por un punto. Este auto tenía su truco: una suspensión que en boxes respetaba la altura mínima, pero en pista bajaba y lo pegaba al piso. Lo había diseñado Gordon Murray. Y ese mismo año, con este auto, Piquet había ganado el Gran Premio de Argentina.",
+    juan: "Piquet en realidad se apellida Souto Maior. Corría con el apellido de la madre para que el padre no se enterara.",
     audio: "audio/bt49-1981-piquet.mp3",
     conexiones: [
       { id: "fw07-1979-regazzoni", texto: "El Williams FW07 era el auto de Reutemann en esa pelea de 1981." },
@@ -1986,7 +1996,7 @@ window.AUTOS = [
       "Senna había corrido su primer año en Toleman, que también está en tu repisa."
     ],
     relato: "Estoril, Portugal, 21 de abril de 1985. Llueve tanto que los autos parecen lanchas. En la pole, por primera vez, está un brasileño de veinticinco años con este Lotus negro y dorado: Ayrton Senna. Sale primero y no lo ve nadie más. Mientras los demás trompean, él va cada vez más rápido. Llega con más de un minuto de ventaja y le saca una vuelta a todos, menos al segundo. Primera pole y primera victoria de Senna en la Fórmula 1, en su segundo año. Ese día el mundo entendió que con lluvia había un piloto distinto a todos. Este Lotus 97T es, para muchos, donde empezó la leyenda.",
-    juan: "Fer, acordate del casco de Ayrton: amarillo, verde y azul, como la bandera de Brasil. Se lo pintaba Sid Mosca, el mismo que le hacía los cascos a Emerson Fittipaldi.",
+    juan: "El casco de Ayrton, amarillo, verde y azul como la bandera de Brasil, se lo pintaba Sid Mosca, el mismo que le hacía los cascos a Emerson Fittipaldi.",
     audio: "audio/97t-1985-senna.mp3",
     conexiones: [
       { id: "tg184-1984-senna", texto: "El auto de su primer año, con el que casi gana en Mónaco bajo la lluvia." },
@@ -2286,6 +2296,7 @@ window.AUTOS = [
       "Ganó con 58 puntos de ventaja sobre el segundo."
     ],
     relato: "Mirá la trompa: es negra. Esta Ferrari, la F2001, corrió así una sola vez. Fue en Monza, en septiembre de 2001, cinco días después de los atentados a las Torres Gemelas. Ferrari decidió correr en su casa sin ninguna publicidad y con la trompa pintada de negro, de luto. Michael Schumacher ya era campeón: lo había asegurado en Hungría, ganando, el mismo día que igualó las cincuenta y una victorias de Alain Prost, el récord de la historia. Una carrera después lo superó. Pero ese domingo en Monza no tenía ganas de festejar. Ganó Juan Pablo Montoya, el primero de su carrera, y Schumacher terminó cuarto. Por eso tu modelo es tan especial.",
+    juan: "Michael aprendió a manejar en el kartódromo de Kerpen, donde el padre trabajaba de encargado.",
     audio: "audio/f2001-2001-schumacher.mp3",
     conexiones: [
       { id: "f2002-2002-schumacher", texto: "Su sucesora, la F2002, fue todavía más dominante." }
@@ -2333,6 +2344,7 @@ window.AUTOS = [
       "Años después Sauber se convirtió en Audi."
     ],
     relato: "¿Una Ferrari azul? Casi. Este es el Sauber C23 de 2004. Sauber era un equipo suizo chico que tenía un acuerdo con Ferrari: le compraba el motor, y este auto se parecía muchísimo a la Ferrari campeona del año anterior. Su piloto era un brasileño joven, Felipe Massa. Había debutado en Sauber en 2002, rápido pero desprolijo; Ferrari lo tuvo un año aprendiendo como piloto de pruebas, al lado de Michael Schumacher, y lo devolvió a Sauber más maduro. En 2004 su mejor resultado fue un cuarto puesto en Bélgica. Dos años después saltó a Ferrari, ganó once carreras, y en 2008 fue campeón del mundo… durante treinta y ocho segundos.",
+    juan: "En Brasil a Massa le dicen Felipinho, algo así como Felipito, y así le siguen diciendo.",
     audio: "audio/c23-2004-massa.mp3",
     conexiones: [
       { id: "mp4-23-2008-hamilton", texto: "En 2008 Massa perdió el título por un punto contra Hamilton y este McLaren." },
@@ -2382,6 +2394,7 @@ window.AUTOS = [
       "Su compañero era Fernando Alonso, que al año siguiente fue campeón."
     ],
     relato: "En 2004 la Ferrari de Schumacher ganó quince de dieciocho carreras. Una de las tres que se le escaparon fue Mónaco, y la ganó este auto, el Renault R24. Su piloto era Jarno Trulli, un italiano conocido por ser rapidísimo en clasificación. En las calles de Montecarlo, donde casi no se puede pasar, eso vale oro: Trulli hizo la pole y aguantó adelante toda la carrera. Fue la única victoria de su vida en la Fórmula 1. Su compañero era un español joven, Fernando Alonso. A Trulli las cosas con el equipo terminaron mal, y se fue antes de fin de año. Al siguiente, con el R25, el que salió campeón fue Alonso.",
+    juan: "Trulli tiene viñedos en Italia y hace su propio vino.",
     audio: "audio/r24-2004-trulli.mp3",
     conexiones: [
       { id: "r25-2005-alonso", texto: "El sucesor: el R25 con el que Alonso fue campeón en 2005." }
@@ -2482,7 +2495,7 @@ window.AUTOS = [
       "Durante muchos años fue el último campeón del mundo con Ferrari."
     ],
     relato: "La primera carrera de Ferrari sin Michael Schumacher. Australia, 2007. El elegido para reemplazarlo era un finlandés que casi no hablaba: Kimi Räikkönen, el Iceman. Se subió a este auto, la F2007, hizo la pole, ganó la carrera y marcó la vuelta más rápida. Todo en su debut. Pero lo mejor llegó al final del año. A dos carreras del cierre, Räikkönen estaba diecisiete puntos detrás de Lewis Hamilton, que peleaba con su compañero Fernando Alonso. Hamilton tuvo problemas, Alonso no alcanzó, y Kimi ganó las dos últimas. Campeón por un punto. ¿Y cómo lo festejó? Como festejaba todo el Iceman: casi sin mover la cara.",
-    juan: "Fer, acordate que ese mismo año Kimi corrió una carrera de motos de nieve en Finlandia con nombre falso: se anotó como James Hunt.",
+    juan: "Ese mismo año Kimi corrió una carrera de motos de nieve en Finlandia con nombre falso: se anotó como James Hunt.",
     audio: "audio/f2007-2007-raikkonen.mp3",
     conexiones: [
       { id: "mp4-14-1999-hakkinen", texto: "El otro finlandés campeón, ocho años antes." }
@@ -2576,7 +2589,7 @@ window.AUTOS = [
       "Hamilton ganó el título por un solo punto: 98 a 97."
     ],
     relato: "Interlagos, 2 de noviembre de 2008. Última vuelta del campeonato. Felipe Massa cruza la meta primero, en su casa, y su familia festeja en el box de Ferrari: es campeón. Lewis Hamilton, con este McLaren, va sexto, y así pierde el título. Pero empieza a llover, y adelante, Timo Glock, con gomas de seco, casi no puede avanzar. En la última curva de la última vuelta, Hamilton lo pasa. Quinto. Campeón por un punto. Massa fue campeón del mundo durante treinta y ocho segundos. Hamilton tenía veintitrés años y fue el campeón más joven de la historia hasta ese momento. Era el primero de sus siete títulos.",
-    juan: "Fer, no te olvides que Hamilton, con diez años, lo encaró a Ron Dennis en una entrega de premios y le dijo que algún día iba a manejar para McLaren.",
+    juan: "Hamilton, con diez años, lo encaró a Ron Dennis en una entrega de premios y le dijo que algún día iba a manejar para McLaren.",
     audio: "audio/mp4-23-2008-hamilton.mp3",
     conexiones: [
       { id: "c23-2004-massa", texto: "Massa, el que perdió por un punto, empezó en Sauber." }

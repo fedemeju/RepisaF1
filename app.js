@@ -24,15 +24,24 @@
   let autoplayNext = false; // al llegar desde el escáner, arranca el audio solo
   const withAudio = new Set();
   // Intervención de Juan Fossaroli (campo juan): suena pegada al relato, como un solo audio.
-  // "Fernando…" (Juan) y "¿Sí, Juan?" (Fernando) se graban una vez y se reutilizan;
+  // "Fernando…" (Juan), "¿Sí, Juan?" (Fernando) y las entradas se graban una vez y se reutilizan;
   // por auto solo se graba el comentario: audio/juan/<id>.mp3
   const withJuan = new Set();
   const JUAN_FIJOS = ["audio/juan/juan-fernando.mp3", "audio/juan/fernando-si-juan.mp3"];
   const juanSrc = (c) => `audio/juan/${c.id}.mp3`;
+  // Entradas de Juan antes del comentario ("Esta no la tenías, Fer", ...): también se graban una vez.
+  // Cada vez suena una al azar entre las que estén grabadas; si no hay ninguna, va directo al comentario.
+  const JUAN_ENTRADAS = [1, 2, 3, 4].map((n) => `audio/juan/entrada-${n}.mp3`);
+  let entradas = [];
+  const existe = (u) => fetch(u, { method: "HEAD" }).then((r) => r.ok, () => false);
   const juanFijos = location.protocol.startsWith("http")
-    ? Promise.all(JUAN_FIJOS.map((u) => fetch(u, { method: "HEAD" }).then((r) => r.ok, () => false))).then((ok) => ok.every(Boolean))
+    ? Promise.all([...JUAN_FIJOS, ...JUAN_ENTRADAS].map(existe)).then((ok) => {
+      entradas = JUAN_ENTRADAS.filter((_, i) => ok[JUAN_FIJOS.length + i]);
+      return ok.slice(0, JUAN_FIJOS.length).every(Boolean);
+    })
     : Promise.resolve(false);
-  const audioPartes = (c) => (withJuan.has(c.id) ? [c.audio, ...JUAN_FIJOS, juanSrc(c)] : [c.audio]);
+  const azar = (xs) => (xs.length ? [xs[Math.floor(Math.random() * xs.length)]] : []);
+  const audioPartes = (c) => (withJuan.has(c.id) ? [c.audio, ...JUAN_FIJOS, ...azar(entradas), juanSrc(c)] : [c.audio]);
 
   // ---------- utilidades ----------
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[m]);

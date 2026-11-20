@@ -41,14 +41,22 @@ fs.mkdirSync(dir, { recursive: true });
 const segundos = (t) => Math.round(t.split(/\s+/).length / 2.6);
 
 // Intervención de Juan Fossaroli (campo juan de cada auto). La app la pasa pegada al relato, como un
-// solo audio:  relato → Juan: "Fernando…" → Fernando: "¿Sí, Juan?" → Juan: el comentario.
-// Las dos frases fijas se graban UNA vez y sirven para todos los autos:
+// solo audio:  relato → Juan: "Fernando…" → Fernando: "¿Sí, Juan?" → Juan: una entrada → Juan: el comentario.
+// Las frases fijas y las entradas se graban UNA vez y sirven para todos los autos:
 //   audio/juan/juan-fernando.mp3      (voz de Juan)      "Fernando…"
 //   audio/juan/fernando-si-juan.mp3   (voz de Fernando)  "¿Sí, Juan?"
+//   audio/juan/entrada-1.mp3 … entrada-4.mp3 (voz de Juan): cada vez suena una al azar (opcionales)
 // y por auto solo el comentario:  audio/juan/<id del auto>.mp3  (voz de Juan)
-// Mientras falte alguno de esos mp3, la app pasa solo el relato.
+// Mientras falte "Fernando…", "¿Sí, Juan?" o el comentario, la app pasa solo el relato.
 // Los comandos generar y azure no los hacen (otra voz): los textos están en GUIONES.md.
-const JUAN_FIJOS = [["juan-fernando.mp3", "Juan", "Fernando…"], ["fernando-si-juan.mp3", "Fernando", "¿Sí, Juan?"]];
+const JUAN_FIJOS = [
+  ["juan-fernando.mp3", "Juan", "Fernando…"],
+  ["fernando-si-juan.mp3", "Fernando", "¿Sí, Juan?"],
+  ["entrada-1.mp3", "Juan", "Esta no la tenías, Fer."],
+  ["entrada-2.mp3", "Juan", "Mirá este dato."],
+  ["entrada-3.mp3", "Juan", "Te tiro una que poca gente sabe."],
+  ["entrada-4.mp3", "Juan", "Un dato de color, Fer."]
+];
 
 function guiones() {
   const ordenados = [...AUTOS].sort((a, b) => a.etiqueta.anio - b.etiqueta.anio);
@@ -73,8 +81,9 @@ function guiones() {
   // Juan: las frases fijas (una sola vez) y la lista de comentarios
   const est = (f) => (fs.existsSync(path.join(dir, f)) ? "✅ ya está" : "⬜ falta");
   md += `\n---\n\n# Intervenciones de Juan Fossaroli (${juan.length} autos)\n\n` +
-    `Suenan pegadas al final del relato: Juan: "Fernando…" → Fernando: "¿Sí, Juan?" → Juan: el comentario.\n` +
-    `Mientras falte alguno de estos mp3, la app pasa solo el relato.\n\n` +
+    `Suenan pegadas al final del relato: Juan: "Fernando…" → Fernando: "¿Sí, Juan?" → Juan: una entrada → Juan: el comentario.\n` +
+    `Las entradas son opcionales: cada vez suena una al azar entre las que estén grabadas.\n` +
+    `Mientras falte "Fernando…", "¿Sí, Juan?" o el comentario del auto, la app pasa solo el relato.\n\n` +
     `**Se graban una sola vez (sirven para todos los autos):**\n\n` +
     JUAN_FIJOS.map(([f, quien, t]) => `- \`juan/${f}\` ${est("juan/" + f)} · voz de ${quien}: "${t}"`).join("\n") +
     `\n\n**Un comentario por auto (voz de Juan),** el texto está arriba en cada auto:\n\n` +
