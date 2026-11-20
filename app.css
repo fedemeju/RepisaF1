@@ -485,8 +485,36 @@ a.driver .meta, .driver .meta { flex: 1; min-width: 0; }
   position: relative; overflow: hidden; touch-action: none; user-select: none; -webkit-user-select: none;
   perspective: 1100px; perspective-origin: 50% 45%;
   display: grid; place-items: center; min-height: 360px;
-  background: radial-gradient(70% 60% at 50% 40%, #2a2c31, #101114 75%);
+  background: linear-gradient(180deg, #e9ecee, #dfe2e5);
 }
+/* La habitación: pared blanca, piso gris medio con el reflejo del mueble. La luz (un foco en la pared y
+   un brillo en el piso) se corre con el giro, con la misma --g que el reflejo del acrílico. */
+.r3d-shelf > .r3d-room { transform-origin: 0 0; pointer-events: none; }
+.r3d-room.wall {
+  background:
+    radial-gradient(40% 48% at calc(50% - var(--g, 0) * .7%) 42%, #fff, rgba(255, 255, 255, 0) 75%),
+    linear-gradient(90deg, rgba(0, 0, 0, calc(.05 + var(--g, 0) * .002)), transparent 40%, transparent 60%, rgba(0, 0, 0, calc(.05 - var(--g, 0) * .002))),
+    linear-gradient(180deg, #e6e9eb, #f3f4f5 60%, #eceef0);
+}
+/* sombra suave del mueble contra la pared */
+.r3d-room.wsh { background: rgba(0, 0, 0, .25); box-shadow: 0 calc(6px * var(--k, 1)) calc(36px * var(--k, 1)) calc(8px * var(--k, 1)) rgba(0, 0, 0, .24); }
+.r3d-room.floor {
+  background:
+    radial-gradient(var(--sw) var(--sd) at 50% calc(var(--sd) * .5), rgba(0, 0, 0, .34), rgba(0, 0, 0, .12) 60%, transparent),
+    radial-gradient(34% 18% at calc(50% - var(--g, 0) * .7%) 3%, rgba(255, 255, 255, .2), transparent 80%),
+    linear-gradient(180deg, rgba(118, 122, 126, .74), rgba(134, 138, 142, .84) 35%, rgba(128, 132, 136, .94) 80%);
+}
+.r3d-room.sub { background: #6b6f73; }
+/* reflejo: las dos filas de abajo, dadas vuelta, que se apagan hacia abajo */
+.r3d-shelf > .r3d-refl {
+  pointer-events: none; opacity: .5;
+  -webkit-mask-image: linear-gradient(180deg, #000, rgba(0, 0, 0, .35) 40%, transparent 85%);
+  mask-image: linear-gradient(180deg, #000, rgba(0, 0, 0, .35) 40%, transparent 85%);
+}
+.r3d-refl-in { position: absolute; inset: 0; transform: scaleY(-1); background: #9aa1a4; }
+.r3d-refl-in i { position: absolute; overflow: hidden; background: #e4e6e8; }
+.r3d-refl-in img { position: absolute; left: 0; top: 0; width: 100%; height: 82%; object-fit: cover; object-position: 50% 84%; display: block; }
+.r3d-refl-in i::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 18%; background: linear-gradient(180deg, #555a5e, #3f4447); box-shadow: inset 0 0 0 calc(2px * var(--k, 1)) #3f4447; }
 .r3d-cam, .r3d-world, .r3d-shelf { transform-style: preserve-3d; }
 /* sin will-change: así el navegador vuelve a dibujar nítido después de acercar (con will-change agranda la imagen chica) */
 .r3d-stage.anim .r3d-cam, .r3d-stage.anim .r3d-world { transition: transform .6s var(--ease); }
@@ -583,7 +611,8 @@ a.driver .meta, .driver .meta { flex: 1; min-width: 0; }
 .r3d-b.fav { right: calc(3px * var(--k, 1)); background: var(--gold); color: #1a1300; }
 .r3d-b.sin { left: 50%; top: 50%; transform: translateZ(calc(var(--dg) + 1px)) translate(-50%, -50%); width: calc(22px * var(--k, 1)); height: calc(22px * var(--k, 1)); font-size: calc(14px * var(--k, 1)); background: rgba(0, 0, 0, .7); color: #fff; border: 1px solid rgba(255, 255, 255, .4); }
 .r3d-hint {
-  position: absolute; left: 0; right: 0; bottom: 12px; margin: 0; text-align: center; font-size: 12.5px; color: rgba(255, 255, 255, .7);
+  position: absolute; left: 0; right: 0; bottom: 12px; margin: 0; text-align: center; font-size: 12.5px; color: rgba(255, 255, 255, .92);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, .55);
   pointer-events: none; transition: opacity .6s;
 }
 .r3d-hint.gone { opacity: 0; }
@@ -615,6 +644,28 @@ a.driver .meta, .driver .meta { flex: 1; min-width: 0; }
   border: 1px solid var(--line-2); font-size: 12.5px; line-height: 1.3;
 }
 .r3d-editbar[hidden] { display: none; }
+/* PIN para ordenar */
+.r3d-pin {
+  position: absolute; inset: 0; z-index: 4; display: grid; place-items: center; padding: 16px; margin: 0;
+  background: rgba(10, 10, 14, .55); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  user-select: auto; -webkit-user-select: auto; touch-action: auto; animation: r3dUp .25s var(--ease);
+}
+.r3d-pin-card {
+  width: min(320px, 100%); display: flex; flex-direction: column; gap: 10px; padding: 18px; border-radius: var(--r-lg);
+  background: rgba(24, 24, 31, .98); border: 1px solid var(--line-2); box-shadow: 0 18px 40px rgba(0, 0, 0, .5);
+}
+.r3d-pin-card b { font-size: 17px; }
+.r3d-pin-card small { color: var(--muted); font-size: 13px; line-height: 1.35; }
+.r3d-pin-card input {
+  height: 46px; border-radius: 12px; border: 1px solid var(--line-2); background: var(--surface-3); color: var(--text);
+  font-size: 22px; letter-spacing: .35em; text-align: center; padding: 0 10px;
+}
+.r3d-pin-card input:focus { outline: 2px solid var(--red-2); outline-offset: 1px; }
+.r3d-pin-card .err { color: var(--red-2); font-style: normal; font-size: 13px; }
+.r3d-pin-card .err[hidden] { display: none; }
+.r3d-pin-act { display: flex; gap: 8px; }
+.r3d-pin-act button { flex: 1; height: 42px; border-radius: 12px; border: 1px solid var(--line-2); background: var(--surface-3); color: var(--text); font-weight: 700; cursor: pointer; }
+.r3d-pin-act .ok { background: linear-gradient(135deg, var(--red-2), var(--red)); border-color: transparent; color: #fff; }
 .r3d-editbar span { flex: 1 1 160px; color: var(--muted); }
 .r3d-editbar button { height: 32px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--line-2); background: var(--surface-3); color: var(--text); font-weight: 700; cursor: pointer; }
 .r3d-editbar button.ok { background: linear-gradient(135deg, var(--red-2), var(--red)); border-color: transparent; color: #fff; }

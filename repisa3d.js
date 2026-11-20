@@ -61,7 +61,7 @@
       <section class="r3d${F.dir !== "repisa" ? " r3d-cat" : ""}">
         <div class="r3d-stage" id="r3dStage">
           <div class="r3d-cam" id="r3dCam"><div class="r3d-world" id="r3dWorld"><div class="r3d-shelf" id="r3dShelf"></div></div></div>
-          <p class="r3d-hint" id="r3dHint">Arrastrá para girar · tocá un auto · mantenelo apretado para moverlo</p>
+          <p class="r3d-hint" id="r3dHint">Arrastrá para girar · tocá un auto para verlo</p>
           <div class="r3d-editbar" id="r3dEditBar" hidden>
             <span>Arrastrá un auto sobre otro (o tocá los dos) para intercambiarlos</span>
             <button id="r3dEditReset">Orden original</button>
@@ -80,18 +80,41 @@
     const $ = (id) => document.getElementById(id);
     const stage = $("r3dStage"), cam = $("r3dCam"), world = $("r3dWorld"), shelf = $("r3dShelf"), panel = $("r3dPanel");
 
+    // ---------- la habitación: pared blanca atrás, piso gris donde se refleja el mueble ----------
+    // Pared y piso son planos grandes de puro degradé: se dibujan chicos y se agrandan (SC), así no pesan.
+    // El reflejo es real: una copia invertida de las dos filas de abajo, colgada debajo del piso, que se
+    // ve a través del piso (semitransparente). Debajo hay un contrapiso opaco.
+    const SC = 8;
+    function room() {
+      const ft = H + t / 2, FD = D + 3 + 700 * K, RH = 2 * ch, z0 = -D - 3;
+      const plano = (cls, top, h, tf, extra = "") =>
+        `<div class="r3d-room ${cls}" style="left:${-2 * W}px;top:${top}px;width:${(5 * W) / SC}px;height:${h / SC}px;transform:${tf} scale(${SC});${extra}"></div>`;
+      let refl = "";
+      for (let k = 0; k < 2; k++) L[R.filas - 2 + k].forEach((tok, c) => {
+        refl += `<i style="left:${c * cw + t / 2}px;top:${k * ch + t / 2}px;width:${cw - t}px;height:${ch - t}px"><img src="${F.dir}/${foto[tok]}.${F.ext}" alt="" loading="lazy"></i>`;
+      });
+      return plano("wall", -1.6 * H, 2.6 * H + t / 2, `translateZ(${z0}px)`) +
+        `<div class="r3d-room wsh" style="left:${-t / 2}px;top:${-t / 2}px;width:${W + t}px;height:${ft + t / 2}px;transform:translateZ(${z0 + 1}px)"></div>` +
+        plano("sub", ft + RH + 2, FD, `translateZ(${z0}px) rotateX(90deg)`) +
+        `<div class="r3d-refl" style="left:0;top:${ft}px;width:${W}px;height:${RH}px;transform:translateZ(${(-D * 0.1).toFixed(1)}px)"><div class="r3d-refl-in">${refl}</div></div>` +
+        plano("floor", ft, FD, `translateZ(${z0}px) rotateX(90deg)`, `--sw:${((W * 0.62) / SC).toFixed(1)}px;--sd:${((D + 3) / SC).toFixed(1)}px`);
+    }
+
     // ---------- medidas ----------
-    let W, H, cw, ch, D, t;
+    let W, H, cw, ch, D, t, OY = 0; // OY: el mueble va un poco más arriba del centro (px de pantalla)
     function build() {
       const avail = stage.clientWidth - 28;
-      W = Math.min(avail, 820) * K; cw = W / R.columnas; ch = cw * 0.48; H = ch * R.filas;
+      // el mueble un poco más chico que el ancho, para que se vea la habitación alrededor
+      W = Math.min(avail * 0.88, 760) * K; cw = W / R.columnas; ch = cw * 0.48; H = ch * R.filas;
       D = cw * 0.62; t = Math.max(3 * K, cw * 0.05);
-      const Hv = H / K;
-      stage.style.height = Math.round(Math.min(Hv + 120, innerHeight - 150 > Hv + 40 ? innerHeight - 150 : Hv + 120)) + "px";
+      const Hv = H / K, piso = Math.min(140, Hv * 0.22); // lo que se ve de piso debajo del mueble
+      stage.style.height = Math.round(Hv + piso + 70) + "px";
       shelf.style.setProperty("--k", K);
       shelf.style.width = W + "px"; shelf.style.height = H + "px";
-      shelf.style.left = -W / 2 + "px"; shelf.style.top = -H / 2 + "px";
-      let html = `<div class="r3d-back" style="width:${W}px;height:${H}px;transform:translateZ(${-D}px)"></div>`;
+      // centrado un poco más arriba: abajo queda lugar para el piso y el reflejo
+      OY = -(piso - 70) / 2;
+      shelf.style.left = -W / 2 + "px"; shelf.style.top = -H / 2 + OY * K + "px";
+      let html = room() + `<div class="r3d-back" style="width:${W}px;height:${H}px;transform:translateZ(${-D}px)"></div>`;
       // Paredes y estantes en pedazos de un compartimento: así ningún plano atraviesa a otro
       // (si se cruzan, el navegador los dibuja cortados en triángulos).
       for (let i = 0; i <= R.columnas; i++) {
@@ -133,11 +156,17 @@
     function apply() {
       const k = st.s / K;
       cam.style.transform = `translate(${st.px}px, ${st.py}px) scale3d(${k}, ${k}, ${k})`;
-      world.style.transform = `rotateX(${(st.rx + tilt.x).toFixed(2)}deg) rotateY(${(st.ry + tilt.y).toFixed(2)}deg)`;
+      world.style.transform = `rotateX(${Math.min(st.rx + tilt.x, rxMax()).toFixed(2)}deg) rotateY(${(st.ry + tilt.y).toFixed(2)}deg)`;
       // reflejo del acrílico: la franja de luz se corre al girar el mueble o inclinar el celu
       const g = ((st.ry + tilt.y) * 1.2 - (st.rx + tilt.x) * 0.6 + st.px / 40).toFixed(1);
       if (!LITE) shelf.style.setProperty("--g", g);
       else { clearTimeout(glareT); glareT = setTimeout(() => shelf.style.setProperty("--g", g), 250); }
+    }
+    // rx positivo = mirar desde abajo. Hasta dónde se puede sin que la cámara baje del nivel del piso
+    // (si baja, el piso tapa las filas de abajo). Depende del zoom: de cerca la cámara está más cerca.
+    function rxMax() {
+      const piso = H / 2 + t / 2 + OY * K, cam = (1100 * K) / st.s;
+      return (Math.asin(Math.min(1, piso / cam)) * 180) / Math.PI - 1.5;
     }
     function animate(on) { stage.classList.toggle("anim", on); }
     function limitPan() {
@@ -164,7 +193,7 @@
       if (sel) sel.classList.remove("pop"); else before = { ...st };
       sel = cell; cell.classList.add("pop");
       const s = clamp((stage.clientWidth * 0.78) / (cw / K), 1.6, LITE ? 4.6 : 3.2);
-      const cx = ((c + 0.5) * cw - W / 2) / K, cy = ((r + 0.5) * ch - H / 2) / K;
+      const cx = ((c + 0.5) * cw - W / 2) / K, cy = ((r + 0.5) * ch - H / 2) / K + OY;
       animate(true);
       st.s = s; st.px = -cx * s; st.py = -cy * s - stage.clientHeight * 0.12; st.rx = 2; st.ry = 0;
       apply();
@@ -265,7 +294,55 @@
       if (dropOn) { dropOn.classList.remove("drop"); dropOn = null; }
       shelf.querySelectorAll(".r3d-cell.dragging").forEach((c) => c.classList.remove("dragging"));
     }
-    $("r3dEdit").onclick = () => (editing ? exitEdit() : enterEdit());
+    // ---------- PIN para ordenar: así nadie te cambia el orden desde tu celu o tu compu ----------
+    // La primera vez en cada dispositivo se crea el PIN; queda guardado (como hash) en ese dispositivo.
+    // Después de ponerlo bien, se puede ordenar (y mantener apretado un auto) hasta salir de la repisa.
+    const PIN_KEY = "repisa-pin";
+    let desbloqueado = false;
+    const hashPin = (s) => { // no es seguridad fuerte (la app no tiene servidor): alcanza para que no toquen el orden
+      let h1 = 0xdeadbeef, h2 = 0x41c6ce57;
+      for (const ch of "repisa-f1:" + s) { const k = ch.charCodeAt(0); h1 = Math.imul(h1 ^ k, 2654435761); h2 = Math.imul(h2 ^ k, 1597334677); }
+      h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+      h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+      return (h2 >>> 0).toString(16) + (h1 >>> 0).toString(16);
+    };
+    const pinGuardado = () => { try { return localStorage.getItem(PIN_KEY); } catch (_) { return null; } };
+    function pedirPin() {
+      if (desbloqueado) return Promise.resolve(true);
+      const nuevo = !pinGuardado();
+      return new Promise((res) => {
+        const box = document.createElement("form");
+        box.className = "r3d-pin";
+        box.innerHTML = `<div class="r3d-pin-card">
+            <b>${nuevo ? "Creá un PIN para ordenar" : "PIN para ordenar la repisa"}</b>
+            <small>${nuevo ? "Así nadie más te cambia el orden en este dispositivo. Elegí de 4 a 8 números." : "Ingresá tu PIN."}</small>
+            <input type="password" inputmode="numeric" autocomplete="off" maxlength="8" placeholder="PIN" aria-label="PIN" required>
+            ${nuevo ? '<input type="password" inputmode="numeric" autocomplete="off" maxlength="8" placeholder="Repetilo" aria-label="Repetí el PIN" required>' : ""}
+            <em class="err" hidden></em>
+            <div class="r3d-pin-act"><button type="button" class="no">Cancelar</button><button type="submit" class="ok">${nuevo ? "Guardar" : "Entrar"}</button></div>
+          </div>`;
+        const [a, b] = box.querySelectorAll("input"), err = box.querySelector(".err");
+        const fin = (ok) => { box.remove(); res(ok); };
+        const mal = (txt) => { err.textContent = txt; err.hidden = false; a.value = ""; if (b) b.value = ""; a.focus(); };
+        box.querySelector(".no").onclick = () => fin(false);
+        box.onsubmit = (ev) => {
+          ev.preventDefault();
+          const v = a.value.trim();
+          if (nuevo) {
+            if (!/^\d{4,8}$/.test(v)) return mal("Tienen que ser de 4 a 8 números.");
+            if (v !== b.value.trim()) return mal("Los dos PIN no coinciden.");
+            try { localStorage.setItem(PIN_KEY, hashPin(v)); } catch (_) {}
+          } else if (hashPin(v) !== pinGuardado()) {
+            if (navigator.vibrate) navigator.vibrate([30, 40, 30]);
+            return mal("PIN incorrecto.");
+          }
+          desbloqueado = true; fin(true);
+        };
+        stage.appendChild(box);
+        setTimeout(() => a.focus(), 50);
+      });
+    }
+    $("r3dEdit").onclick = () => (editing ? exitEdit() : pedirPin().then((ok) => ok && enterEdit()));
     $("r3dEditOk").onclick = exitEdit;
     $("r3dEditReset").onclick = () => { L = original(); guardarOrden(L); unpick(); build(); };
     stage.addEventListener("contextmenu", (ev) => ev.preventDefault()); // sin menú al mantener apretado
@@ -275,7 +352,7 @@
     let gesture = null, lastTap = 0, lpT = 0;
     const center = () => { const b = stage.getBoundingClientRect(); return [b.left + b.width / 2, b.top + b.height / 2]; };
     stage.addEventListener("pointerdown", (ev) => {
-      if (ev.target.closest(".r3d-zoom, .r3d-editbar")) return;
+      if (ev.target.closest(".r3d-zoom, .r3d-editbar, .r3d-pin")) return;
       try { stage.setPointerCapture(ev.pointerId); } catch (_) {}
       pts.set(ev.pointerId, { x: ev.clientX, y: ev.clientY, x0: ev.clientX, y0: ev.clientY, t0: Date.now() });
       askGyro();
@@ -289,8 +366,8 @@
       }
       const cell = ev.target.closest(".r3d-cell");
       gesture = { pinch: false, moved: false, src: editing ? cell : null, dragging: false };
-      // mantener apretado un auto: entra en modo ordenar y lo levanta
-      if (!editing && cell && !sel) {
+      // mantener apretado un auto: entra en modo ordenar y lo levanta (solo si ya se puso el PIN)
+      if (!editing && cell && !sel && desbloqueado) {
         const p = pts.get(ev.pointerId);
         lpT = setTimeout(() => {
           if (!gesture || gesture.pinch || gesture.moved || pts.size !== 1) return;
@@ -321,7 +398,7 @@
       }
       if (!gesture.moved || sel) return;
       if (st.s > 1.05) { st.px += dx; st.py += dy; limitPan(); st.ry = clamp(st.ry + dx * 0.04, -30, 30); }
-      else { st.ry = clamp(st.ry + dx * 0.22, -38, 38); st.rx = clamp(st.rx - dy * 0.18, -28, 28); }
+      else { st.ry = clamp(st.ry + dx * 0.22, -38, 38); st.rx = clamp(st.rx - dy * 0.18, -28, rxMax()); }
       apply();
     });
     const up = (ev) => {
