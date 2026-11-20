@@ -546,8 +546,9 @@ window.AUTOS = [
       { nombre: "Ayrton Senna", numero: 19, resultado: "9.º · 13 pts · 3 podios (Mónaco, Gran Bretaña, Portugal)" },
       { nombre: "Johnny Cecotto", numero: 20, resultado: "Se fracturó las piernas en Brands Hatch" }
     ],
+    // Las del auto, no las del equipo: debutó en Francia (5.ª fecha); antes Toleman corrió con el TG183B.
     temporada: {
-      carreras: 16,
+      carreras: 12,
       victorias: 0,
       poles: null,
       constructores: null,
@@ -698,9 +699,10 @@ window.AUTOS = [
       { nombre: "Michael Schumacher", numero: 1, resultado: "Campeón del mundo · 144 pts · 11 victorias · podio en las 17 carreras" },
       { nombre: "Rubens Barrichello", numero: 2, resultado: "2.º · 77 pts · 4 victorias" }
     ],
+    // Las del auto, no las del equipo: debutó en Brasil (3.ª fecha); Australia la ganó el F2001.
     temporada: {
-      carreras: 17,
-      victorias: 15,
+      carreras: 15,
+      victorias: 14,
       poles: null,
       constructores: "1.º — 221 pts",
       pilotos: "Schumacher campeón (5.º título)"
@@ -993,8 +995,9 @@ window.AUTOS = [
     pilotos: [
       { nombre: "John Surtees", numero: 14, resultado: "Ganó en Italia en el debut del auto · 4.º en el campeonato" }
     ],
+    // Las del auto, no las del equipo: debutó en Monza y ganó; después solo EE.UU. y México.
     temporada: {
-      carreras: 11,
+      carreras: 3,
       victorias: 1,
       poles: null,
       constructores: null,
@@ -1384,8 +1387,9 @@ window.AUTOS = [
       { nombre: "Jody Scheckter", numero: 3, resultado: "3.º · 49 pts · ganó en Suecia" },
       { nombre: "Patrick Depailler", numero: 4, resultado: "4.º · 2.º en Suecia" }
     ],
+    // Las del auto, no las del equipo: debutó en España (4.ª fecha); las 3 primeras fueron con el Tyrrell 007.
     temporada: {
-      carreras: 16,
+      carreras: 13,
       victorias: 1,
       poles: null,
       constructores: "3.º",
@@ -1433,9 +1437,10 @@ window.AUTOS = [
       { nombre: "Mario Andretti", numero: 5, resultado: "Campeón del mundo · 64 pts · 6 victorias" },
       { nombre: "Ronnie Peterson", numero: 6, resultado: "2.º · murió tras el accidente de Monza" }
     ],
+    // Las del auto, no las del equipo: debutó en Bélgica (6.ª fecha); Argentina y Sudáfrica las ganó el Lotus 78.
     temporada: {
-      carreras: 16,
-      victorias: 8,
+      carreras: 11,
+      victorias: 6,
       poles: null,
       constructores: "1.º",
       pilotos: "Andretti campeón (único título)"
@@ -1482,12 +1487,15 @@ window.AUTOS = [
     ],
     pilotos: [
       { nombre: "Niki Lauda", numero: 1, resultado: "Ganó en Suecia · 4.º en el campeonato con 44 pts" },
-      { nombre: "John Watson", numero: 2, resultado: null }
+      { nombre: "John Watson", numero: 2, resultado: "Abandonó en Suecia" }
     ],
+    // Las del auto, no las del equipo: el BT46B corrió solo en Suecia (Brabham hizo 16 carreras en 1978,
+    // casi todas con el BT46 común, y ganó 2: Suecia con este auto y Monza con el BT46).
+    // La pole en Suecia fue de Andretti (Lotus 79); Watson largó 2.º y Lauda 3.º.
     temporada: {
-      carreras: 16,
-      victorias: 2,
-      poles: null,
+      carreras: 1,
+      victorias: 1,
+      poles: 0,
       constructores: "3.º",
       pilotos: "Lauda 4.º"
     },
@@ -1632,8 +1640,9 @@ window.AUTOS = [
       { nombre: "Clay Regazzoni", numero: 28, resultado: "5.º · 29 pts · ganó en Gran Bretaña" },
       { nombre: "Alan Jones", numero: 27, resultado: "3.º · 40 pts · 4 victorias" }
     ],
+    // Las del auto, no las del equipo: debutó en España (5.ª fecha); las 5 victorias de Williams fueron con el FW07.
     temporada: {
-      carreras: 15,
+      carreras: 11,
       victorias: 5,
       poles: null,
       constructores: "2.º",
@@ -1927,9 +1936,10 @@ window.AUTOS = [
       { nombre: "Nelson Piquet", numero: 5, resultado: "Campeón del mundo · 59 pts · 3 victorias" },
       { nombre: "Riccardo Patrese", numero: 6, resultado: "Ganó en Sudáfrica" }
     ],
+    // Las del auto, no las del equipo: debutó en Silverstone (9.ª fecha); Brasil la ganó el BT52.
     temporada: {
-      carreras: 15,
-      victorias: 4,
+      carreras: 7,
+      victorias: 3,
       poles: null,
       constructores: "3.º",
       pilotos: "Piquet campeón (2.º título)"
@@ -2619,8 +2629,9 @@ window.AUTOS = [
       { nombre: "Sebastian Vettel", numero: 15, resultado: "8.º · 35 pts · ganó en Italia" },
       { nombre: "Sébastien Bourdais", numero: 14, resultado: null }
     ],
+    // Las del auto, no las del equipo: debutó en Mónaco (6.ª fecha); antes Toro Rosso corrió con el STR2B.
     temporada: {
-      carreras: 18,
+      carreras: 13,
       victorias: 1,
       poles: null,
       constructores: "6.º",
