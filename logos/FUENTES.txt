@@ -1,4 +1,5 @@
-mclaren.svg	File:McLaren Speedmark.svg	https://commons.wikimedia.org/wiki/File:McLaren_Speedmark.svg
+mclaren.png	provisto por el usuario (logo moderno, autos del 2000 en adelante)
+mclaren-hasta-1999.png	provisto por el usuario (logo clásico, autos hasta 1999)
 mercedes.svg	File:Mercedes-Benz Star 2022.svg	https://commons.wikimedia.org/wiki/File:Mercedes-Benz_Star_2022.svg
 red-bull.png	provisto por el usuario
 renault.jpg	provisto por el usuario

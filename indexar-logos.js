@@ -3,6 +3,8 @@
 // Correlo cada vez que agregues o borres un logo o una foto:   node indexar-logos.js
 //
 //   logos/<equipo>.png   → ej. logos/ferrari.png   (ver la tabla en el README)
+//   logos/<equipo>-hasta-<año>.png → logo de época, para los autos de ese año o anteriores
+//                                    (ej. logos/mclaren-hasta-1999.png)
 //   fotos/<id-del-auto>.jpg → ej. fotos/312t2-1977-lauda.jpg  (el id está en data/autos.js)
 const fs = require("fs"), path = require("path");
 

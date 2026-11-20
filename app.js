@@ -66,9 +66,20 @@
     const parts = key.split("-");
     return (parts.length > 1 ? parts.map((p) => p[0]).join("") : key.slice(0, 3)).toUpperCase();
   };
+  // Logos por época: logos/<equipo>-hasta-<año>.png se usa para los autos de ese año o anteriores
+  // (ej. mclaren-hasta-1999.png para los McLaren viejos; los demás usan mclaren.png).
+  const eraKey = (k, anio) => {
+    if (!window.LOGOS || !anio) return k;
+    let best = null;
+    for (const key of Object.keys(window.LOGOS)) {
+      const m = key.startsWith(k + "-hasta-") && /^(\d{4})$/.exec(key.slice(k.length + 7));
+      if (m && anio <= +m[1] && (!best || +m[1] < best.y)) best = { key, y: +m[1] };
+    }
+    return best ? best.key : k;
+  };
   const badge = (c, cls = "") => {
     const k = logoKey(c.etiqueta.equipo);
-    return `<span class="badge ${cls}" data-logo="${k}" style="${vars(c)}" aria-hidden="true">${initials(k)}</span>`;
+    return `<span class="badge ${cls}" data-logo="${eraKey(k, c.etiqueta.anio)}" style="${vars(c)}" aria-hidden="true">${initials(k)}</span>`;
   };
   const logoCache = new Map(); // key -> url | null | Promise
   function probe(url) {
