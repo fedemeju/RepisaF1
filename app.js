@@ -195,6 +195,7 @@
       heard: (id) => !!s.h[id],
       fav: (id) => !!s.f[id],
       setHeard(id) { if (!s.h[id]) { s.h[id] = Date.now(); save(); } },
+      resetHeard() { s.h = {}; save(); },
       toggleFav(id) { if (s.f[id]) delete s.f[id]; else s.f[id] = Date.now(); save(); return !!s.f[id]; }
     };
   })();
@@ -226,6 +227,7 @@
     appbarTitle.textContent = `${cars.length} autos`;
     const decades = [...new Set(cars.map(decadeOf))];
     const champs = cars.filter(isChampion).length;
+    const nHeard = cars.filter((c) => store.heard(c.id)).length;
     view.innerHTML = `
       <section class="intro">
         <div class="kicker">Colección</div>
@@ -253,12 +255,18 @@
       ${tab === "autos" ? `<div class="filters" role="group" aria-label="Mostrar">
           ${[["todos", "Todos", cars.length], ["favoritos", "★ Favoritos", cars.filter((c) => store.fav(c.id)).length], ["sin-escuchar", "Sin escuchar", cars.filter((c) => withAudio.has(c.id) && !store.heard(c.id)).length]]
             .map(([k, l, n]) => `<button class="filter ${listFilter === k ? "on" : ""}" data-f="${k}">${l} <span>${n}</span></button>`).join("")}
+          ${nHeard ? `<button class="filter reset" id="resetHeard" title="Volver a marcar todas como sin escuchar">↺ Reiniciar escuchadas <span>${nHeard}</span></button>` : ""}
         </div>
         <nav class="jump" aria-label="Ir a década">${decades.map((d) => `<button class="chip" data-d="${d}">${decadeName(d)}</button>`).join("")}</nav>` : ""}
       <div id="list"></div>`;
     renderList();
     document.getElementById("tourBtn").onclick = () => openTourSheet();
-    view.querySelectorAll(".filter").forEach((b) => (b.onclick = () => { listFilter = b.dataset.f; home(); }));
+    view.querySelectorAll(".filter[data-f]").forEach((b) => (b.onclick = () => { listFilter = b.dataset.f; home(); }));
+    const rh = document.getElementById("resetHeard");
+    if (rh) rh.onclick = () => {
+      if (!confirm(`¿Volver a marcar las ${nHeard} historias escuchadas como sin escuchar?`)) return;
+      store.resetHeard(); home();
+    };
     const qi = document.getElementById("q");
     qi.oninput = () => { query = qi.value; renderList(); };
     view.querySelectorAll(".tab").forEach((b) => (b.onclick = () => { if (tab !== b.dataset.tab) { tab = b.dataset.tab; query = ""; home(); } }));
