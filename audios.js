@@ -40,11 +40,22 @@ fs.mkdirSync(dir, { recursive: true });
 
 const segundos = (t) => Math.round(t.split(/\s+/).length / 2.6);
 
+// Intervención de Juan Fossaroli (campo juan de cada auto). La app la pasa pegada al relato, como un
+// solo audio:  relato → Juan: "Fernando…" → Fernando: "¿Sí, Juan?" → Juan: el comentario.
+// Las dos frases fijas se graban UNA vez y sirven para todos los autos:
+//   audio/juan/juan-fernando.mp3      (voz de Juan)      "Fernando…"
+//   audio/juan/fernando-si-juan.mp3   (voz de Fernando)  "¿Sí, Juan?"
+// y por auto solo el comentario:  audio/juan/<id del auto>.mp3  (voz de Juan)
+// Mientras falte alguno de esos mp3, la app pasa solo el relato.
+// Los comandos generar y azure no los hacen (otra voz): los textos están en GUIONES.md.
+const JUAN_FIJOS = [["juan-fernando.mp3", "Juan", "Fernando…"], ["fernando-si-juan.mp3", "Fernando", "¿Sí, Juan?"]];
+
 function guiones() {
   const ordenados = [...AUTOS].sort((a, b) => a.etiqueta.anio - b.etiqueta.anio);
   let md = `# Guiones para los audios\n\nUn mp3 por auto. Guardalo en esta carpeta (\`audio/\`) con el nombre exacto que figura en cada uno.\n` +
     `Duración estimada a ritmo normal de narración.\n\n`;
   let total = 0;
+  const juan = [];
   for (const a of ordenados) {
     const e = a.etiqueta, file = path.basename(a.audio), s = segundos(a.relato);
     const hay = fs.existsSync(path.join(dir, file));
@@ -52,8 +63,22 @@ function guiones() {
     md += `---\n\n## ${e.equipo} ${e.chasis} · ${e.anio} · ${e.piloto}\n\n` +
       `**Archivo:** \`${file}\` ${hay ? "✅ ya está" : "⬜ falta"} · ~${s} s · ${a.relato.length} caracteres\n\n` +
       `${a.relato}\n\n`;
+    if (a.juan) {
+      const fj = `juan/${a.id}.mp3`, hayJ = fs.existsSync(path.join(dir, fj));
+      juan.push(a);
+      md += `**Comentario de Juan:** \`${fj}\` ${hayJ ? "✅ ya está" : "⬜ falta"} · ${a.juan.length} caracteres\n\n> ${a.juan}\n\n`;
+    }
   }
   md += `---\n\nTotal: ${AUTOS.length} textos, ${total} caracteres.\n`;
+  // Juan: las frases fijas (una sola vez) y la lista de comentarios
+  const est = (f) => (fs.existsSync(path.join(dir, f)) ? "✅ ya está" : "⬜ falta");
+  md += `\n---\n\n# Intervenciones de Juan Fossaroli (${juan.length} autos)\n\n` +
+    `Suenan pegadas al final del relato: Juan: "Fernando…" → Fernando: "¿Sí, Juan?" → Juan: el comentario.\n` +
+    `Mientras falte alguno de estos mp3, la app pasa solo el relato.\n\n` +
+    `**Se graban una sola vez (sirven para todos los autos):**\n\n` +
+    JUAN_FIJOS.map(([f, quien, t]) => `- \`juan/${f}\` ${est("juan/" + f)} · voz de ${quien}: "${t}"`).join("\n") +
+    `\n\n**Un comentario por auto (voz de Juan),** el texto está arriba en cada auto:\n\n` +
+    juan.map((a) => `- \`juan/${a.id}.mp3\` ${est(`juan/${a.id}.mp3`)} · ${a.etiqueta.equipo} ${a.etiqueta.chasis} ${a.etiqueta.anio}`).join("\n") + "\n";
   fs.writeFileSync(path.join(dir, "GUIONES.md"), md);
   console.log(`audio/GUIONES.md creado: ${AUTOS.length} textos, ${total} caracteres en total.`);
 }

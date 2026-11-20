@@ -23,6 +23,16 @@
   let player = null;        // audio en curso
   let autoplayNext = false; // al llegar desde el escáner, arranca el audio solo
   const withAudio = new Set();
+  // Intervención de Juan Fossaroli (campo juan): suena pegada al relato, como un solo audio.
+  // "Fernando…" (Juan) y "¿Sí, Juan?" (Fernando) se graban una vez y se reutilizan;
+  // por auto solo se graba el comentario: audio/juan/<id>.mp3
+  const withJuan = new Set();
+  const JUAN_FIJOS = ["audio/juan/juan-fernando.mp3", "audio/juan/fernando-si-juan.mp3"];
+  const juanSrc = (c) => `audio/juan/${c.id}.mp3`;
+  const juanFijos = location.protocol.startsWith("http")
+    ? Promise.all(JUAN_FIJOS.map((u) => fetch(u, { method: "HEAD" }).then((r) => r.ok, () => false))).then((ok) => ok.every(Boolean))
+    : Promise.resolve(false);
+  const audioPartes = (c) => (withJuan.has(c.id) ? [c.audio, ...JUAN_FIJOS, juanSrc(c)] : [c.audio]);
 
   // ---------- utilidades ----------
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[m]);
@@ -147,6 +157,7 @@
   const audioCheck = Promise.all(cars.map(async (c) => {
     if (!c.audio || !location.protocol.startsWith("http")) return;
     try { const r = await fetch(c.audio, { method: "HEAD" }); if (r.ok) withAudio.add(c.id); } catch (_) {}
+    if (c.juan && await juanFijos) try { const r = await fetch(juanSrc(c), { method: "HEAD" }); if (r.ok) withJuan.add(c.id); } catch (_) {}
   }));
 
   // Conexiones: las escritas a mano + otros autos del mismo piloto en la repisa
@@ -332,16 +343,38 @@
       audio.addEventListener("error", () => { estado = "falta"; unavailable(); res(); }, { once: true });
       setTimeout(res, 10000);
     });
-    const durLabel = () => { lbl.textContent = isFinite(audio.duration) ? `Narración · ${fmt(audio.duration)}` : "Narración"; };
-    audio.addEventListener("loadedmetadata", durLabel);
-    audio.addEventListener("durationchange", () => { if (estado === "ok") durLabel(); });
-    audio.addEventListener("timeupdate", () => {
-      if (!isFinite(audio.duration)) return;
-      bar.style.width = (audio.currentTime / audio.duration) * 100 + "%";
-      if (state.playing) lbl.textContent = `${fmt(audio.currentTime)} / ${fmt(audio.duration)}`;
-      if (audio.currentTime / audio.duration > 0.9 && !store.heard(car.id)) { store.setHeard(car.id); markHeardUI(); }
+    // Partes que suenan seguidas como un solo audio: el relato y, si está grabada, la intervención de Juan
+    // (se completa cuando la app termina de ver qué mp3 hay: al abrir directo una ficha puede tardar)
+    let partes = [car.audio], parte = 0;
+    const durs = [NaN];
+    audioCheck.then(() => {
+      if (!withJuan.has(car.id) || partes.length > 1) return;
+      partes = audioPartes(car);
+      partes.slice(1).forEach((src, i) => { durs[i + 1] = NaN; const p = new Audio(); p.preload = "metadata"; p.onloadedmetadata = () => { durs[i + 1] = p.duration; durLabel(); }; p.src = src; });
     });
+    const total = () => (durs.every(isFinite) ? durs.reduce((a, b) => a + b, 0) : durs[0]);
+    const antes = (i) => durs.slice(0, i).reduce((a, b) => a + (b || 0), 0);
+    const durLabel = () => { if (estado !== "ok" || state.playing) return; lbl.textContent = isFinite(total()) ? `Narración · ${fmt(total())}` : "Narración"; };
+    audio.addEventListener("loadedmetadata", () => { if (parte === 0) durs[0] = audio.duration; durLabel(); });
+    audio.addEventListener("durationchange", () => { if (parte === 0 && isFinite(audio.duration)) durs[0] = audio.duration; durLabel(); });
+    audio.addEventListener("timeupdate", () => {
+      const T = total(), t = antes(parte) + audio.currentTime;
+      if (!isFinite(T) || !T) return;
+      bar.style.width = Math.min(100, (t / T) * 100) + "%";
+      if (state.playing) lbl.textContent = `${fmt(t)} / ${fmt(T)}`;
+      if (parte === 0 && audio.currentTime / audio.duration > 0.9 && !store.heard(car.id)) { store.setHeard(car.id); markHeardUI(); }
+    });
+    const irA = (i, off = 0, sonar = false) => {
+      parte = i; audio.src = partes[i];
+      audio.addEventListener("loadedmetadata", () => { if (off) audio.currentTime = off; }, { once: true });
+      if (sonar) audio.play().catch(() => {});
+    };
+    // si falla una parte de Juan (ej. sin señal), termina ahí como si hubiera terminado el audio
+    audio.addEventListener("error", () => { if (parte) { parte = partes.length - 1; audio.dispatchEvent(new Event("ended")); } });
     audio.addEventListener("ended", () => {
+      // sigue con la próxima parte sin cortar
+      if (parte < partes.length - 1) { irA(parte + 1, 0, true); return; }
+      if (parte) irA(0);
       setPlaying(false); bar.style.width = "0"; durLabel();
       store.setHeard(car.id); markHeardUI();
       if (tour) setTimeout(() => tourStep(1), 1500); // recorrido: pausa corta y al próximo auto
@@ -350,9 +383,12 @@
     const markHeardUI = () => { const h = box.querySelector(".heard-badge"); if (h) h.hidden = false; };
     // tocar o arrastrar la barra para adelantar
     const seek = (ev) => {
-      if (estado !== "ok" || !isFinite(audio.duration)) return;
+      const T = total();
+      if (estado !== "ok" || !isFinite(T)) return;
       const r = track.getBoundingClientRect();
-      audio.currentTime = Math.max(0, Math.min(1, (ev.clientX - r.left) / r.width)) * audio.duration;
+      let t = Math.max(0, Math.min(1, (ev.clientX - r.left) / r.width)) * T, i = 0;
+      while (i < partes.length - 1 && t >= durs[i]) { t -= durs[i]; i++; }
+      if (i === parte) audio.currentTime = t; else irA(i, t, state.playing);
     };
     track.addEventListener("pointerdown", (ev) => { seek(ev); track.setPointerCapture(ev.pointerId); track.onpointermove = seek; });
     track.addEventListener("pointerup", () => { track.onpointermove = null; });
@@ -677,7 +713,10 @@
     if (!tour || !car.audio) { tourT = setTimeout(() => tourStep(1), 800); return; }
     const a = tourAudio;
     let playing = false;
+    const partes = audioPartes(car);
+    let parte = 0;
     const onEnd = () => {
+      if (parte < partes.length - 1) { a.src = partes[++parte]; play(); return; } // sigue con Juan sin cortar
       playing = false; store.setHeard(car.id);
       if (Repisa3D.current) Repisa3D.current.markHeard(car.id);
       tourT = setTimeout(() => tourStep(1), 1500); // pausa corta y al próximo auto

@@ -14,6 +14,9 @@ o conseguir el permiso de Tornello.
 Motivo: clonar la voz de una persona real sin consentimiento incumple las condiciones de ElevenLabs,
 y en Argentina el art. 53 del Código Civil y Comercial exige consentimiento para reproducir la voz de alguien.
 
+Lo mismo vale para las intervenciones de Juan Fossaroli (`audio/juan/`, todavía sin grabar):
+si se hacen con un clon de su voz, también hace falta su permiso o cambiarla por otra voz.
+
 Audios con la voz de Tornello:
 
 - 375indy-1952-ascari.mp3

@@ -11,6 +11,10 @@ Duración estimada a ritmo normal de narración.
 
 ¿Sabías que Ferrari corrió una sola vez, de manera oficial, las 500 Millas de Indianápolis? Fue con este auto. En 1952, Indianápolis contaba para el Mundial de Fórmula 1, pero los europeos casi nunca iban. Alberto Ascari, el mejor piloto del momento, se animó. Se perdió la primera carrera del año, en Suiza, para cruzar el océano con un Ferrari de motor V12 y el número doce. ¿Cómo le fue? Largó decimonoveno y en la vuelta cuarenta se le desarmó una rueda de rayos. Afuera. Pero la historia tiene revancha: volvió a Europa, ganó todas las carreras que corrió ese año y fue campeón del mundo. Ferrari nunca más volvió oficialmente a Indianápolis.
 
+**Comentario de Juan:** `juan/375indy-1952-ascari.mp3` ⬜ falta · 127 caracteres
+
+> Fer, no te olvides que Ascari era muy cábala: corría siempre con casco y remera celestes, y no los cambiaba por nada del mundo.
+
 ---
 
 ## Mercedes W196 · 1955 · Juan Manuel Fangio
@@ -19,11 +23,15 @@ Duración estimada a ritmo normal de narración.
 
 Este auto ganó en su debut, y parece de otro planeta. Es el Mercedes W196, la Flecha de Plata de Juan Manuel Fangio. Mirá las ruedas: están tapadas. Es la versión carenada, pensada para circuitos rapidísimos como Reims y Monza. Por dentro tenía inyección directa y válvulas desmodrómicas, tecnología que los autos de calle tardaron décadas en tener. En el Gran Premio de Argentina de 1955 hizo tanto calor, más de cuarenta grados, que muchos pilotos pidieron relevo en plena carrera. Fangio no. Aguantó todo, se quemó la pierna con el escape, y ganó. Ese año fue campeón por tercera vez. Después de la tragedia de Le Mans, Mercedes se retiró de las carreras, y no volvió a la Fórmula 1 con equipo propio hasta 2010.
 
+**Comentario de Juan:** `juan/w196-1955-fangio.mp3` ⬜ falta · 122 caracteres
+
+> Fer, acordate que a Fangio le decían el Chueco desde pibe, en Balcarce, porque jugaba al fútbol con las piernas arqueadas.
+
 ---
 
 ## Ferrari 246 F1 · 1958 · Mike Hawthorn
 
-**Archivo:** `246f1-1958-hawthorn.mp3` ⬜ falta · ~48 s · 702 caracteres
+**Archivo:** `246f1-1958-hawthorn.mp3` ✅ ya está · ~48 s · 702 caracteres
 
 Una victoria contra cuatro. Así terminó 1958: Stirling Moss ganó cuatro carreras, Mike Hawthorn una sola… y el campeón fue Hawthorn, por un punto. Lo hizo con este auto, la Ferrari Dino 246, con el motor adelante y el nombre del hijo de Enzo Ferrari, que había muerto dos años antes. Tu modelo es el de Holanda, en Zandvoort: ese día Hawthorn terminó quinto, a una vuelta. Parecía poca cosa, pero esos dos puntos valieron oro. Y hay más: en Portugal, Moss defendió a Hawthorn para que no lo descalificaran. Ese gesto de caballero le costó el título. Fue un año durísimo: murieron los dos compañeros de Hawthorn. Él se retiró apenas salió campeón, y pocos meses después murió en un accidente en la ruta.
 
@@ -31,15 +39,19 @@ Una victoria contra cuatro. Así terminó 1958: Stirling Moss ganó cuatro carre
 
 ## Lotus 25 · 1963 · Jim Clark
 
-**Archivo:** `lotus25-1963-clark.mp3` ⬜ falta · ~44 s · 616 caracteres
+**Archivo:** `lotus25-1963-clark.mp3` ✅ ya está · ~44 s · 616 caracteres
 
 Este auto cambió cómo se construye un Fórmula 1. Es el Lotus 25, y fue el primero con chasis monocasco: en vez de un esqueleto de caños, una sola pieza como una bañera, liviana y durísima. Lo inventó Colin Chapman, el genio de Lotus, y todos los demás lo terminaron copiando. Adentro iba Jim Clark, casi acostado, un escocés tímido que en la pista era imparable. En 1963 ganó siete de las diez carreras y fue campeón. En Holanda le sacó una vuelta a todos. Ese récord de siete victorias en un año duró veinticinco años, hasta que llegó Ayrton Senna. Para muchos pilotos de su época, Clark fue el más rápido de todos.
+
+**Comentario de Juan:** `juan/lotus25-1963-clark.mp3` ⬜ falta · 129 caracteres
+
+> Fer, no te olvides que Jim Clark, entre carrera y carrera, volvía a Escocia a trabajar en el campo de la familia, con las ovejas.
 
 ---
 
 ## Ferrari 512 F1 · 1964 · Lorenzo Bandini
 
-**Archivo:** `512f1-1964-bandini.mp3` ⬜ falta · ~51 s · 686 caracteres
+**Archivo:** `512f1-1964-bandini.mp3` ✅ ya está · ~51 s · 686 caracteres
 
 ¿Una Ferrari blanca y azul? Sí, y no es un error. En 1964 Enzo Ferrari estaba tan peleado con la federación italiana que, en las dos últimas carreras, mandó sus autos a nombre del equipo de su importador en Estados Unidos, con los colores de ese país. Esta es la 512, con un motor de doce cilindros chato, y tu modelo es el de México, la final del campeonato. Había tres candidatos. Lorenzo Bandini tocó a Graham Hill y lo hizo girar; a Jim Clark se le rompió el motor en la última vuelta. Y Bandini, que iba segundo, levantó el pie para dejar pasar a su compañero John Surtees. Ese segundo puesto le dio el título a Surtees por un punto: el único campeón del mundo en motos y en autos.
 
@@ -47,7 +59,7 @@ Este auto cambió cómo se construye un Fórmula 1. Es el Lotus 25, y fue el pri
 
 ## Brabham BT24 · 1967 · Denis Hulme
 
-**Archivo:** `bt24-1967-hulme.mp3` ⬜ falta · ~44 s · 638 caracteres
+**Archivo:** `bt24-1967-hulme.mp3` ✅ ya está · ~44 s · 638 caracteres
 
 Imaginate ganarle el campeonato a tu propio jefe. Eso hizo Denis Hulme en 1967 con este auto, el Brabham BT24. El dueño del equipo era Jack Brabham, que además corría, y que el año anterior había sido campeón con su propio auto. El motor era australiano, un Repco, menos potente que los rivales… pero casi nunca se rompía. Hulme, un neozelandés de pocas palabras al que le decían el Oso, ganó en Mónaco y en Nürburgring, sumó puntos carrera tras carrera, y terminó campeón por cinco puntos sobre su jefe. Es el único campeón del mundo de Nueva Zelanda. Al año siguiente se fue a McLaren, el equipo de su amigo y compatriota Bruce McLaren.
 
@@ -55,7 +67,7 @@ Imaginate ganarle el campeonato a tu propio jefe. Eso hizo Denis Hulme en 1967 c
 
 ## Honda RA300 · 1967 · John Surtees
 
-**Archivo:** `ra300-1967-surtees.mp3` ⬜ falta · ~44 s · 623 caracteres
+**Archivo:** `ra300-1967-surtees.mp3` ✅ ya está · ~44 s · 623 caracteres
 
 Este auto se armó en unas pocas semanas y ganó en su primera carrera. Es el Honda RA300 de 1967. El motor V12 japonés era potente pero pesado, y John Surtees, el piloto, convenció a Honda de hacer el chasis en Inglaterra con la fábrica Lola, usando la base de un auto de Indianápolis. Los mecánicos lo bautizaron Hondola. Lo estrenaron en Monza, y la carrera fue una locura: en la última vuelta Surtees y Jack Brabham llegaron juntos a la última curva, y Surtees ganó por dos décimas. Fue la segunda victoria de Honda con equipo propio en la Fórmula 1. La tercera tardó casi cuarenta años: llegó en 2006, con Jenson Button.
 
@@ -63,7 +75,7 @@ Este auto se armó en unas pocas semanas y ganó en su primera carrera. Es el Ho
 
 ## BRM P153 · 1970 · Pedro Rodríguez
 
-**Archivo:** `p153-1970-rodriguez.mp3` ⬜ falta · ~44 s · 636 caracteres
+**Archivo:** `p153-1970-rodriguez.mp3` ✅ ya está · ~44 s · 636 caracteres
 
 El circuito más rápido del mundo y un mexicano que no levantaba el pie. Este es el BRM P153, y tu modelo es el del Gran Premio de Bélgica de 1970. Spa, en esa época, tenía catorce kilómetros entre bosques y pueblos, a fondo casi todo el tiempo. Pedro Rodríguez se tiró a pelear con Chris Amon vuelta tras vuelta, y le ganó por un segundo, a un promedio de más de doscientos cuarenta kilómetros por hora. Fue la primera victoria de BRM en cuatro años. Pedro y su hermano Ricardo fueron los primeros ídolos mexicanos del automovilismo, y los dos murieron corriendo. Por ellos, el autódromo de Ciudad de México se llama Hermanos Rodríguez.
 
@@ -71,7 +83,7 @@ El circuito más rápido del mundo y un mexicano que no levantaba el pie. Este e
 
 ## Lotus 72D · 1972 · Emerson Fittipaldi
 
-**Archivo:** `72d-1972-fittipaldi.mp3` ⬜ falta · ~45 s · 666 caracteres
+**Archivo:** `72d-1972-fittipaldi.mp3` ✅ ya está · ~45 s · 666 caracteres
 
 Negro y dorado: para muchos, el Fórmula 1 más lindo de la historia. Es el Lotus 72, con los colores de John Player Special. Tenía forma de cuña, los radiadores a los costados y los frenos escondidos adentro: Colin Chapman otra vez un paso adelante. Este auto corrió seis temporadas y ganó veinte carreras. En 1972 lo manejaba un brasileño de veinticinco años, Emerson Fittipaldi. Ganó cinco carreras y se coronó en Monza: el campeón más joven de la historia hasta ese momento, y el primero de Brasil. Detrás de él vinieron Nelson Piquet y Ayrton Senna. Y una historia triste: con este mismo modelo, Jochen Rindt fue campeón en 1970… después de morir en un accidente.
 
@@ -79,7 +91,7 @@ Negro y dorado: para muchos, el Fórmula 1 más lindo de la historia. Es el Lotu
 
 ## BRM P160B · 1972 · Jean-Pierre Beltoise
 
-**Archivo:** `p160b-1972-beltoise.mp3` ⬜ falta · ~43 s · 624 caracteres
+**Archivo:** `p160b-1972-beltoise.mp3` ✅ ya está · ~43 s · 624 caracteres
 
 Mónaco, 1972. Llueve durante toda la carrera, las calles son una pista de patinaje y los mejores pilotos del mundo trompean contra los guardarraíles. Uno solo no se equivoca nunca: Jean-Pierre Beltoise, con este BRM blanco y rojo. Largó cuarto, pasó adelante en la primera curva y no lo vio nadie más. Ganó de punta a punta. Y lo hizo con el brazo izquierdo casi sin movimiento, por un accidente que había tenido ocho años antes. Fue la única victoria de su vida… y la última de BRM, un equipo histórico que había sido campeón del mundo. Por eso esta es una de esas carreras que en Mónaco todavía se recuerdan cuando llueve.
 
@@ -87,9 +99,13 @@ Mónaco, 1972. Llueve durante toda la carrera, las calles son una pista de patin
 
 ## Tyrrell 006 · 1973 · Jackie Stewart
 
-**Archivo:** `006-1973-stewart.mp3` ⬜ falta · ~45 s · 670 caracteres
+**Archivo:** `006-1973-stewart.mp3` ✅ ya está · ~45 s · 670 caracteres
 
 Este es el último auto que manejó Jackie Stewart. El Tyrrell 006, azul como los autos franceses por su sponsor, Elf. En 1973 Stewart ganó cinco carreras, superó las veinticinco victorias de su gran amigo Jim Clark, llegó a veintisiete, un récord que duró catorce años, y fue campeón por tercera vez. Lo que nadie sabía es que ya había decidido retirarse. La última carrera del año, en Estados Unidos, iba a ser la número cien de su vida. Pero en la clasificación murió su compañero, François Cevert, el piloto al que preparaba para reemplazarlo. El equipo se retiró, y Stewart nunca corrió su carrera cien. Después dedicó su vida a que el automovilismo fuera más seguro.
+
+**Comentario de Juan:** `juan/006-1973-stewart.mp3` ⬜ falta · 140 caracteres
+
+> Fer, ¿sabías que Jackie Stewart era disléxico y se enteró recién pasados los cuarenta, cuando le diagnosticaron lo mismo a uno de sus hijos?
 
 ---
 
@@ -103,7 +119,7 @@ Un lord inglés, un osito de peluche y champagne en los boxes. Así era Hesketh,
 
 ## Brabham BT44B · 1975 · Carlos Pace
 
-**Archivo:** `bt44b-1975-pace.mp3` ⬜ falta · ~42 s · 614 caracteres
+**Archivo:** `bt44b-1975-pace.mp3` ✅ ya está · ~42 s · 614 caracteres
 
 Un brasileño gana en Brasil y otro brasileño llega segundo. Eso pasó en Interlagos en 1975, con este auto: el Brabham BT44B, blanco con las rayas de Martini, diseñado por Gordon Murray. El ganador fue Carlos Pace, que aprovechó el abandono del líder. Detrás llegó Emerson Fittipaldi. Fue la única victoria de Pace en la Fórmula 1. Y un dato para nosotros: su compañero de equipo era Carlos Reutemann, que con este mismo auto ganó ese año en Alemania. Dos Carlos en el mismo box. Pace murió dos años después en un accidente de avioneta, y desde entonces el autódromo de Interlagos lleva su nombre: José Carlos Pace.
 
@@ -111,7 +127,7 @@ Un brasileño gana en Brasil y otro brasileño llega segundo. Eso pasó en Inter
 
 ## March 751 · 1975 · Vittorio Brambilla
 
-**Archivo:** `751-1975-brambilla.mp3` ⬜ falta · ~44 s · 624 caracteres
+**Archivo:** `751-1975-brambilla.mp3` ✅ ya está · ~44 s · 624 caracteres
 
 La victoria más loca de la historia de la Fórmula 1. Austria, 1975, diluvio total. Vittorio Brambilla, un italiano grandote al que le decían el Gorila de Monza, se pone adelante con este March naranja. Llueve tanto que paran la carrera en la vuelta veintinueve, poco más de la mitad. Ganó. Y estaba tan feliz que, al cruzar la meta, soltó el volante para festejar con los dos brazos arriba… y se estrelló contra el guardarraíl. Dio la vuelta de honor con la trompa rota, saludando igual. Como no se completó la carrera, le dieron la mitad de los puntos. Fue la única victoria de su vida, y no cambiaría ese festejo por nada.
 
@@ -119,15 +135,19 @@ La victoria más loca de la historia de la Fórmula 1. Austria, 1975, diluvio to
 
 ## McLaren M23 · 1976 · James Hunt
 
-**Archivo:** `m23-1976-hunt.mp3` ⬜ falta · ~48 s · 670 caracteres
+**Archivo:** `m23-1976-hunt.mp3` ✅ ya está · ~48 s · 670 caracteres
 
 Un punto. Esa fue la diferencia en el campeonato más famoso de la historia, el que inspiró la película Rush. Este es el McLaren M23 de James Hunt. En 1976 Hunt y Niki Lauda pelearon todo el año. En Alemania, Lauda casi muere quemado en Nürburgring… y cuarenta y dos días después volvió a correr, con las vendas todavía puestas. La final fue en Japón, bajo un diluvio. Lauda se bajó del auto a las dos vueltas: dijo que su vida valía más que un título. Hunt siguió, tuvo que parar a cambiar gomas, y terminó tercero. Le alcanzó: campeón por un punto. Fuera de la pista eran amigos. Y este mismo modelo de auto ya había sido campeón dos años antes, con Emerson Fittipaldi.
+
+**Comentario de Juan:** `juan/m23-1976-hunt.mp3` ⬜ falta · 139 caracteres
+
+> Fer, acordate que antes de la Fórmula 1 a Hunt le decían Hunt the Shunt, algo así como Hunt el choque, por la cantidad de autos que rompía.
 
 ---
 
 ## Tyrrell P34 · 1976 · Jody Scheckter
 
-**Archivo:** `p34-1976-scheckter.mp3` ⬜ falta · ~45 s · 665 caracteres
+**Archivo:** `p34-1976-scheckter.mp3` ✅ ya está · ~45 s · 665 caracteres
 
 Contá las ruedas. Sí, son seis. Este es el Tyrrell P34, el auto más raro que ganó una carrera de Fórmula 1. La idea del diseñador Derek Gardner fue poner cuatro ruedas chiquitas adelante: así el aire chocaba menos contra ellas y no se perdía agarre. Tenía hasta unas ventanitas a los costados para que el piloto viera las ruedas delanteras. Muchos se rieron… hasta el Gran Premio de Suecia de 1976, donde Jody Scheckter ganó y Patrick Depailler llegó segundo. Un uno-dos de seis ruedas. Scheckter terminó tercero en el campeonato y tres años después fue campeón con Ferrari. Después las reglas limitaron los autos a cuatro ruedas, y el P34 quedó único para siempre.
 
@@ -143,15 +163,19 @@ Este auto casi le cuesta la vida a Niki Lauda… y después lo hizo campeón. Es
 
 ## Lotus 79 · 1978 · Mario Andretti
 
-**Archivo:** `lotus79-1978-andretti.mp3` ⬜ falta · ~46 s · 685 caracteres
+**Archivo:** `lotus79-1978-andretti.mp3` ✅ ya está · ~46 s · 685 caracteres
 
 Este auto descubrió un secreto: el aire que pasa por debajo puede pegarte al piso. Es el Lotus 79, la Belleza Negra. Colin Chapman le dio a los costados forma de ala de avión invertida, con unas polleras que sellaban contra el asfalto. El auto doblaba como si fuera sobre rieles. En 1978 Mario Andretti ganó seis carreras y su compañero Ronnie Peterson llegaba segundo una y otra vez, obedeciendo las órdenes del equipo. Pero el título tuvo un final triste: en Monza, el día en que Andretti se aseguró el campeonato, Peterson tuvo un accidente en la largada y murió al día siguiente. Andretti, nacido en Italia y criado en Estados Unidos, es hasta hoy el último campeón estadounidense.
+
+**Comentario de Juan:** `juan/lotus79-1978-andretti.mp3` ⬜ falta · 129 caracteres
+
+> Fer, no te olvides que Mario Andretti es mellizo: su hermano Aldo también corría, y arrancaron juntos de pibes en Estados Unidos.
 
 ---
 
 ## Brabham BT46B · 1978 · Niki Lauda
 
-**Archivo:** `bt46b-1978-lauda.mp3` ⬜ falta · ~47 s · 680 caracteres
+**Archivo:** `bt46b-1978-lauda.mp3` ✅ ya está · ~47 s · 680 caracteres
 
 Una sola carrera, una sola victoria. Este es el Brabham BT46B, el auto aspiradora. ¿Ves el ventilador gigante atrás? Gordon Murray dijo que era para enfriar el motor. Mentira a medias: en realidad chupaba el aire de abajo del auto y lo pegaba al piso, como el Lotus 79, pero a lo bruto. Si Niki Lauda aceleraba parado, el auto se agachaba. Lo estrenaron en Suecia, en 1978. Los rivales protestaron: decían que les tiraba piedras. Lauda los dejó a todos a más de medio minuto. Y después de la carrera pasó algo increíble: Bernie Ecclestone, el dueño de Brabham, lo guardó para siempre, para no pelearse con los demás equipos. Nunca lo descalificaron: corrió una vez y ganó una vez.
 
@@ -159,7 +183,7 @@ Una sola carrera, una sola victoria. Este es el Brabham BT46B, el auto aspirador
 
 ## Ligier JS11 · 1979 · Jacques Laffite
 
-**Archivo:** `js11-1979-laffite.mp3` ⬜ falta · ~45 s · 680 caracteres
+**Archivo:** `js11-1979-laffite.mp3` ✅ ya está · ~45 s · 680 caracteres
 
 Enero de 1979, Autódromo de Buenos Aires. La primera carrera del año la gana este auto: el Ligier JS11, azul francés, con Jacques Laffite. Largó desde la pole, y dos semanas después volvió a ganar en Brasil. Parecía imbatible. ¿El secreto? El efecto suelo, el mismo truco con el que el Lotus 79 había arrasado el año anterior… pero mejor hecho. El diseñador era Gérard Ducarouge, el mismo que años después haría el Lotus de la primera victoria de Ayrton Senna. Su compañero, Patrick Depailler, ganó en España. Pero los rivales aprendieron rápido, y Laffite no volvió a ganar ese año. Terminó cuarto. Igual, su nombre quedó para siempre en la historia del Gran Premio de Argentina.
 
@@ -167,7 +191,7 @@ Enero de 1979, Autódromo de Buenos Aires. La primera carrera del año la gana e
 
 ## Alfa Romeo 177 · 1979 · Bruno Giacomelli
 
-**Archivo:** `177-1979-giacomelli.mp3` ⬜ falta · ~44 s · 611 caracteres
+**Archivo:** `177-1979-giacomelli.mp3` ✅ ya está · ~44 s · 611 caracteres
 
 Los dos primeros Mundiales de la Fórmula 1, en 1950 y 1951, se ganaron con Alfa Romeo: el segundo, con Juan Manuel Fangio. Después se fue. Casi treinta años más tarde volvió con equipo propio, y este fue el auto del regreso: el Alfa Romeo 177. Lo llamaron así porque el proyecto había arrancado en 1977. El motor era un doce cilindros chato, el mismo que Alfa le daba a Brabham, el del famoso auto aspiradora de Niki Lauda. Debutó en Bélgica en 1979, manejado por un joven italiano, Bruno Giacomelli. No ganó nada: era pesado y llegó tarde. Pero abrió la puerta a la segunda etapa de Alfa Romeo en la Fórmula 1.
 
@@ -175,7 +199,7 @@ Los dos primeros Mundiales de la Fórmula 1, en 1950 y 1951, se ganaron con Alfa
 
 ## Williams FW07 · 1979 · Clay Regazzoni
 
-**Archivo:** `fw07-1979-regazzoni.mp3` ⬜ falta · ~45 s · 646 caracteres
+**Archivo:** `fw07-1979-regazzoni.mp3` ✅ ya está · ~45 s · 646 caracteres
 
 Acá empieza la historia de Williams. Frank Williams llevaba años con equipos chicos y sin plata. En 1979 su ingeniero, Patrick Head, miró el Lotus 79, entendió el efecto suelo y lo hizo mejor: el FW07. En el Gran Premio de Gran Bretaña, en Silverstone, iba ganando Alan Jones, pero se le rompió la bomba de agua. Y el que heredó la punta fue el veterano del equipo, el suizo Clay Regazzoni, con casi cuarenta años. Primera victoria de Williams, en casa. Desde ahí, Jones ganó cuatro carreras más ese año y fue campeón en 1980 con este mismo auto mejorado. Y en 1981, Carlos Reutemann peleó el título hasta la última carrera con su última versión.
 
@@ -183,7 +207,7 @@ Acá empieza la historia de Williams. Frank Williams llevaba años con equipos c
 
 ## Renault RS10 · 1979 · Jean-Pierre Jabouille
 
-**Archivo:** `rs10-1979-jabouille.mp3` ⬜ falta · ~48 s · 718 caracteres
+**Archivo:** `rs10-1979-jabouille.mp3` ✅ ya está · ~48 s · 718 caracteres
 
 Al principio se reían de él. Le decían la tetera amarilla, porque cada vez que el motor se rompía largaba una nube de humo blanco. Era el Renault de Fórmula 1, el primero con motor turbo: apenas un litro y medio, contra los tres litros de los demás. En 1979, en el Gran Premio de Francia, Jean-Pierre Jabouille largó desde la pole con este auto, el RS10, y ganó. Primera victoria de un turbo en la historia. Victoria cien por ciento francesa: auto, piloto, motor, nafta y gomas. Y casi nadie miró al ganador, porque detrás pasó algo legendario: Gilles Villeneuve y René Arnoux se tocaron rueda contra rueda durante las últimas vueltas peleando por el segundo puesto. Pocos años después, todos los equipos usaban turbo.
 
@@ -191,7 +215,7 @@ Al principio se reían de él. Le decían la tetera amarilla, porque cada vez qu
 
 ## Arrows A1B · 1979 · Riccardo Patrese
 
-**Archivo:** `a1b-1979-patrese.mp3` ⬜ falta · ~42 s · 631 caracteres
+**Archivo:** `a1b-1979-patrese.mp3` ✅ ya está · ~42 s · 631 caracteres
 
 Más de trescientas ochenta carreras y ni una sola victoria. Ese es el récord triste de Arrows, el equipo de este auto, el A1B. El nombre viene de las iniciales de sus fundadores, que se habían ido de otro equipo, Shadow. Shadow los demandó por copiar su auto y ganó el juicio, así que tuvieron que hacer este de cero. Su piloto era un italiano joven y rapidísimo, Riccardo Patrese. Patrese corrió diecisiete temporadas, ganó seis carreras con otros equipos y llegó a ser el piloto con más Grandes Premios de la historia: doscientos cincuenta y seis. Lo superó después un brasileño que también está en tu repisa: Rubens Barrichello.
 
@@ -199,7 +223,7 @@ Más de trescientas ochenta carreras y ni una sola victoria. Ese es el récord t
 
 ## Brabham BT49 · 1981 · Nelson Piquet
 
-**Archivo:** `bt49-1981-piquet.mp3` ⬜ falta · ~44 s · 657 caracteres
+**Archivo:** `bt49-1981-piquet.mp3` ✅ ya está · ~44 s · 657 caracteres
 
 Esta historia nos duele un poco a los argentinos. 1981, última carrera en Las Vegas, en un circuito armado en el estacionamiento de un hotel. Carlos Reutemann llega primero en el campeonato, un punto adelante de Nelson Piquet y su Brabham BT49. Reutemann larga desde la pole… y algo le pasa: termina octavo, sin puntos. Piquet, deshidratado y casi desmayado por el calor, llega quinto. Le alcanza: campeón por un punto. Este auto tenía su truco: una suspensión que en boxes respetaba la altura mínima, pero en pista bajaba y lo pegaba al piso. Lo había diseñado Gordon Murray. Y ese mismo año, con este auto, Piquet había ganado el Gran Premio de Argentina.
 
@@ -207,7 +231,7 @@ Esta historia nos duele un poco a los argentinos. 1981, última carrera en Las V
 
 ## Tyrrell 011 · 1982 · Michele Alboreto
 
-**Archivo:** `011-1982-alboreto.mp3` ⬜ falta · ~45 s · 653 caracteres
+**Archivo:** `011-1982-alboreto.mp3` ✅ ya está · ~45 s · 653 caracteres
 
 1982 fue el año más loco de la Fórmula 1: once ganadores distintos en dieciséis carreras. Y el último de ellos lo consiguió con este auto, el Tyrrell 011. Michele Alboreto, un italiano joven y elegante, ganó la última carrera del año, en Las Vegas: su primera victoria. Enzo Ferrari se fijó en él y lo llevó a Ferrari. Pero este auto tiene otro récord escondido: al año siguiente, en Detroit, Alboreto volvió a ganar con él. Fue la victoria número ciento cincuenta y cinco del motor Ford Cosworth, uno de los más ganadores de la historia, que había debutado en 1967. Y fue la última, porque llegaban los turbo. También fue la última victoria de Tyrrell.
 
@@ -215,7 +239,7 @@ Esta historia nos duele un poco a los argentinos. 1981, última carrera en Las V
 
 ## Ferrari 126 C2 · 1982 · Mario Andretti
 
-**Archivo:** `126c2-1982-andretti.mp3` ⬜ falta · ~43 s · 641 caracteres
+**Archivo:** `126c2-1982-andretti.mp3` ✅ ya está · ~43 s · 641 caracteres
 
 1982 fue el año más triste de Ferrari. Gilles Villeneuve murió en Bélgica. Didier Pironi, que iba primero en el campeonato, tuvo un accidente gravísimo en Alemania y nunca volvió a correr. Para el Gran Premio de Italia, en Monza, Ferrari llamó a un viejo conocido: Mario Andretti, campeón del mundo, de cuarenta y dos años, que estaba corriendo en Estados Unidos. Se subió a esta Ferrari 126 C2, con motor turbo y el número veintiocho de Pironi… y en casa de Ferrari hizo la pole. Los tifosi enloquecieron. En carrera terminó tercero. Y con esos puntos, Ferrari ganó el campeonato de constructores, en un año en que perdió a sus dos pilotos.
 
@@ -223,7 +247,7 @@ Esta historia nos duele un poco a los argentinos. 1981, última carrera en Las V
 
 ## Brabham BT52B · 1983 · Nelson Piquet
 
-**Archivo:** `bt52b-1983-piquet.mp3` ⬜ falta · ~44 s · 631 caracteres
+**Archivo:** `bt52b-1983-piquet.mp3` ✅ ya está · ~44 s · 631 caracteres
 
 Un motor de cuatro cilindros, como el de un auto de calle… con más de mil caballos. Ese era el corazón de este Brabham BT52, el primer auto campeón del mundo con motor turbo. En 1983 se prohibió el efecto suelo, y Gordon Murray dibujó esta punta de flecha con casi todo el peso atrás. Y tenía una estrategia nueva: salía con poca nafta, liviano y rapidísimo, y paraba a mitad de carrera a cargar. Nelson Piquet llegó a la última carrera, en Sudáfrica, dos puntos detrás de Alain Prost. Prost abandonó, Piquet terminó tercero, y fue campeón por segunda vez. Era la segunda vez también que Brabham lo hacía campeón, después del BT49.
 
@@ -239,9 +263,45 @@ Este es el auto con el que el mundo conoció a Ayrton Senna. Toleman era un equi
 
 ## Lotus 97T · 1985 · Ayrton Senna
 
-**Archivo:** `97t-1985-senna.mp3` ⬜ falta · ~42 s · 581 caracteres
+**Archivo:** `97t-1985-senna.mp3` ✅ ya está · ~42 s · 581 caracteres
 
 Estoril, Portugal, 21 de abril de 1985. Llueve tanto que los autos parecen lanchas. En la pole, por primera vez, está un brasileño de veinticinco años con este Lotus negro y dorado: Ayrton Senna. Sale primero y no lo ve nadie más. Mientras los demás trompean, él va cada vez más rápido. Llega con más de un minuto de ventaja y le saca una vuelta a todos, menos al segundo. Primera pole y primera victoria de Senna en la Fórmula 1, en su segundo año. Ese día el mundo entendió que con lluvia había un piloto distinto a todos. Este Lotus 97T es, para muchos, donde empezó la leyenda.
+
+**Comentario de Juan:** `juan/97t-1985-senna.mp3` ⬜ falta · 165 caracteres
+
+> Fer, acordate del casco de Ayrton: amarillo, verde y azul, como la bandera de Brasil. Se lo pintaba Sid Mosca, el mismo que le hacía los cascos a Emerson Fittipaldi.
+
+---
+
+## McLaren MP4/2B · 1985 · Alain Prost
+
+**Archivo:** `mp4-2b-1985-prost.mp3` ⬜ falta · ~45 s · 643 caracteres
+
+Medio punto. Por esa diferencia Alain Prost perdió el campeonato de 1984 contra su compañero Niki Lauda. Al año siguiente, con este McLaren MP4/2B, se tomó revancha. El auto tenía un chasis de fibra de carbono, la gran idea del diseñador John Barnard, y un motor turbo de Porsche. Prost ganó cinco carreras. Y podrían haber sido seis: en San Marino cruzó primero, pero el auto se había quedado sin nafta y pesaba menos que el mínimo. Lo descalificaron. Igual fue campeón, el primero de Francia en la historia. Lauda, en su último año, ganó una vez más en Holanda, la última victoria de su carrera, y se retiró. Era el comienzo de la era Prost.
+
+---
+
+## Williams FW11B · 1987 · Nelson Piquet
+
+**Archivo:** `fw11b-1987-piquet.mp3` ⬜ falta · ~43 s · 638 caracteres
+
+Ganar menos y ser campeón. Eso hizo Nelson Piquet en 1987 con este Williams FW11B. Su compañero, Nigel Mansell, ganó seis carreras; Piquet, solo tres. Pero Piquet sumaba puntos siempre, y los dos se llevaban tan mal que casi no se hablaban dentro del mismo equipo. El auto, con motor turbo Honda, era el mejor de la grilla. En Imola, Piquet tuvo un accidente tremendo en la curva Tamburello, y aun así siguió peleando. En Monza ganó con un auto de suspensión activa, la tecnología que años después haría imbatible al FW14B. Y en Japón, Mansell se golpeó la espalda en la clasificación y no pudo correr. Piquet fue campeón por tercera vez.
+
+---
+
+## Jordan 191 · 1991 · Michael Schumacher
+
+**Archivo:** `191-1991-schumacher.mp3` ⬜ falta · ~43 s · 652 caracteres
+
+Una sola carrera, y cambió la historia de la Fórmula 1. Agosto de 1991: el piloto de Jordan, Bertrand Gachot, termina preso en Londres por rociar con gas a un taxista. Eddie Jordan necesita un reemplazo urgente para Spa, y aparece un alemán de veintidós años: Michael Schumacher. Le preguntan si conoce el circuito y dice que sí. Mentira: nunca había corrido ahí, y lo aprendió dando vueltas en bicicleta. En la clasificación, con este Jordan verde, termina séptimo y deja a todos con la boca abierta. En la carrera abandona en la primera vuelta. No importó: antes de la carrera siguiente, Benetton ya se lo había llevado. Así empezó la era Schumacher.
+
+---
+
+## Williams FW14B · 1992 · Nigel Mansell
+
+**Archivo:** `fw14b-1992-mansell.mp3` ⬜ falta · ~42 s · 659 caracteres
+
+Este auto era tan avanzado que terminaron prohibiendo su tecnología. Es el Williams FW14B de 1992. Tenía suspensión activa: computadoras que mantenían el auto siempre a la altura perfecta. Además, control de tracción y caja semiautomática, cuando los rivales apenas lo estaban probando. Lo diseñó Adrian Newey, el mismo que años después haría los Red Bull campeones. Nigel Mansell, el León, ganó las primeras cinco carreras del año y fue campeón en agosto, con cinco fechas por delante. Era su primer título, después de años de quedarse cerca. ¿Y qué hizo al año siguiente? Se fue a correr a Estados Unidos… y también fue campeón ahí, en su primera temporada.
 
 ---
 
@@ -263,7 +323,7 @@ Para muchos, este es el auto más avanzado que corrió en la Fórmula 1. Es el W
 
 ## Benetton B194 · 1994 · Michael Schumacher
 
-**Archivo:** `b194-1994-schumacher.mp3` ⬜ falta · ~44 s · 658 caracteres
+**Archivo:** `b194-1994-schumacher.mp3` ✅ ya está · ~44 s · 658 caracteres
 
 1994 fue un año durísimo para la Fórmula 1. En Imola murió Ayrton Senna, y el campeonato quedó para un alemán de veinticinco años con este Benetton azul: Michael Schumacher. Ganó seis de las primeras siete carreras. Pero el año se llenó de polémicas: lo descalificaron dos veces y lo suspendieron dos carreras más. Damon Hill, con Williams, se acercó hasta llegar a la última carrera, en Australia, un punto atrás. Schumacher iba adelante, tocó el muro, y cuando Hill intentó pasarlo, chocaron. Los dos afuera. Schumacher, campeón por un punto. Fue su primer título. El equipo que hizo este auto, con Ross Brawn y Rory Byrne, después se fue con él a Ferrari.
 
@@ -271,7 +331,7 @@ Para muchos, este es el auto más avanzado que corrió en la Fórmula 1. Es el W
 
 ## Williams FW19 · 1997 · Jacques Villeneuve
 
-**Archivo:** `fw19-1997-villeneuve.mp3` ⬜ falta · ~42 s · 654 caracteres
+**Archivo:** `fw19-1997-villeneuve.mp3` ✅ ya está · ~42 s · 654 caracteres
 
 Jerez, España, última carrera de 1997. Michael Schumacher va primero en el campeonato, un punto adelante de Jacques Villeneuve y este Williams FW19. Faltando veinte vueltas, Villeneuve se le tira por adentro en una curva… y Schumacher le cierra la puerta a propósito. Chocan. Pero el que queda varado en la grava es Schumacher; Villeneuve sigue, con el auto tocado, y termina tercero. Campeón del mundo. Después la FIA hizo algo inédito: le borró a Schumacher todos los puntos del año. Villeneuve era hijo de Gilles, el ídolo de Ferrari, y ya había ganado Indianápolis. Ese año, además, ganó el Gran Premio de Argentina. Fue el último título de Williams.
 
@@ -279,7 +339,7 @@ Jerez, España, última carrera de 1997. Michael Schumacher va primero en el cam
 
 ## Ferrari F399 · 1999 · Mika Salo
 
-**Archivo:** `f399-1999-salo.mp3` ⬜ falta · ~42 s · 630 caracteres
+**Archivo:** `f399-1999-salo.mp3` ✅ ya está · ~42 s · 630 caracteres
 
 Un reemplazo que casi hace historia. En 1999 Michael Schumacher se quebró la pierna en Silverstone, y Ferrari llamó a un finlandés que estaba sin equipo: Mika Salo. En su segunda carrera con este auto, la F399, en Alemania, Salo iba primero. Iba a ganar. Pero desde el box le pidieron que dejara pasar a su compañero, Eddie Irvine, que peleaba el campeonato. Salo obedeció y llegó segundo. Nunca ganó una carrera en la Fórmula 1: esa fue la más cerca. Irvine perdió el título por dos puntos contra Mika Häkkinen, el otro finlandés. Pero con la ayuda de Salo, Ferrari ganó el campeonato de constructores, después de dieciséis años.
 
@@ -287,7 +347,7 @@ Un reemplazo que casi hace historia. En 1999 Michael Schumacher se quebró la pi
 
 ## Jordan 199 · 1999 · Heinz-Harald Frentzen
 
-**Archivo:** `jordan199-1999-frentzen.mp3` ⬜ falta · ~44 s · 649 caracteres
+**Archivo:** `jordan199-1999-frentzen.mp3` ✅ ya está · ~44 s · 649 caracteres
 
 El mejor año de un equipo chico. Jordan era una escudería irlandesa, alegre y sin el presupuesto de los grandes. En 1999 contrató a un alemán que Williams había despedido: Heinz-Harald Frentzen. Y con este auto amarillo, el Jordan 199, Frentzen tuvo la temporada de su vida. Ganó en Francia, bajo la lluvia, y en Monza. A falta de tres carreras, peleaba el campeonato con Häkkinen e Irvine. En el Nürburgring iba primero… y el auto se le apagó al salir de boxes. Ahí se terminó el sueño. Igual terminó tercero en el campeonato, adelante de los Williams que lo habían echado, y Jordan fue tercero entre los constructores. Nunca más llegaron tan alto.
 
@@ -295,7 +355,7 @@ El mejor año de un equipo chico. Jordan era una escudería irlandesa, alegre y 
 
 ## McLaren MP4/14 · 1999 · Mika Hakkinen
 
-**Archivo:** `mp4-14-1999-hakkinen.mp3` ⬜ falta · ~41 s · 607 caracteres
+**Archivo:** `mp4-14-1999-hakkinen.mp3` ✅ ya está · ~41 s · 607 caracteres
 
 Un campeón que lloró en público. Mika Häkkinen, el finlandés volador, manejaba este McLaren plateado, el MP4/14, el auto más rápido de 1999 y también el que más se rompía. En Monza iba primero, puso mal un cambio y trompeó. Se bajó, caminó hasta los árboles, y las cámaras lo encontraron llorando, solo, agachado entre las plantas. Todo el mundo lo vio. Parecía que el título se le escapaba contra Eddie Irvine, de Ferrari. Pero llegó a la última carrera, en Japón, ganó, y fue campeón por segunda vez seguida. Michael Schumacher, su gran rival, dijo muchas veces que Häkkinen fue el piloto que más respetó.
 
@@ -303,7 +363,7 @@ Un campeón que lloró en público. Mika Häkkinen, el finlandés volador, manej
 
 ## Ferrari F2001 · 2001 · Michael Schumacher
 
-**Archivo:** `f2001-2001-schumacher.mp3` ⬜ falta · ~43 s · 640 caracteres
+**Archivo:** `f2001-2001-schumacher.mp3` ✅ ya está · ~43 s · 640 caracteres
 
 Mirá la trompa: es negra. Esta Ferrari, la F2001, corrió así una sola vez. Fue en Monza, en septiembre de 2001, cinco días después de los atentados a las Torres Gemelas. Ferrari decidió correr en su casa sin ninguna publicidad y con la trompa pintada de negro, de luto. Michael Schumacher ya era campeón: lo había asegurado en Hungría, ganando, el mismo día que igualó las cincuenta y una victorias de Alain Prost, el récord de la historia. Una carrera después lo superó. Pero ese domingo en Monza no tenía ganas de festejar. Ganó Juan Pablo Montoya, el primero de su carrera, y Schumacher terminó cuarto. Por eso tu modelo es tan especial.
 
@@ -319,7 +379,7 @@ Diecisiete carreras, diecisiete podios. Eso hizo Michael Schumacher en 2002, la 
 
 ## Ferrari F2004 · 2004 · Rubens Barrichello
 
-**Archivo:** `f2004-2004-barrichello.mp3` ⬜ falta · ~45 s · 654 caracteres
+**Archivo:** `f2004-2004-barrichello.mp3` ✅ ya está · ~45 s · 654 caracteres
 
 Ser compañero de Michael Schumacher era el trabajo más difícil de la Fórmula 1. Rubens Barrichello lo hizo seis años. Esta es la F2004, la Ferrari más dominante de esa época: ganó quince de dieciocho carreras. Trece fueron de Schumacher… y las otras dos, de Rubinho. En Monza, delante de los tifosi, entró a boxes muy temprano, cayó atrás y remontó hasta ganar. Y unas semanas después ganó el primer Gran Premio de China de la historia, desde la pole. Terminó segundo en el campeonato, su mejor año. Barrichello se retiró con más de trescientas carreras, el récord de su época. Y en tu repisa también está la Ferrari con la que Schumacher arrasó en 2002.
 
@@ -327,7 +387,7 @@ Ser compañero de Michael Schumacher era el trabajo más difícil de la Fórmula
 
 ## Sauber C23 · 2004 · Felipe Massa
 
-**Archivo:** `c23-2004-massa.mp3` ⬜ falta · ~43 s · 628 caracteres
+**Archivo:** `c23-2004-massa.mp3` ✅ ya está · ~43 s · 628 caracteres
 
 ¿Una Ferrari azul? Casi. Este es el Sauber C23 de 2004. Sauber era un equipo suizo chico que tenía un acuerdo con Ferrari: le compraba el motor, y este auto se parecía muchísimo a la Ferrari campeona del año anterior. Su piloto era un brasileño joven, Felipe Massa. Había debutado en Sauber en 2002, rápido pero desprolijo; Ferrari lo tuvo un año aprendiendo como piloto de pruebas, al lado de Michael Schumacher, y lo devolvió a Sauber más maduro. En 2004 su mejor resultado fue un cuarto puesto en Bélgica. Dos años después saltó a Ferrari, ganó once carreras, y en 2008 fue campeón del mundo… durante treinta y ocho segundos.
 
@@ -335,7 +395,7 @@ Ser compañero de Michael Schumacher era el trabajo más difícil de la Fórmula
 
 ## Renault R24 · 2004 · Jarno Trulli
 
-**Archivo:** `r24-2004-trulli.mp3` ⬜ falta · ~43 s · 607 caracteres
+**Archivo:** `r24-2004-trulli.mp3` ✅ ya está · ~43 s · 607 caracteres
 
 En 2004 la Ferrari de Schumacher ganó quince de dieciocho carreras. Una de las tres que se le escaparon fue Mónaco, y la ganó este auto, el Renault R24. Su piloto era Jarno Trulli, un italiano conocido por ser rapidísimo en clasificación. En las calles de Montecarlo, donde casi no se puede pasar, eso vale oro: Trulli hizo la pole y aguantó adelante toda la carrera. Fue la única victoria de su vida en la Fórmula 1. Su compañero era un español joven, Fernando Alonso. A Trulli las cosas con el equipo terminaron mal, y se fue antes de fin de año. Al siguiente, con el R25, el que salió campeón fue Alonso.
 
@@ -347,11 +407,15 @@ En 2004 la Ferrari de Schumacher ganó quince de dieciocho carreras. Una de las 
 
 Cinco años seguidos ganó Michael Schumacher. Hasta que llegó este auto. Es el Renault R25, y lo manejaba un español de veintitrés años: Fernando Alonso. En 2005 había una regla rarísima: no se podían cambiar los neumáticos durante la carrera. Había que cuidarlos como oro. En Imola, Schumacher venía mucho más rápido, pegado atrás, vuelta tras vuelta. Alonso no cometió un solo error, y ganó. Terminó el año con siete victorias y fue campeón en Brasil, con veinticuatro años: el más joven de la historia hasta ese momento. Y un dato que pocos saben: este equipo es el mismo que en 1984 tenía a Senna, cuando se llamaba Toleman.
 
+**Comentario de Juan:** `juan/r25-2005-alonso.mp3` ⬜ falta · 162 caracteres
+
+> Fer, no te olvides que el primer karting de Alonso lo armó el padre para la hermana mayor, pero a ella no le gustó, y lo terminó manejando Fernando con tres años.
+
 ---
 
 ## Honda RA106 · 2006 · Jenson Button
 
-**Archivo:** `ra106-2006-button.mp3` ⬜ falta · ~40 s · 604 caracteres
+**Archivo:** `ra106-2006-button.mp3` ✅ ya está · ~40 s · 604 caracteres
 
 Ciento doce carreras sin ganar. Eso cargaba Jenson Button cuando llegó a Hungría en 2006 con este Honda RA106. Encima largaba decimocuarto, castigado por cambiar el motor. Pero llovió, paró, volvió a llover, y Button, que manejaba suave como pocos sobre piso mojado, fue pasando a todos. Ganó. Su primera victoria. Y para Honda fue algo histórico: la primera victoria con equipo propio desde 1967, cuando John Surtees ganó en Monza con el RA300. Treinta y nueve años después. Lo mejor llegó más tarde: Honda se fue a fines de 2008, el equipo pasó a llamarse Brawn, y en 2009 Button fue campeón del mundo.
 
@@ -359,15 +423,19 @@ Ciento doce carreras sin ganar. Eso cargaba Jenson Button cuando llegó a Hungr�
 
 ## Ferrari F2007 · 2007 · Kimi Raikkonen
 
-**Archivo:** `f2007-2007-raikkonen.mp3` ⬜ falta · ~41 s · 616 caracteres
+**Archivo:** `f2007-2007-raikkonen.mp3` ✅ ya está · ~41 s · 616 caracteres
 
 La primera carrera de Ferrari sin Michael Schumacher. Australia, 2007. El elegido para reemplazarlo era un finlandés que casi no hablaba: Kimi Räikkönen, el Iceman. Se subió a este auto, la F2007, hizo la pole, ganó la carrera y marcó la vuelta más rápida. Todo en su debut. Pero lo mejor llegó al final del año. A dos carreras del cierre, Räikkönen estaba diecisiete puntos detrás de Lewis Hamilton, que peleaba con su compañero Fernando Alonso. Hamilton tuvo problemas, Alonso no alcanzó, y Kimi ganó las dos últimas. Campeón por un punto. ¿Y cómo lo festejó? Como festejaba todo el Iceman: casi sin mover la cara.
+
+**Comentario de Juan:** `juan/f2007-2007-raikkonen.mp3` ⬜ falta · 130 caracteres
+
+> Fer, acordate que ese mismo año Kimi corrió una carrera de motos de nieve en Finlandia con nombre falso: se anotó como James Hunt.
 
 ---
 
 ## BMW Sauber F1.08 · 2008 · Robert Kubica
 
-**Archivo:** `f108-2008-kubica.mp3` ⬜ falta · ~44 s · 645 caracteres
+**Archivo:** `f108-2008-kubica.mp3` ✅ ya está · ~44 s · 645 caracteres
 
 Montreal, 2007. Robert Kubica choca a doscientos treinta kilómetros por hora y el auto se desarma en pedazos. Parece imposible que haya sobrevivido. Se perdió una sola carrera. Y un año después, en el mismo circuito, ganó con este auto, el BMW Sauber F1.08. Su compañero, Nick Heidfeld, llegó segundo: un uno-dos para BMW. Ese día, además, Lewis Hamilton chocó a Kimi Räikkönen en la salida de boxes, con el semáforo en rojo. Kubica quedó primero en el campeonato. Fue la única victoria del equipo y del primer piloto polaco de la Fórmula 1. Años después, un accidente de rally casi le cuesta el brazo… y aun así volvió a correr en la Fórmula 1.
 
@@ -375,15 +443,19 @@ Montreal, 2007. Robert Kubica choca a doscientos treinta kilómetros por hora y 
 
 ## McLaren MP4/23 · 2008 · Lewis Hamilton
 
-**Archivo:** `mp4-23-2008-hamilton.mp3` ⬜ falta · ~41 s · 603 caracteres
+**Archivo:** `mp4-23-2008-hamilton.mp3` ✅ ya está · ~41 s · 603 caracteres
 
 Interlagos, 2 de noviembre de 2008. Última vuelta del campeonato. Felipe Massa cruza la meta primero, en su casa, y su familia festeja en el box de Ferrari: es campeón. Lewis Hamilton, con este McLaren, va sexto, y así pierde el título. Pero empieza a llover, y adelante, Timo Glock, con gomas de seco, casi no puede avanzar. En la última curva de la última vuelta, Hamilton lo pasa. Quinto. Campeón por un punto. Massa fue campeón del mundo durante treinta y ocho segundos. Hamilton tenía veintitrés años y fue el campeón más joven de la historia hasta ese momento. Era el primero de sus siete títulos.
+
+**Comentario de Juan:** `juan/mp4-23-2008-hamilton.mp3` ⬜ falta · 148 caracteres
+
+> Fer, no te olvides que Hamilton, con diez años, lo encaró a Ron Dennis en una entrega de premios y le dijo que algún día iba a manejar para McLaren.
 
 ---
 
 ## Toro Rosso STR3 · 2008 · Sebastian Vettel
 
-**Archivo:** `str3-2008-vettel.mp3` ⬜ falta · ~45 s · 624 caracteres
+**Archivo:** `str3-2008-vettel.mp3` ✅ ya está · ~45 s · 624 caracteres
 
 Monza, 2008. Llueve. El equipo más chico de la grilla, Toro Rosso, el hermano menor de Red Bull, que antes se llamaba Minardi y nunca había ganado nada. Y en la pole, un alemán de veintiún años con cara de nene: Sebastian Vettel. Al día siguiente, con este auto, el STR3, salió primero y nadie lo pudo alcanzar. Ganó de punta a punta. Fue el ganador más joven de la historia en ese momento, y el equipo chico de Red Bull ganó antes que el equipo grande. En Italia, con un auto italiano y motor Ferrari, los tifosi lo festejaron como propio. Al año siguiente Vettel pasó a Red Bull, y de ahí salieron cuatro títulos seguidos.
 
@@ -391,7 +463,7 @@ Monza, 2008. Llueve. El equipo más chico de la grilla, Toro Rosso, el hermano m
 
 ## Brawn GP BGP 001 · 2009 · Jenson Button
 
-**Archivo:** `bgp001-2009-button.mp3` ⬜ falta · ~47 s · 654 caracteres
+**Archivo:** `bgp001-2009-button.mp3` ✅ ya está · ~47 s · 654 caracteres
 
 ¿Cómo un equipo que estaba por desaparecer ganó el campeonato del mundo? Esta es la historia del Brawn BGP 001. A fines de 2008, Honda abandonó la Fórmula 1 de un día para otro. Ross Brawn se quedó con el equipo por una suma simbólica, le puso un motor Mercedes y salió a pista casi sin sponsors: por eso el auto es casi todo blanco. Tenía un secreto escondido en la parte trasera del piso: el doble difusor. Los rivales protestaron, pero era legal. Jenson Button ganó seis de las primeras siete carreras y fue campeón. Un solo año de vida, dos títulos… y al año siguiente lo compró Mercedes. De este auto nació el equipo que después dominó con Hamilton.
 
@@ -399,7 +471,7 @@ Monza, 2008. Llueve. El equipo más chico de la grilla, Toro Rosso, el hermano m
 
 ## Ferrari F138 · 2013 · Fernando Alonso
 
-**Archivo:** `f138-2013-alonso.mp3` ⬜ falta · ~43 s · 610 caracteres
+**Archivo:** `f138-2013-alonso.mp3` ✅ ya está · ~43 s · 610 caracteres
 
 Este auto es la historia de un casi. Fernando Alonso, bicampeón del mundo, llegó a Ferrari para ganar el tercer título. Y casi lo logra varias veces, siempre contra el mismo rival: Sebastian Vettel y su Red Bull. 2013 fue otra vez así. Con esta Ferrari, la F138, Alonso ganó en China y después en España, en Barcelona, delante de su gente, largando quinto. Fue una fiesta. Pero en la segunda mitad del año Vettel ganó todo, y Alonso terminó segundo por tercera vez en cuatro años. Esa victoria en España fue su última con Ferrari. Y este fue el último año de los motores V8: al siguiente llegaban los híbridos.
 
@@ -407,7 +479,7 @@ Este auto es la historia de un casi. Fernando Alonso, bicampeón del mundo, lleg
 
 ## Red Bull RB9 · 2013 · Sebastian Vettel
 
-**Archivo:** `rb9-2013-vettel.mp3` ⬜ falta · ~44 s · 603 caracteres
+**Archivo:** `rb9-2013-vettel.mp3` ✅ ya está · ~44 s · 603 caracteres
 
 Nueve carreras seguidas. Ese fue el final de temporada de Sebastian Vettel en 2013 con este Red Bull, el RB9. Desde Bélgica hasta Brasil no perdió nunca. En total ganó trece carreras y su cuarto título seguido, con apenas veintiséis años. El auto era otra obra de Adrian Newey, y fue el último de la era de los motores V8. Pero no todo fue fiesta: en Malasia el equipo le ordenó por radio no pasar a su compañero Mark Webber, con un mensaje en código: Multi veintiuno. Vettel lo pasó igual. Webber se retiró a fin de año. Y otro detalle: Vettel le ponía nombre a sus autos. A este le decía Hungry Heidi.
 
@@ -461,4 +533,29 @@ Quince victorias en un año. Ese récord de la Fórmula 1 lo puso este auto: el 
 
 ---
 
-Total: 57 textos, 36523 caracteres.
+Total: 61 textos, 39115 caracteres.
+
+---
+
+# Intervenciones de Juan Fossaroli (10 autos)
+
+Suenan pegadas al final del relato: Juan: "Fernando…" → Fernando: "¿Sí, Juan?" → Juan: el comentario.
+Mientras falte alguno de estos mp3, la app pasa solo el relato.
+
+**Se graban una sola vez (sirven para todos los autos):**
+
+- `juan/juan-fernando.mp3` ⬜ falta · voz de Juan: "Fernando…"
+- `juan/fernando-si-juan.mp3` ⬜ falta · voz de Fernando: "¿Sí, Juan?"
+
+**Un comentario por auto (voz de Juan),** el texto está arriba en cada auto:
+
+- `juan/375indy-1952-ascari.mp3` ⬜ falta · Ferrari 375 Indy 1952
+- `juan/w196-1955-fangio.mp3` ⬜ falta · Mercedes W196 1955
+- `juan/lotus25-1963-clark.mp3` ⬜ falta · Lotus 25 1963
+- `juan/006-1973-stewart.mp3` ⬜ falta · Tyrrell 006 1973
+- `juan/m23-1976-hunt.mp3` ⬜ falta · McLaren M23 1976
+- `juan/lotus79-1978-andretti.mp3` ⬜ falta · Lotus 79 1978
+- `juan/97t-1985-senna.mp3` ⬜ falta · Lotus 97T 1985
+- `juan/r25-2005-alonso.mp3` ⬜ falta · Renault R25 2005
+- `juan/f2007-2007-raikkonen.mp3` ⬜ falta · Ferrari F2007 2007
+- `juan/mp4-23-2008-hamilton.mp3` ⬜ falta · McLaren MP4/23 2008
