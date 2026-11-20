@@ -170,7 +170,11 @@
     function animate(on) { stage.classList.toggle("anim", on); }
     function limitPan() {
       const mx = Math.max(0, (W / K * st.s - stage.clientWidth) / 2 + 40), my = Math.max(0, (H / K * st.s - stage.clientHeight) / 2 + 60);
-      st.px = clamp(st.px, -mx, mx); st.py = clamp(st.py, -my, my);
+      // Vertical: el mueble no está centrado (OY, arriba queda margen y abajo la pared y el piso), así que
+      // el límite se mide desde sus bordes: con zoom se puede llevar la fila de arriba o la de abajo a la vista.
+      const hs = stage.clientHeight / 2, Hv = H / K, arriba = (OY - Hv / 2) * st.s, abajo = (OY + Hv / 2) * st.s;
+      const lo = Math.min(-my, hs - 60 - abajo), hi = Math.max(my, -hs + 60 - arriba);
+      st.px = clamp(st.px, -mx, mx); st.py = clamp(st.py, lo, hi);
     }
     function zoomTo(s, cx = 0, cy = 0) { // cx, cy: punto de la pantalla (relativo al centro) que queda fijo
       const k = s / st.s;
